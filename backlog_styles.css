@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+}
+
+#header-and-backlog {
+    display: flex;
+}
+
+#header {
+    width: 10%;
+}
+
+#column-names {
+    display: flex;
+}
+
+.backlog-element {
+    display: flex;
+}

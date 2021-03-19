@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Join - Backlog</title>
+
+    <link rel="stylesheet" href="./templates/header_styles.css">
+    <link rel="stylesheet" href="./backlog_styles.css">
+
+    <script src="script.js"></script>
+
+</head>
+
+<body onload="includeHTML()">
+
+    <div id="header-and-backlog">
+
+        <div id="header" w3-include-html="./templates/header.html"></div>
+
+        <div id="backlog">
+
+            <div id="backlog-headline">
+                <h2>Backlog</h2>
+                <h3>Learning Management System Project</h3>
+            </div>
+
+            <div id="column-names">
+                <p>ASSIGNED TO</p>
+                <p>CATEGORY</p>
+                <p>DETAILS</p>
+            </div>
+
+
+            <!-- Backlog as Table -->
+            <table id="backlog-content">
+                <tr>
+                    <td>COLOR</td>
+                    <td><img src="./img/joinlogo.png"></td>
+                    <td>
+                        <p>NAME</p>
+                        <p>MAIL</p>
+                    </td>
+                    <td>Marketing</td>
+                    <td>Details</td>
+                </tr>
+                <tr>
+                    <td>COLOR</td>
+                    <td><img src="./img/joinlogo.png"></td>
+                    <td>
+                        <p>NAME</p>
+                        <p>MAIL</p>
+                    </td>
+                    <td>Product</td>
+                    <td>Details</td>
+                </tr>
+                <tr>
+                    <td>COLOR</td>
+                    <td><img src="./img/joinlogo.png"></td>
+                    <td>
+                        <p>NAME</p>
+                        <p>MAIL</p>
+                    </td>
+                    <td>Sale</td>
+                    <td>Details</td>
+                </tr>
+            </table>
+
+            <!-- Backlog as Divs -->
+            <div class="backlog-element">
+
+                <div class="backlog-element-color">
+                    <p>COLOR</p>
+                </div>
+                <div class="backlog-element-picture">
+                    <img src="./img/joinlogo.png">
+                </div>
+                <div class="backlog-element-name">
+                    <p>NAME</p>
+                    <p>MAIL</p>
+                </div>
+                <div class="backlog-element-category">
+                    <p>Product</p>
+                </div>
+                <div class="backlog-element-details">
+                    <p>Details</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+}
+
+a {
+    color: white;
+}
+
+#header-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(0, 0, 140);
+}
+
+#logo-and-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 30vh;
+}
+
+#links {
+    display: flex;
+    flex-direction: column;
+}

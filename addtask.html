@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Join - Add Task</title>
+
+    <link rel="stylesheet" href="./templates/header_styles.css">
+    <link rel="stylesheet" href="./addtask_styles.css">
+
+    <script src="script.js"></script>
+
+</head>
+
+<body onload="includeHTML()">
+
+    <div id="header-and-task">
+
+        <div id="header" w3-include-html="./templates/header.html"></div>
+
+        <div id="headline-and-add">
+
+            <div id="add-task-headline">
+                <h2>Add Task</h2>
+                <h3>Learning Management System Project</h3>
+            </div>
+
+            <div id="add-new-task">
+
+                <div id="title-container">
+                    <div class="field-headline">
+                        <p>Title</p>
+                    </div>
+                    <div class="field-input">
+                        <input id="title-input">
+                    </div>
+                </div>
+
+                <div id="due-date-container">
+                    <div class="field-headline">
+                        <p>Due Date</p>
+                    </div>
+                    <div class="field-input">
+                        <input id="due-date-input">
+                        <div class="calender-container">
+                            <img src="./img/icons8_calendar_150.png">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="field-container">
+                    <div class="category-headline">
+                        <p>Category</p>
+                    </div>
+                    <div class="field-input">
+                        <input id="category-input">
+                        <div class="chevron-container">
+                            <img src="./img/chevron.png">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="field-container">
+                    <div class="urgency-headline">
+                        <p>Urgency</p>
+                    </div>
+                    <div class="field-input">
+                        <input id="urgency-input">
+                        <div class="chevron-container">
+                            <img src="./img/chevron.png">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="field-container">
+                    <div class="description-headline">
+                        <p>Description</p>
+                    </div>
+                    <div class="field-input">
+                        <textarea id="description-input"></textarea>
+                    </div>
+                </div>
+
+                <div id="field-container">
+                    <div class="assigned-to-headline">
+                        <p>Assigned to</p>
+                    </div>
+                    <div class="field-input">
+                        <img src="./img/joinlogo.png">
+                        <img src="./img/icon_plus.png">
+                    </div>
+                </div>
+
+                <div id="action-buttons">
+                    <div id="cancel">
+                        <button id="cancel-btn">Cancel</button>
+                    </div>
+                    <div id="create">
+                        <button id="create-btn">Create Task</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
