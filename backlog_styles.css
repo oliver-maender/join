@@ -12,6 +12,7 @@
 
 #column-names {
     display: flex;
+    font-size: 18px;
     font-weight: bold;
     color: #1e3190;
     margin-bottom: 8px;
@@ -43,7 +44,6 @@
 
 .backlog-element-picture {
     min-width: 80px;
-    /* background-color: rgb(228, 228, 247); */
 } 
 
 .backlog-element-picture img {
@@ -58,20 +58,16 @@
     flex-direction: column;
     justify-content: center;
     min-width: 300px;
-   /*  background-color: yellow; */
     padding: 16px;
 }
 
 .backlog-element-category {
     width: 200px;
-    /* background-color: orange; */
     align-self: center;
     padding: 16px;
 }
 
 .backlog-element-details {
-   /*  width: 100%; */
-    /* background-color: green; */
     align-self: center;
     padding: 16px;
 }

@@ -34,87 +34,107 @@
 
         <div id="header" w3-include-html="./templates/header.html"></div>
 
-        <div id="headline-and-add">
+        <div class="content-container">
 
-            <div id="add-task-headline">
-                <h2>Add Task</h2>
-                <h3>Learning Management System Project</h3>
-            </div>
+            <div id="add-task-container">
 
-            <div id="add-new-task">
-
-                <div id="title-container">
-                    <div class="field-headline">
-                        <p>Title</p>
-                    </div>
-                    <div class="field-input">
-                        <input id="title-input">
-                    </div>
+                <div id="add-task-headline">
+                    <h2>Add Task</h2>
+                    <h3>Learning Management System Project</h3>
                 </div>
 
-                <div id="due-date-container">
-                    <div class="field-headline">
-                        <p>Due Date</p>
-                    </div>
-                    <div class="field-input">
-                        <input id="due-date-input">
-                        <div class="calender-container">
-                            <img src="./img/icons8_calendar_150.png">
+                <form id="add-tastk-form" class="form">
+
+                    <div id="title-container" class="form-part">
+                        <div class="field-headline">
+                            <label for="title-input">TITLE</label>
+                        </div>
+                        <div class="input-box">
+                            <input id="title-input" type="text" required>
                         </div>
                     </div>
-                </div>
 
-                <div id="field-container">
-                    <div class="category-headline">
-                        <p>Category</p>
-                    </div>
-                    <div class="field-input">
-                        <input id="category-input">
-                        <div class="chevron-container">
-                            <img src="./img/chevron.png">
+                    <div id="due-date-container" class="form-part">
+                        <div class="field-headline">
+                            <label for="due-date-input">DUE DATE</label>
+                        </div>
+                        <div class="input-box">
+                            <input id="due-date-input" type="date">
+                            <!--   <div class="calender-container">
+                                <img src="./img/icons8_calendar_150.png">
+                            </div> -->
                         </div>
                     </div>
-                </div>
 
-                <div id="field-container">
-                    <div class="urgency-headline">
-                        <p>Urgency</p>
+                    <div id="category-container" class="form-part">
+                        <div class="category-headline">
+                            <label for="category-input">CATEGORY</label>
+                        </div>
+                        <select class="input-box">
+                            <option>Accounting</option>
+                            <option>Marketing</option>
+                            <option>IT</option>
+                            <option>Controlling</option>
+                            <option>Others</option>
+                            <!-- <div class="chevron-container">
+                                <img src="./img/chevron.png">
+                            </div> -->
+                        </select>
                     </div>
-                    <div class="field-input">
-                        <input id="urgency-input">
-                        <div class="chevron-container">
-                            <img src="./img/chevron.png">
+
+                    <div id="urgency-container" class="form-part">
+                        <div class="urgency-headline">
+                            <label for="urgency-input">URGENCY</label>
+                        </div>
+                        <select class="input-box">
+                            <option>High</option>
+                            <option>Middle</option>
+                            <option>Low</option>
+                            <!-- <div class="chevron-container">
+                                <img src="./img/chevron.png">
+                            </div> -->
+                        </select>
+                    </div>
+
+                    <div id="description-container" class="form-part form-part-big">
+                        <div class="description-headline">
+                            <label for="description-input">DESCRIPTION</label>
+                        </div>
+                        <div>
+                            <textarea id="description-input"></textarea>
                         </div>
                     </div>
-                </div>
 
-                <div id="field-container">
-                    <div class="description-headline">
-                        <p>Description</p>
-                    </div>
-                    <div class="field-input">
-                        <textarea id="description-input"></textarea>
-                    </div>
-                </div>
+                    <div class="form-part form-part-big">
+                        <div id="assigned-to-container">
+                            <div class="assigned-to-headline">
+                                <label>ASSIGNED TO</label>
+                            </div>
+                            <div class="profile-pics">
+                                <img id="profile-pic" src="./img/junus_ergin.jpg">
+                                <button type="button" id="add-person-btn"
+                                    class="mdl-button mdl-js-button mdl-button--fab">
+                                    <i class="material-icons">add</i>
+                                </button>
+                                <!-- <img src="./img/icon_plus.png"> -->
+                            </div>
+                        </div>
 
-                <div id="field-container">
-                    <div class="assigned-to-headline">
-                        <p>Assigned to</p>
+                        <div id="action-buttons">
+                            <div id="cancel">
+                                <button id="cancel-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect btn">
+                                    Cancel
+                                </button>
+                            </div>
+                            <div id="create">
+                                <button type="submit" id="create-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
+                                    Create Task
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field-input">
-                        <img src="./img/joinlogo.png">
-                        <img src="./img/icon_plus.png">
-                    </div>
-                </div>
 
-                <div id="action-buttons">
-                    <div id="cancel">
-                        <button id="cancel-btn">Cancel</button>
-                    </div>
-                    <div id="create">
-                        <button id="create-btn">Create Task</button>
-                    </div>
-                </div>
+                </form>
 
             </div>
 
