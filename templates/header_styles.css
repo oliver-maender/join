@@ -1,9 +1,11 @@
 body {
     margin: 0;
+    font-size: 20px;
 }
 
 a {
     color: white;
+    text-decoration: none;
 }
 
 #header-content {
@@ -19,10 +21,20 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 30vh;
 }
 
-#links {
+#logo-container {
+    margin-top: 16px;
+    margin-top: 32px;
+    margin-bottom: 56px;
+    display: flex;
+    justify-content: center;
+}
+
+#links-container {
+    height: 16vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+   
 }

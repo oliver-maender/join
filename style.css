@@ -1,0 +1,32 @@
+:root {
+    --main-font-family: 'PT Sans', sans-serif;
+    --header-width: 10%;
+    --content-container-width: 90%
+}
+
+body {
+    margin: 0;
+    font-family: var(--main-font-family);
+    font-size: 16px;
+}
+
+.header-and-content {
+    display: flex;
+}
+
+#header {
+    width: var(--header-width);
+}
+
+.content-container {
+    width: var(--content-container-width);
+}
+
+.profile-pic {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-bottom: 32px;
+}

@@ -1,11 +1,1 @@
-body {
-    margin: 0;
-}
 
-#header {
-    width: 10%;
-}
-
-#header-and-task {
-    display: flex;
-}

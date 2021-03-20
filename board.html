@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
+    <!-- Embed Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./templates/header_styles.css">
     <link rel="stylesheet" href="./board_styles.css">
 
@@ -23,46 +30,50 @@
 
 <body onload="includeHTML()">
 
-    <div id="header-and-board">
+    <div class="header-and-content">
 
         <div id="header" w3-include-html="./templates/header.html"></div>
 
-        <div id="whole-board">
+        <div class="content-container">
 
-            <div id="to-do">
-                <div id="to-do-headline">
-                    <h2>TO DO</h2>
-                </div>
-                <div id="to-do-content">
+            <div id="whole-board">
 
-                </div>
-            </div>
+                <div id="to-do">
+                    <div id="to-do-headline">
+                        <h2>TO DO</h2>
+                    </div>
+                    <div id="to-do-content">
 
-            <div id="in-progress">
-                <div id="in-progress-headline">
-                    <h2>IN PROGRESS</h2>
+                    </div>
                 </div>
-                <div id="in-progress-content">
 
-                </div>
-            </div>
+                <div id="in-progress">
+                    <div id="in-progress-headline">
+                        <h2>IN PROGRESS</h2>
+                    </div>
+                    <div id="in-progress-content">
 
-            <div id="testing">
-                <div id="testing-headline">
-                    <h2>TESTING</h2>
+                    </div>
                 </div>
-                <div id="testing-content">
 
-                </div>
-            </div>
+                <div id="testing">
+                    <div id="testing-headline">
+                        <h2>TESTING</h2>
+                    </div>
+                    <div id="testing-content">
 
-            <div id="done">
-                <div id="done-headline">
-                    <h2>DONE</h2>
+                    </div>
                 </div>
-                <div id="done-content">
 
+                <div id="done">
+                    <div id="done-headline">
+                        <h2>DONE</h2>
+                    </div>
+                    <div id="done-content">
+
+                    </div>
                 </div>
+
             </div>
 
         </div>
