@@ -33,73 +33,74 @@
     <div class="header-and-content">
 
         <div id="header" w3-include-html="./templates/header.html"></div>
+        <div class="content-container">
+            <div id="backlog">
 
-        <div id="backlog">
-
-            <div id="backlog-headline">
-                <h2>Backlog</h2>
-                <h3>Learning Management System Project</h3>
-            </div>
-
-            <div id="column-names">
-                <p>ASSIGNED TO</p>
-                <p>CATEGORY</p>
-                <p>DETAILS</p>
-            </div>
-
-
-            <!-- Backlog as Table -->
-            <table id="backlog-content">
-                <tr>
-                    <td>COLOR</td>
-                    <td><img src="./img/joinlogo.png"></td>
-                    <td>
-                        <p>NAME</p>
-                        <p>MAIL</p>
-                    </td>
-                    <td>Marketing</td>
-                    <td>Details</td>
-                </tr>
-                <tr>
-                    <td>COLOR</td>
-                    <td><img src="./img/joinlogo.png"></td>
-                    <td>
-                        <p>NAME</p>
-                        <p>MAIL</p>
-                    </td>
-                    <td>Product</td>
-                    <td>Details</td>
-                </tr>
-                <tr>
-                    <td>COLOR</td>
-                    <td><img src="./img/joinlogo.png"></td>
-                    <td>
-                        <p>NAME</p>
-                        <p>MAIL</p>
-                    </td>
-                    <td>Sale</td>
-                    <td>Details</td>
-                </tr>
-            </table>
-
-            <!-- Backlog as Divs -->
-            <div class="backlog-element">
-
-                <div class="backlog-element-color">
-                    <p>COLOR</p>
+                <div id="backlog-headline">
+                    <h2>Backlog</h2>
+                    <h3>Learning Management System Project</h3>
                 </div>
-                <div class="backlog-element-picture">
-                    <img src="./img/joinlogo.png">
+
+                <div id="column-names">
+                    <span class="column-assigned-to">ASSIGNED TO</span>
+                    <span class="column-category">CATEGORY</span>
+                    <span class="column-details">DETAILS</spanp>
                 </div>
-                <div class="backlog-element-name">
-                    <p>NAME</p>
-                    <p>MAIL</p>
+
+                <!-- Backlog as Divs -->
+                <!-- the index within the id will be relevant for javascript function showing all backlog elements -->
+                <div id="backlog-element-1" class="backlog-element">
+                    <div class="backlog-element-color">
+                        </div>
+                    <div class="backlog-element-picture flex-center">
+                        <img src="./img/junus_ergin.jpg">
+                    </div>
+                    <div class="backlog-element-name">
+                        <span>Junus Ergin</span>
+                        <a class="email-adress" href="mailto:junus.ergin@googlemail.com" title="send email">junus.ergin@googlemail.com</a>
+                    </div>
+                    <div class="backlog-element-category">
+                        <span>Category</span>
+                    </div>
+                    <div class="backlog-element-details">
+                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia deserunt minima, enim obcaecati consequatur nesciunt.</span>
+                    </div>
                 </div>
-                <div class="backlog-element-category">
-                    <p>Product</p>
+
+                <div id="backlog-element-2" class="backlog-element">
+                    <div class="backlog-element-color">
+                        </div>
+                    <div class="backlog-element-picture flex-center">
+                        <img src="./img/junus_ergin.jpg">
+                    </div>
+                    <div class="backlog-element-name">
+                        <span>Junus Ergin</span>
+                        <a class="email-adress" href="mailto:junus.ergin@googlemail.com" title="send email">junus.ergin@googlemail.com</a>
+                    </div>
+                    <div class="backlog-element-category">
+                        <span>Category</span>
+                    </div>
+                    <div class="backlog-element-details">
+                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia deserunt minima, enim obcaecati consequatur nesciunt.</span>
+                    </div>
                 </div>
-                <div class="backlog-element-details">
-                    <p>Details</p>
+
+                <div id="backlog-element-3" class="backlog-element">
+                    <div class="backlog-element-color">
+                        </div>
+                    <div class="backlog-element-picture flex-center">
+                        <img src="./img/junus_ergin.jpg">
+                    </div>
+                    <div class="backlog-element-name">
+                        <span>Junus Ergin</span>
+                        <a class="email-adress" href="mailto:junus.ergin@googlemail.com" title="send email">junus.ergin@googlemail.com</a>
+                    </div>
+                    <div class="backlog-element-category">
+                        <span>Category</span>
+                    </div>
+                    <div class="backlog-element-details">
+                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia deserunt minima, enim obcaecati consequatur nesciunt.</span>
+                    </div>
                 </div>
 
             </div>

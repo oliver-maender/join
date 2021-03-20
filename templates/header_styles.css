@@ -1,9 +1,8 @@
-body {
-    margin: 0;
-    font-size: 20px;
+#header {
+    width: var(--header-width);
 }
 
-a {
+#header-links a {
     color: white;
     text-decoration: none;
 }
@@ -14,7 +13,7 @@ a {
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-color: rgb(0, 0, 140);
+    background-color: var(--color-primary);
 }
 
 #logo-and-links {
@@ -31,10 +30,10 @@ a {
     justify-content: center;
 }
 
-#links-container {
+#header-links {
     height: 16vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-   
+    font-size: 20px;
 }

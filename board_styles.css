@@ -3,12 +3,22 @@
 
 
 #whole-board {
+    margin-top: 24px;
+    margin-left: 40px;
     display: flex;
     justify-content: space-around;
+    height: 100%;
     width: 90%;
 }
 
-#in-progress-content {
-    height: 80%;
-    background-color: gray;
+.board-category {
+    height: 100%;
+    width: 20%;
+    text-align: center;
+}
+
+.board-category-content {
+    height: 84%;
+    background-color: var(--color-secondary);
+    border-radius: var(--border-radius-main);
 }

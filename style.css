@@ -1,7 +1,16 @@
 :root {
     --main-font-family: 'PT Sans', sans-serif;
     --header-width: 10%;
-    --content-container-width: 90%
+    --content-container-width: 90%;
+    --color-primary: #1c2d92;
+    --color-secondary: #f4f3fb;
+    --color-tertiary: #567cfc;
+    --color-category1: linear-gradient(to top, rgb(200, 44, 143) 0%, rgb(227, 119, 255) 50%, rgb(255, 210, 238) 80%);
+    --color-category2: linear-gradient(to top, rgb(255, 153, 0) 0%, rgb(248, 181, 94) 50%, rgb(255, 225, 168) 80%);
+    --color-category3: linear-gradient(to top, rgb(1, 32, 185) 0%, rgb(72, 96, 211) 50%, rgb(157, 172, 250) 80%);
+    --color-category4: linear-gradient(to top, rgb(51, 158, 1) 0%, rgb(164, 231, 76) 50%, rgb(211, 236, 190) 80%);
+    --color-category5: linear-gradient(to top, rgb(230, 226, 0) 0%, rgb(255, 255, 88) 50%, rgb(255, 255, 146) 80%);
+    --border-radius-main: 12px;
 }
 
 body {
@@ -10,16 +19,43 @@ body {
     font-size: 16px;
 }
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--main-font-family);
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+h3 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5060ad;
+    margin-top: 0;
+    line-height: 12px;
+}
+
 .header-and-content {
     display: flex;
 }
 
-#header {
-    width: var(--header-width);
-}
-
 .content-container {
     width: var(--content-container-width);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.email-adress {
+    color: var(--color-tertiary);
+    text-decoration: none;
 }
 
 .profile-pic {
