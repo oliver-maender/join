@@ -3,7 +3,6 @@
     margin-left: 24px;
     margin-right: 24px;
     height: 90%;
-
 }
 
 #backlog-headline {
@@ -19,7 +18,7 @@
 }
 
 .column-assigned-to {
-    width: calc(8px + 128px + 300px); 
+    width: calc(8px + 128px + 300px);
 }
 
 .column-category {
@@ -44,7 +43,7 @@
 
 .backlog-element-picture {
     min-width: 80px;
-} 
+}
 
 .backlog-element-picture img {
     height: 48px;
@@ -72,3 +71,67 @@
     padding: 16px;
 }
 
+
+/* Here is the question, how soon should we do column and not row, my opinion is that the column looks better. */
+
+
+
+@media(max-width:1000px) {
+    .column-category {
+        /* width: 200px; */
+    }
+    .backlog-element-name {
+        min-width: 200px !important;
+        padding: 8px;
+    }
+    .column-assigned-to {
+        width: calc(-100px + 128px + 300px);
+    }
+    .backlog-element-category {
+        padding: 8px;
+    }
+    .backlog-element-category {
+        padding: 8px;
+    }
+    @media(max-width:900px) {}
+    .column-assigned-to {
+        width: calc(-100px + 128px + 275px);
+    }
+    .column-category {
+        width: 160px !important;
+    }
+    .backlog-element-details {
+        word-break: break-all;
+    }
+}
+
+
+@media(max-width:800px) {
+    .backlog-element {
+        display: flex;
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .backlog-element-color{
+        height: 8px;
+        width: 100%;
+    }
+
+
+    .column-assigned-to{
+        display: none;
+    }
+    .column-category{
+        display: none;
+    }
+
+    .column-details{
+        display: none;
+    }
+
+    .backlog-element-picture{
+        padding-top: 8px;
+    }
