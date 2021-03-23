@@ -3,6 +3,13 @@ let currentID = 0;
 
 let allTasks = [];
 
+//MDL Variables
+let snackbarContainer;
+let showToastButton;
+
+setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
+
+
 
 /**
  * Loads content at the startup of the board page
@@ -11,12 +18,9 @@ function initBoard() {
 
   includeHTML();
 
-  getFromBackend('allTasks');
-  /* if (getArray('allTasks') != null) {
+  if (getArray('allTasks') != null) {
     allTasks = getArray('allTasks');
-  } */
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
+  }
     
 }
 
@@ -27,13 +31,9 @@ function initBoard() {
 
   includeHTML();
 
-  getFromBackend('allTasks');
- /*  if (getArray('allTasks') != null) {
+  if (getArray('allTasks') != null) {
     allTasks = getArray('allTasks');
-  } */
-
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
+  }
 
   showBacklog();
   
@@ -45,44 +45,28 @@ function initBoard() {
  function initAddTask() {
 
   includeHTML();
-  preventReload();
 
-  getFromBackend('allTasks');
-/*   if (getArray('allTasks') != null) {
+  if (getArray('allTasks') != null) {
     allTasks = getArray('allTasks');
-  } */
+  }
 
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
-
-  
+  snackbarContainer = document.getElementById('demo-toast-example');
+  showToastButton = document.getElementById('create-btn');
+  listenForPopup();
 }
 
 /**
  * Manages the ability to add a task to the backlog
  */
 function addTask() {
-  
-  currentID = backend.getItem('currentID');
-  console.log(currentID);
 
-  allTasks = getFromBackend('allTasks');
-
-  let task = getValues(currentID);
+  let task = getValues();
 
   //if (task != false) {
     allTasks.push(task);
   //}
 
-  currentID++;
-  backend.setItem('currentID', currentID);
-  console.log("currentID", currentID);
-  
-
-  /* setArray('allTasks', allTasks); */
-  saveToBackend('allTasks', allTasks);
-
-  showSnackbar("Task pushed to board!");
+  setArray('allTasks', allTasks);
 
 }
 
@@ -91,7 +75,7 @@ function addTask() {
  * 
  * @returns JSON
  */
-function getValues(currentID) {
+function getValues() {
 
   let title = document.getElementById('title-input').value;
   let dueDate = document.getElementById('due-date-input').value;
@@ -100,7 +84,7 @@ function getValues(currentID) {
   let description = document.getElementById('description-input').value;
   let currentDate = new Date().getTime();
 
-  return createTask(currentID, title, dueDate, category, urgency, description, currentDate);
+  return createTask(title, dueDate, category, urgency, description, currentDate);
 
   // Checks for empty input fields because HTML form's "required" seems not to be enough (?)
   //[PAUL] I added onsubmit="addTask();return false" on form tag and required von every input and select tag within the form. So the following code is not necessary.
@@ -124,7 +108,7 @@ function getValues(currentID) {
  * @param {Date} currentDate - today's date
  * @returns JSON
  */
-function createTask(currentID, title, dueDate, category, urgency, description, currentDate) {
+function createTask(title, dueDate, category, urgency, description, currentDate) {
 
   return {
     "id": currentID,
@@ -142,16 +126,27 @@ function createTask(currentID, title, dueDate, category, urgency, description, c
 
 /**
  * MDL (material design lite) function
- * Shows a short popup with a message when a task has been successfully created and pushed to backlog.
+ * Shows a short popup when a task has been successfully created and pushed to backlog.
  */
+function listenForPopup() {
+
+  (function() {
+    'use strict';
+    var snackbarContainer = document.getElementById('demo-toast-example');
+    var showToastButton = document.getElementById('create-btn');
+    showToastButton.addEventListener('click', function() {
+      'use strict';
+      var data = {message: 'Task pushed to board'};
+      snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
+  }());
+
+}
 
 function showSnackbar(msg) {
-  let snackbarContainer = document.getElementById('snackbar-container');
-  let showToastButton = document.getElementById('create-btn');
   let data = {message: msg};
   snackbarContainer.MaterialSnackbar.showSnackbar(data);
 }
-
 
 function showBacklog() {
 
@@ -212,28 +207,7 @@ function getArray(key) {
 }
 
 
-/* MINI BACKEND */
 
-setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
-
-async function getFromBackend(key) {
-  await downloadFromServer();
-  return JSON.parse(backend.getItem(key)) || [];
-}
-
-function saveToBackend(key, array) {
-  backend.setItem(key, JSON.stringify(array));
-}
-
-
-/**
-* Prevents the reload of the page when the submit button in the Add Task form is clicked.
-*/
-function preventReload() {
-  var form = document.getElementById("add-task-form");
-  function handleForm(event) { event.preventDefault(); }
-  form.addEventListener('submit', handleForm);
-}
 
 
 

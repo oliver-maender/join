@@ -1,0 +1,56 @@
+
+
+
+
+#whole-board {
+    margin-top: 24px;
+    margin-left: 40px;
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    width: 90%;
+
+}
+
+.board-category {
+    height: 100%;
+    width: 20%;
+    text-align: center;
+}
+
+.board-category-content {
+    height: 84%;
+    background-color: var(--color-secondary);
+    border-radius: var(--border-radius-main);
+}
+
+@media(max-width:900px){
+    #whole-board{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .board-category{
+        width: 88%;
+    }
+}
+
+@media(max-width: 877px){
+    h2{
+        font-size: 17px;                                     /* I'm not sure here. I can go down with font size, but then its smaller then a tag. Maybe we need to re-do css here - This is about IN PROGRESS h2 tag */
+        letter-spacing: -1px;
+    }
+}
+
+@media(max-width: 700px){
+    #whole-board{
+        margin-left: 0px;
+        width: 100%;
+    }
+}
+
+@media(max-width:375px){
+    .board-category-content{
+        background-color: #f4f3fb;
+    }
+}
