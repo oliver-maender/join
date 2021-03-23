@@ -28,7 +28,7 @@
 
 </head>
 
-<body onload="includeHTML()">
+<body onload="init()">
 
     <div class="header-and-content">
 
@@ -70,7 +70,7 @@
                         <div class="category-headline">
                             <label for="category-input">CATEGORY</label>
                         </div>
-                        <select class="input-box">
+                        <select id="category-input" class="input-box">
                             <option>Accounting</option>
                             <option>Marketing</option>
                             <option>IT</option>
@@ -86,7 +86,7 @@
                         <div class="urgency-headline">
                             <label for="urgency-input">URGENCY</label>
                         </div>
-                        <select class="input-box">
+                        <select id="urgency-input" class="input-box">
                             <option>High</option>
                             <option>Middle</option>
                             <option>Low</option>
@@ -127,7 +127,7 @@
                                 </button>
                             </div>
                             <div id="create">
-                                <button type="submit" id="create-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
+                                <button onclick="addTask()" type="submit" id="create-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
                                     Create Task
                                 </button>
                             </div>
