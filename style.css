@@ -87,6 +87,26 @@ select {
     display: none;
 }
 
+.mdl-snackbar {
+    background-color: var(--color-primary);  
+}
+
+.mdl-snackbar__text {
+    text-align: center;
+}
+
+.table-task {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-task td {
+    border: 1px solid black;
+}
+
+
+/* RESPONSIVE DESIGN */
+
 @media(max-width: 890px) {
     .header-icon {
         display: block;

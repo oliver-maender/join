@@ -31,7 +31,7 @@
 
 </head>
 
-<body onload="initAddTask()">
+<body onload="init();initAddTask()">
 
     <div class="header-and-content">
 
@@ -74,6 +74,7 @@
                             <label for="category-input">CATEGORY</label>
                         </div>
                         <select id="category-input" class="input-box" required>
+                            <option disabled selected value> -- select an option -- </option>
                             <option>Accounting</option>
                             <option>Marketing</option>
                             <option>IT</option>
@@ -90,6 +91,7 @@
                             <label for="urgency-input">URGENCY</label>
                         </div>
                         <select id="urgency-input" class="input-box" required>
+                            <option disabled selected value> -- select an option -- </option>
                             <option>High</option>
                             <option>Middle</option>
                             <option>Low</option>
@@ -142,7 +144,7 @@
                 </form>
 
                 <!-- PopUp Snackbar (MDL) -->
-                <div id="snackbar-container" class="mdl-js-snackbar mdl-snackbar">
+                <div id="snackbar-container" class="mdl-js-snackbar mdl-snackbar flex-center">
                     <div class="mdl-snackbar__text"></div>
                     <button class="mdl-snackbar__action" type="button"></button>
                 </div>

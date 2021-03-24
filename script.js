@@ -3,11 +3,10 @@ let currentID = 0;
 
 let allTasks = [];
 
-
 /**
- * Loads content at the startup of the board page
+ * Loads content which is necessary at the startup for all underpages.
  */
-function initBoard() {
+function init() {
 
   includeHTML();
 
@@ -17,14 +16,16 @@ function initBoard() {
 }
 
 /**
+ * Loads content at the startup of the board page
+ */
+function initBoard() {
+  //follows...
+}
+
+/**
  * Loads content at the startup of the backlog page
  */
 function initBacklog() {
-
-  includeHTML();
-
-  getArrayFromBackend('allTasks');
-  getIDFromBackend('currentID');
 
   showBacklog();
 
@@ -35,11 +36,8 @@ function initBacklog() {
  */
 function initAddTask() {
 
-  includeHTML();
   preventReload();
 
-  getArrayFromBackend('allTasks');
-  getIDFromBackend('currentID');
 
 }
 
@@ -55,9 +53,10 @@ function addTask() {
 
   currentID++;
   saveIDToBackend('currentID');
-  console.log("currentID", currentID);
+  /*  console.log("currentID", currentID); */
 
-  showSnackbar("Task pushed to board!");
+  showSnackbar("Task pushed to backlog!");
+  clearFields();
 
 }
 
@@ -95,13 +94,13 @@ function createTask(currentID, title, dueDate, category, urgency, description, c
   return {
     "id": currentID,
     "title": title,
-    "due-date": dueDate,
+    "dueDate": dueDate,
     "category": category,
     "urgency": urgency,
     "description": description,
     "assignedTo": "",
     "status": "backlog",
-    "current-date": currentDate
+    "currentDate": currentDate
   }
 
 }
@@ -118,25 +117,38 @@ function showSnackbar(msg) {
   snackbarContainer.MaterialSnackbar.showSnackbar(data);
 }
 
+/**
+ * Clears the form input fields.
+ */
+function clearFields() {
+  document.getElementById('title-input').value = '';
+  document.getElementById('due-date-input').value = '';
+  document.getElementById('category-input').value = '';
+  document.getElementById('urgency-input').value = '';
+  document.getElementById('description-input').value = '';
+}
+
+
+
 
 async function showBacklog() {
   console.log("showBacklog() wurde aufgerufen!");
-  
+
   let backlog = document.getElementById('backlog');
-  
+
   // Not assigned to a variable because 'allTasks' is hard-coded in the function - should be fixed but I can't get it done
   // [Paul] Fixed: Made showBacklog() an async function and put await in front of getArrayFromBackend('allTasks');
   await getArrayFromBackend('allTasks');
 
-    for (let i = 0; i < allTasks.length; i++) {
-      
-      console.log("i: " + i);
-      console.log("cat: " + allTasks[i].category);
-      console.log("des: " + allTasks[i].description);
+  for (let i = 0; i < allTasks.length; i++) {
 
-      backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+    /* console.log("i: " + i);
+    console.log("cat: " + allTasks[i].category);
+    console.log("des: " + allTasks[i].description); */
 
-    }
+    backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+
+  }
 
 }
 
@@ -144,7 +156,7 @@ function addBacklogElement(id, category, description) {
 
   return `
 
-    <div id="backlog-element-${id}" class="backlog-element">
+    <div onclick="openTask(${id})" id="backlog-element-${id}" class="backlog-element">
       <div class="backlog-element-color">
       </div>
       <div class="backlog-element-picture flex-center">
@@ -163,8 +175,67 @@ function addBacklogElement(id, category, description) {
     </div>
       
   `;
-
 }
+
+/**
+ * MDL function
+ * @param  {} id
+ */
+function openTask(id) {
+
+  document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id);
+
+  var dialog = document.querySelector('dialog');
+  /* var showDialogButton = document.querySelector('#show-dialog'); */
+  if (!dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  /* showDialogButton.addEventListener('click', function() { */
+  dialog.showModal();
+  /*  }); */
+  dialog.querySelector('.close').addEventListener('click', function () {
+    dialog.close();
+  });
+}
+
+function generateHTMLForOpenTask(id) {
+  return ` <table class="table-task mdl-dialog__content">
+                        <tr>
+                            <td>Current Date</td>
+                            <td>${allTasks[id]['currentDate']}</td>
+                        </tr>
+                        <tr>
+                            <td>Titel</td>
+                            <td>${allTasks[id]['title']}</td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>${allTasks[id]['category']}</td>
+                        </tr>
+                        <tr>
+                            <td>Urgency</td>
+                            <td>${allTasks[id]['urgency']}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>${allTasks[id]['description']}</td>
+                        </tr>
+                        <tr>
+                            <td>Assigned To</td>
+                            <td>${allTasks[id]['assignedTo']}</td>
+                        </tr>
+              </table>
+              <div class="mdl-dialog__actions">
+                  <button type="button" class="mdl-button">Push to board</button>
+                  <button type="button" class="mdl-button close">Close</button>
+                  <button type="button" class="mdl-button">Delete</button>
+              </div>`
+};
+
+
+
+/* LOCAL STORAGE */
+/* May be deleted later if not used. */
 
 /**
  * Saves an array to the local storage
@@ -191,22 +262,42 @@ function getArray(key) {
 
 setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
 
+/**
+ * @param  {string} key - Loads an array (object) from backend.
+ */
 async function getArrayFromBackend(key) {
   await downloadFromServer();
   allTasks = JSON.parse(backend.getItem(key)) || [];
 }
 
+/**
+ * Loads the currentID variable from backend.
+ * 
+ * @param  {string} key
+ */
 async function getIDFromBackend(key) {
   await downloadFromServer();
-  currentID = backend.getItem(key);
+  currentID = backend.getItem(key) || 0;
 }
 
+
+/**
+ * Saves the changed array object (allTasks) to backend.
+ * 
+ * @param  {string} key
+ * @param  {obj} array
+ */
 function saveArrayToBackend(key, array) {
   backend.setItem(key, JSON.stringify(array));
 }
 
+/**
+ * Saves the currentID variable to backend.
+ * 
+ * @param  {string} key
+ */
 function saveIDToBackend(key) {
-  backend.setItem('currentID', currentID);
+  backend.setItem(key, currentID);
 }
 
 

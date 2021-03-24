@@ -2,7 +2,6 @@
     margin: 40px;
     margin-left: 24px;
     margin-right: 24px;
-    height: 90%;
 }
 
 #backlog-headline {
@@ -32,6 +31,7 @@
     border-radius: var(--border-radius-main);
     overflow: hidden;
     margin-bottom: 8px;
+    cursor: crosshair;
 }
 
 .backlog-element-color {
@@ -135,3 +135,4 @@
     .backlog-element-picture{
         padding-top: 8px;
     }
+}
