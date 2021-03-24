@@ -20,12 +20,22 @@ function init() {
  */
 function initBoard() {
   //follows...
+
+  init();
+
+  // Should be fixed, probably with async and await
+  setTimeout(function() {
+    showBoard();
+  }, 1000);
+
 }
 
 /**
  * Loads content at the startup of the backlog page
  */
 function initBacklog() {
+
+  init();
 
   showBacklog();
 
@@ -35,6 +45,8 @@ function initBacklog() {
  * Loads content at the startup of the addTask page
  */
 function initAddTask() {
+
+  init();
 
   preventReload();
 
@@ -46,7 +58,7 @@ function initAddTask() {
  */
 function addTask() {
 
-  let task = getValues(currentID);
+  let task = getValues();
   allTasks.push(task);
 
   saveArrayToBackend('allTasks', allTasks);
@@ -65,7 +77,7 @@ function addTask() {
  * 
  * @returns JSON
  */
-function getValues(currentID) {
+function getValues() {
 
   let title = document.getElementById('title-input').value;
   let dueDate = document.getElementById('due-date-input').value;
@@ -74,7 +86,7 @@ function getValues(currentID) {
   let description = document.getElementById('description-input').value;
   let currentDate = new Date().getTime();
 
-  return createTask(currentID, title, dueDate, category, urgency, description, currentDate);
+  return createTask(title, dueDate, category, urgency, description, currentDate);
 
 }
 
@@ -89,7 +101,7 @@ function getValues(currentID) {
  * @param {Date} currentDate - today's date
  * @returns JSON
  */
-function createTask(currentID, title, dueDate, category, urgency, description, currentDate) {
+function createTask(title, dueDate, category, urgency, description, currentDate) {
 
   return {
     "id": currentID,
@@ -99,7 +111,7 @@ function createTask(currentID, title, dueDate, category, urgency, description, c
     "urgency": urgency,
     "description": description,
     "assignedTo": "",
-    "status": "backlog",
+    "status": "inProgress",
     "currentDate": currentDate
   }
 
@@ -108,8 +120,9 @@ function createTask(currentID, title, dueDate, category, urgency, description, c
 /**
  * MDL (material design lite) function
  * Shows a short popup with a message when a task has been successfully created and pushed to backlog.
+ * 
+ * @param {string} msg 
  */
-
 function showSnackbar(msg) {
   let snackbarContainer = document.getElementById('snackbar-container');
   let showToastButton = document.getElementById('create-btn');
@@ -128,9 +141,9 @@ function clearFields() {
   document.getElementById('description-input').value = '';
 }
 
-
-
-
+/**
+ * Displays the elements of the backlog.
+ */
 async function showBacklog() {
   console.log("showBacklog() wurde aufgerufen!");
 
@@ -152,6 +165,14 @@ async function showBacklog() {
 
 }
 
+/**
+ * Adds the HTML for every backlog element.
+ * 
+ * @param {number} id 
+ * @param {string} category 
+ * @param {string} description 
+ * @returns HTML
+ */
 function addBacklogElement(id, category, description) {
 
   return `
@@ -174,6 +195,73 @@ function addBacklogElement(id, category, description) {
       </div>
     </div>
       
+  `;
+}
+
+/**
+ * Manages to display the tickets on the board.
+ */
+function showBoard() {
+
+  let toDoContent = document.getElementById('to-do-content');
+  let inProgressContent = document.getElementById('in-progress-content');
+  let testingContent = document.getElementById('testing-content');
+  let doneContent = document.getElementById('done-content');
+
+  showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent);
+
+}
+
+/**
+ * Loops through the JSON array and displays the tickets on the board.
+ * 
+ * @param {string} toDoContent 
+ * @param {string} inProgressContent 
+ * @param {string} testingContent 
+ * @param {string} doneContent 
+ */
+function showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent) {
+
+  for (let i = 0; i < allTasks.length; i++) {
+
+    if (allTasks[i].status == 'toDo') {
+      toDoContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+    }
+
+    else if (allTasks[i].status == 'inProgress') {
+      inProgressContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+    }
+
+    else if (allTasks[i].status == 'testing') {
+      testingContent += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+    }
+
+    else if (allTasks[i].status == 'done') {
+      doneContent += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+    }
+
+  }
+
+}
+
+/**
+ * Adds the HTML for the tickets on the board.
+ * 
+ * @param {string} title 
+ * @param {string} category 
+ * @param {string} description 
+ * @returns HTML
+ */
+function addHTMLBoard(title, category, description) {
+  return `
+
+    <div class="ticket-box">
+      <div class="ticket-title">${title}</div>
+      <div class="ticket-category">${category}</div>
+      <div class="ticket-description">${description}</div>
+      <div class="ticket-profile">profile-pic</div>
+    </div>
+
   `;
 }
 

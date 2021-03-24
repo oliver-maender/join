@@ -37,11 +37,11 @@
     padding: 8px;
 }
 
-#ticket-title {
+.ticket-title {
     font-weight: bold;
 }
 
-#ticket-profile {
+.ticket-profile {
     align-self: flex-end;
 }
 
@@ -61,9 +61,9 @@
 }
 
 @media(max-width: 877px){
-    h2{
+    /* h2{ */
         /* font-size: 17px; */                                     /* I'm not sure here. I can go down with font size, but then its smaller then a tag. Maybe we need to re-do css here - This is about IN PROGRESS h2 tag */
-    }                                                               /* [Paul]: I tested it. We don't need to go down with the font size. Everything is fine. */
+    /* }                                                               [Paul]: I tested it. We don't need to go down with the font size. Everything is fine. */
 }
 
 @media(max-width: 700px){
