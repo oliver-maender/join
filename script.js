@@ -55,6 +55,7 @@ function initAddTask() {
   // currentID = backend.getItem('currentID');
   // console.log("currentID", currentID);
 
+  getIDFromBackend('currentID');
 
 }
 
@@ -68,12 +69,12 @@ function addTask() {
 
   // allTasks = getFromBackend('allTasks');
 
-  if (backend.getItem('currentID') != null) {
-    currentID = backend.getItem('currentID');
-  }
-  else {
-    currentID = 0;
-  }
+  // if (backend.getItem('currentID') != null) {
+  //   currentID = backend.getItem('currentID');
+  // }
+  // else {
+  //   currentID = 0;
+  // }
 
   let task = getValues(currentID);
   allTasks.push(task);
@@ -239,6 +240,11 @@ setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
 async function getFromBackend(key) {
   await downloadFromServer();
   allTasks = JSON.parse(backend.getItem(key)) || [];
+}
+
+async function getIDFromBackend(key) {
+  await downloadFromServer();
+  currentID = backend.getItem(key);
 }
 
 function saveToBackend(key, array) {
