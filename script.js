@@ -11,76 +11,83 @@ function initBoard() {
 
   includeHTML();
 
-  getFromBackend('allTasks');
+  // getFromBackend('allTasks');
   /* if (getArray('allTasks') != null) {
     allTasks = getArray('allTasks');
   } */
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
-    
+  // currentID = backend.getItem('currentID');
+  // console.log("currentID", currentID);
+
 }
 
 /**
- * Loads content at the startup of the board page
+ * Loads content at the startup of the backlog page
  */
- function initBacklog() {
+function initBacklog() {
 
   includeHTML();
 
-  getFromBackend('allTasks');
- /*  if (getArray('allTasks') != null) {
-    allTasks = getArray('allTasks');
-  } */
+  // getFromBackend('allTasks');
+  /*  if (getArray('allTasks') != null) {
+     allTasks = getArray('allTasks');
+   } */
 
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
+  // currentID = backend.getItem('currentID');
+  // console.log("currentID", currentID);
 
   showBacklog();
-  
+
 }
 
 /**
- * Loads content at the startup of the board page
+ * Loads content at the startup of the addTask page
  */
- function initAddTask() {
+function initAddTask() {
 
   includeHTML();
   preventReload();
 
-  getFromBackend('allTasks');
-/*   if (getArray('allTasks') != null) {
-    allTasks = getArray('allTasks');
-  } */
+  // getFromBackend('allTasks');
+  /*   if (getArray('allTasks') != null) {
+      allTasks = getArray('allTasks');
+    } */
 
-  currentID = backend.getItem('currentID');
-  console.log("currentID", currentID);
+  // currentID = backend.getItem('currentID');
+  // console.log("currentID", currentID);
 
-  
+
 }
 
 /**
  * Manages the ability to add a task to the backlog
  */
 function addTask() {
-  
-  currentID = backend.getItem('currentID');
-  console.log(currentID);
 
-  allTasks = getFromBackend('allTasks');
+  // currentID = backend.getItem('currentID');
+  // console.log(currentID);
+
+  // allTasks = getFromBackend('allTasks');
+
+  if (backend.getItem('currentID') != null) {
+    currentID = backend.getItem('currentID');
+  }
+  else {
+    currentID = 0;
+  }
 
   let task = getValues(currentID);
+  allTasks.push(task);
+  backend.setItem('allTasks', JSON.stringify(allTasks));
 
-  //if (task != false) {
-    allTasks.push(task);
-  //}
+  // console.log(allTasks);
 
   currentID++;
   backend.setItem('currentID', currentID);
   console.log("currentID", currentID);
-  
 
-  /* setArray('allTasks', allTasks); */
-  saveToBackend('allTasks', allTasks);
+
+  // setArray('allTasks', allTasks);
+  // saveToBackend('allTasks', allTasks);
 
   showSnackbar("Task pushed to board!");
 
@@ -148,7 +155,7 @@ function createTask(currentID, title, dueDate, category, urgency, description, c
 function showSnackbar(msg) {
   let snackbarContainer = document.getElementById('snackbar-container');
   let showToastButton = document.getElementById('create-btn');
-  let data = {message: msg};
+  let data = { message: msg };
   snackbarContainer.MaterialSnackbar.showSnackbar(data);
 }
 
@@ -156,12 +163,25 @@ function showSnackbar(msg) {
 function showBacklog() {
 
   let backlog = document.getElementById('backlog');
+  
+  // Not assigned to a variable because 'allTasks' is hard-coded in the function - should be fixed but I can't get it done
+  getFromBackend('allTasks');
 
-  for (let i = 0; i < allTasks.length; i++) {
+  setTimeout(function () {
 
-    backlog.innerHTML += addBacklogElement(i, allTasks[i].category, allTasks[i].description);
+    console.log("allTasks length: " + allTasks.length);
 
-  }
+    for (let i = 0; i < allTasks.length; i++) {
+
+      console.log("i: " + i);
+      console.log("cat: " + allTasks[i].category);
+      console.log("des: " + allTasks[i].description);
+
+      backlog.innerHTML += addBacklogElement(i, allTasks[i].category, allTasks[i].description);
+
+    }
+
+  }, 1000);
 
 }
 
@@ -218,7 +238,7 @@ setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
 
 async function getFromBackend(key) {
   await downloadFromServer();
-  return JSON.parse(backend.getItem(key)) || [];
+  allTasks = JSON.parse(backend.getItem(key)) || [];
 }
 
 function saveToBackend(key, array) {
