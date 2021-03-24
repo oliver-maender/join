@@ -11,12 +11,8 @@ function initBoard() {
 
   includeHTML();
 
-  // getFromBackend('allTasks');
-  /* if (getArray('allTasks') != null) {
-    allTasks = getArray('allTasks');
-  } */
-  // currentID = backend.getItem('currentID');
-  // console.log("currentID", currentID);
+  getArrayFromBackend('allTasks');
+  getIDFromBackend('currentID');
 
 }
 
@@ -27,13 +23,8 @@ function initBacklog() {
 
   includeHTML();
 
-  // getFromBackend('allTasks');
-  /*  if (getArray('allTasks') != null) {
-     allTasks = getArray('allTasks');
-   } */
-
-  // currentID = backend.getItem('currentID');
-  // console.log("currentID", currentID);
+  getArrayFromBackend('allTasks');
+  getIDFromBackend('currentID');
 
   showBacklog();
 
@@ -47,14 +38,7 @@ function initAddTask() {
   includeHTML();
   preventReload();
 
-  // getFromBackend('allTasks');
-  /*   if (getArray('allTasks') != null) {
-      allTasks = getArray('allTasks');
-    } */
-
-  // currentID = backend.getItem('currentID');
-  // console.log("currentID", currentID);
-
+  getArrayFromBackend('allTasks');
   getIDFromBackend('currentID');
 
 }
@@ -64,31 +48,14 @@ function initAddTask() {
  */
 function addTask() {
 
-  // currentID = backend.getItem('currentID');
-  // console.log(currentID);
-
-  // allTasks = getFromBackend('allTasks');
-
-  // if (backend.getItem('currentID') != null) {
-  //   currentID = backend.getItem('currentID');
-  // }
-  // else {
-  //   currentID = 0;
-  // }
-
   let task = getValues(currentID);
   allTasks.push(task);
-  backend.setItem('allTasks', JSON.stringify(allTasks));
 
-  // console.log(allTasks);
+  saveArrayToBackend('allTasks', allTasks);
 
   currentID++;
-  backend.setItem('currentID', currentID);
+  saveIDToBackend('currentID');
   console.log("currentID", currentID);
-
-
-  // setArray('allTasks', allTasks);
-  // saveToBackend('allTasks', allTasks);
 
   showSnackbar("Task pushed to board!");
 
@@ -109,15 +76,6 @@ function getValues(currentID) {
   let currentDate = new Date().getTime();
 
   return createTask(currentID, title, dueDate, category, urgency, description, currentDate);
-
-  // Checks for empty input fields because HTML form's "required" seems not to be enough (?)
-  //[PAUL] I added onsubmit="addTask();return false" on form tag and required von every input and select tag within the form. So the following code is not necessary.
-  /* if (title.length > 0 && dueDate.length > 0 && category.length > 0 && urgency.length > 0 && description.length > 0) {
-    return createTask(title, dueDate, category, urgency, description, currentDate);
-  }
-  else {
-    return false;
-  } */
 
 }
 
@@ -161,28 +119,24 @@ function showSnackbar(msg) {
 }
 
 
-function showBacklog() {
-
+async function showBacklog() {
+  console.log("showBacklog() wurde aufgerufen!");
+  
   let backlog = document.getElementById('backlog');
   
   // Not assigned to a variable because 'allTasks' is hard-coded in the function - should be fixed but I can't get it done
-  getFromBackend('allTasks');
-
-  setTimeout(function () {
-
-    console.log("allTasks length: " + allTasks.length);
+  // [Paul] Fixed: Made showBacklog() an async function and put await in front of getArrayFromBackend('allTasks');
+  await getArrayFromBackend('allTasks');
 
     for (let i = 0; i < allTasks.length; i++) {
-
+      
       console.log("i: " + i);
       console.log("cat: " + allTasks[i].category);
       console.log("des: " + allTasks[i].description);
 
-      backlog.innerHTML += addBacklogElement(i, allTasks[i].category, allTasks[i].description);
+      backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
 
     }
-
-  }, 1000);
 
 }
 
@@ -237,7 +191,7 @@ function getArray(key) {
 
 setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
 
-async function getFromBackend(key) {
+async function getArrayFromBackend(key) {
   await downloadFromServer();
   allTasks = JSON.parse(backend.getItem(key)) || [];
 }
@@ -247,8 +201,12 @@ async function getIDFromBackend(key) {
   currentID = backend.getItem(key);
 }
 
-function saveToBackend(key, array) {
+function saveArrayToBackend(key, array) {
   backend.setItem(key, JSON.stringify(array));
+}
+
+function saveIDToBackend(key) {
+  backend.setItem('currentID', currentID);
 }
 
 
