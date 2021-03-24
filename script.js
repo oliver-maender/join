@@ -23,7 +23,7 @@ function initBoard() {
 
   init();
 
-  // Should be fixed, probably with async and await
+  // Timeout should be changed, probably with async and await
   setTimeout(function() {
     showBoard();
   }, 1000);
@@ -233,11 +233,11 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
     }
 
     else if (allTasks[i].status == 'testing') {
-      testingContent += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      testingContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'done') {
-      doneContent += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      doneContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
   }
