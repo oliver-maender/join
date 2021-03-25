@@ -3,6 +3,21 @@ let currentID = 0;
 
 let allTasks = [];
 
+
+let allUsers = [
+  {
+    'name': 'Paul',
+    'img' : '"img/junus_ergin.jpg"'
+},
+{
+    'name': 'Oliver',
+    'img' : '"img/manuel_thaler.JPEG"'
+},
+{
+    'name':'Tomo',
+    'img': '"img/junus_ergin.jpg"'
+}
+];
 /**
  * Loads content which is necessary at the startup for all underpages.
  */
@@ -328,6 +343,32 @@ function generateHTMLForOpenTask(id) {
                   <button type="button" class="mdl-button">Delete</button>
               </div>`;
 }
+
+
+function whichUser(){
+  for(i = 0; i < allUsers.length; i++){
+  const showUsers = allUsers[i];
+  document.getElementById('test-choose-user').innerHTML += ` <div id="shownUsers${i}" class="all-users">
+              <img onclick="theOne(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
+              <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
+            `;
+  }
+  document.getElementById('profile-pic').style.display = "none";
+
+
+
+}
+
+function theOne(i){
+  // document.getElementById('default-user').innerHTML = '';
+  document.getElementById('default-user').innerHTML += `<div class="profile-pics" id="new-default-user${i}"
+                                                        <img src=${allUsers[i].img}></div>`
+  
+}
+
+
+
+
 
 
 /**

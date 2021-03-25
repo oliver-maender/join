@@ -93,6 +93,25 @@ input, textarea, select {
     margin-left: 32px;
 }
 
+.all-users{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.possible-user{
+    height: 64px;
+    width: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#test-choose-user{
+    display: flex;
+    justify-content: space-around;
+}
+
+
 @media(max-width: 870px){
 
     #action-buttons{
