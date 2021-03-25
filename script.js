@@ -24,7 +24,7 @@ function initBoard() {
   init();
 
   // Timeout should be changed, probably with async and await
-  setTimeout(function() {
+  setTimeout(function () {
     showBoard();
   }, 1000);
 
@@ -111,7 +111,7 @@ function createTask(title, dueDate, category, urgency, description, currentDate)
     "urgency": urgency,
     "description": description,
     "assignedTo": "",
-    "status": "inProgress",
+    "status": "backlog",
     "currentDate": currentDate
   }
 
@@ -159,7 +159,9 @@ async function showBacklog() {
     console.log("cat: " + allTasks[i].category);
     console.log("des: " + allTasks[i].description); */
 
-    backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+    if (allTasks[i].status == 'backlog') {
+      backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+    }
 
   }
 
@@ -225,19 +227,19 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
   for (let i = 0; i < allTasks.length; i++) {
 
     if (allTasks[i].status == 'toDo') {
-      toDoContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'inProgress') {
-      inProgressContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'testing') {
-      testingContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'done') {
-      doneContent.innerHTML += addHTMLBoard(allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
     }
 
   }
@@ -252,10 +254,10 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
  * @param {string} description 
  * @returns HTML
  */
-function addHTMLBoard(title, category, description) {
+function addHTMLBoard(id, title, category, description) {
   return `
 
-    <div class="ticket-box">
+    <div onclick="openTask(${id})" class="ticket-box">
       <div class="ticket-title">${title}</div>
       <div class="ticket-category">${category}</div>
       <div class="ticket-description">${description}</div>
@@ -286,6 +288,34 @@ function openTask(id) {
   });
 }
 
+/**
+ * Pushes the status of the ticket one further (except for 'done').
+ * 
+ * @param {number} id - the id of the ticket
+ */
+function changeStatus(id) {
+
+  if (allTasks[id].status == 'done') {
+    allTasks[id].status = 'done';
+  }
+  else if (allTasks[id].status == 'testing') {
+    allTasks[id].status = 'done';
+  }
+  else if (allTasks[id].status == 'inProgress') {
+    allTasks[id].status = 'testing';
+  }
+  else if (allTasks[id].status == 'toDo') {
+    allTasks[id].status = 'inProgress';
+  }
+  else if (allTasks[id].status == 'backlog') {
+    allTasks[id].status = 'toDo';
+  }
+
+  saveArrayToBackend('allTasks', allTasks);
+  location.reload();
+
+}
+
 function generateHTMLForOpenTask(id) {
   return ` <table class="table-task mdl-dialog__content">
                         <tr>
@@ -314,11 +344,11 @@ function generateHTMLForOpenTask(id) {
                         </tr>
               </table>
               <div class="mdl-dialog__actions">
-                  <button type="button" class="mdl-button">Push to board</button>
+                  <button type="button" onclick="changeStatus(${id})" class="mdl-button">Push board/next</button>
                   <button type="button" class="mdl-button close">Close</button>
                   <button type="button" class="mdl-button">Delete</button>
-              </div>`
-};
+              </div>`;
+}
 
 
 
