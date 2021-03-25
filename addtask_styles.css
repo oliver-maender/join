@@ -93,3 +93,53 @@ input, textarea, select {
     margin-left: 32px;
 }
 
+@media(max-width: 870px){
+
+    #action-buttons{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-top: 12px;
+        margin-right: 18px;
+}
+    }
+
+    #create{
+        margin-bottom: 12px;
+        padding-top: 12px;
+    }
+
+    .assigned-to-headline{
+        display: flex;
+        justify-content: center;
+    }
+
+   .assigned-to-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+   }
+
+   .description-headline{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+   }
+
+   .urgency-headline{
+        display: flex;
+        justify-content: center;    
+   }
+
+   .category-headline{
+        display: flex;
+        justify-content: center; 
+   }
+
+   .field-headline{
+        display: flex;
+        justify-content: center; 
+   }
+
+}
