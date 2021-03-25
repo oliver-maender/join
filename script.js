@@ -6,36 +6,36 @@ let allTasks = [];
 /**
  * Loads content which is necessary at the startup for all underpages.
  */
-function init() {
+async function init() {
 
   includeHTML();
 
-  getArrayFromBackend('allTasks');
-  getIDFromBackend('currentID');
+  await getArrayFromBackend('allTasks');
+  await getIDFromBackend('currentID');
 
 }
 
 /**
  * Loads content at the startup of the board page
  */
-function initBoard() {
+async function initBoard() {
   //follows...
 
-  init();
+  await init();
 
   // Timeout should be changed, probably with async and await
-  setTimeout(function () {
-    showBoard();
-  }, 1000);
+ /*  setTimeout(function () { */
+  showBoard();
+  /* }, 1000); */
 
 }
 
 /**
  * Loads content at the startup of the backlog page
  */
-function initBacklog() {
+async function initBacklog() {
 
-  init();
+  await init();
 
   showBacklog();
 
@@ -44,9 +44,9 @@ function initBacklog() {
 /**
  * Loads content at the startup of the addTask page
  */
-function initAddTask() {
+async function initAddTask() {
 
-  init();
+  await init();
 
   preventReload();
 
@@ -65,7 +65,7 @@ function addTask() {
 
   currentID++;
   saveIDToBackend('currentID');
-  /*  console.log("currentID", currentID); */
+  console.log("currentID", currentID);
 
   showSnackbar("Task pushed to backlog!");
   clearFields();
@@ -147,12 +147,15 @@ function clearFields() {
 async function showBacklog() {
   console.log("showBacklog() wurde aufgerufen!");
 
-  let backlog = document.getElementById('backlog');
+  let backlogElements = document.getElementById('backlog-elements');
+  //First step: clear all backlog elements
+  backlogElements.innerHTML = '';
 
   // Not assigned to a variable because 'allTasks' is hard-coded in the function - should be fixed but I can't get it done
   // [Paul] Fixed: Made showBacklog() an async function and put await in front of getArrayFromBackend('allTasks');
   await getArrayFromBackend('allTasks');
 
+  //second step: show alle backlog entries with the currrent information from allTasks
   for (let i = 0; i < allTasks.length; i++) {
 
     /* console.log("i: " + i);
@@ -160,7 +163,7 @@ async function showBacklog() {
     console.log("des: " + allTasks[i].description); */
 
     if (allTasks[i].status == 'backlog') {
-      backlog.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+      backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
     }
 
   }
@@ -203,7 +206,9 @@ function addBacklogElement(id, category, description) {
 /**
  * Manages to display the tickets on the board.
  */
-function showBoard() {
+async function showBoard() {
+
+  await getArrayFromBackend('allTasks');
 
   let toDoContent = document.getElementById('to-do-content');
   let inProgressContent = document.getElementById('in-progress-content');
@@ -288,33 +293,7 @@ function openTask(id) {
   });
 }
 
-/**
- * Pushes the status of the ticket one further (except for 'done').
- * 
- * @param {number} id - the id of the ticket
- */
-function changeStatus(id) {
 
-  if (allTasks[id].status == 'done') {
-    allTasks[id].status = 'done';
-  }
-  else if (allTasks[id].status == 'testing') {
-    allTasks[id].status = 'done';
-  }
-  else if (allTasks[id].status == 'inProgress') {
-    allTasks[id].status = 'testing';
-  }
-  else if (allTasks[id].status == 'toDo') {
-    allTasks[id].status = 'inProgress';
-  }
-  else if (allTasks[id].status == 'backlog') {
-    allTasks[id].status = 'toDo';
-  }
-
-  saveArrayToBackend('allTasks', allTasks);
-  location.reload();
-
-}
 
 function generateHTMLForOpenTask(id) {
   return ` <table class="table-task mdl-dialog__content">
@@ -344,10 +323,58 @@ function generateHTMLForOpenTask(id) {
                         </tr>
               </table>
               <div class="mdl-dialog__actions">
-                  <button type="button" onclick="changeStatus(${id})" class="mdl-button">Push board/next</button>
+                  <button type="button" onclick="pushToBoard(${id})" class="mdl-button">Push board/next</button>
                   <button type="button" class="mdl-button close">Close</button>
                   <button type="button" class="mdl-button">Delete</button>
               </div>`;
+}
+
+
+/**
+ * Pushes the status of a backlog ticket from "backlog" to "toDo".
+ * 
+ * @param {number} id - the id of the ticket
+ */
+ async function pushToBoard(id) {
+  await getArrayFromBackend('allTasks');
+  if (allTasks[id].status == 'backlog') {
+    allTasks[id].status = 'toDo';
+  }
+  saveArrayToBackend('allTasks', allTasks);
+  showBacklog();
+}
+
+/**
+ * Pushes the status of a board ticket one further (except for 'done').
+ * 
+ * @param {number} id - the id of the ticket
+ * @param {status} id - The status to become.
+ */
+async function changeBoardStatus(id, status) {
+  
+  await getArrayFromBackend('allTasks');
+
+  allTasks[id].status == status;
+
+ /*  if (allTasks[id].status == 'done') {
+    allTasks[id].status = 'done';
+  }
+  else if (allTasks[id].status == 'testing') {
+    allTasks[id].status = 'done';
+  }
+  else if (allTasks[id].status == 'inProgress') {
+    allTasks[id].status = 'testing';
+  }
+  else if (allTasks[id].status == 'toDo') {
+    allTasks[id].status = 'inProgress';
+  } */
+/*   else if (allTasks[id].status == 'backlog') {
+    allTasks[id].status = 'toDo';
+  } */
+
+  saveArrayToBackend('allTasks', allTasks);
+  showBoard();
+
 }
 
 
