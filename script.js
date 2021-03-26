@@ -7,16 +7,16 @@ let allTasks = [];
 let allUsers = [
   {
     'name': 'Paul',
-    'img' : '"img/junus_ergin.jpg"'
-},
-{
-    'name': 'Oliver',
-    'img' : '"img/manuel_thaler.JPEG"'
-},
-{
-    'name':'Tomo',
     'img': '"img/junus_ergin.jpg"'
-}
+  },
+  {
+    'name': 'Oliver',
+    'img': '"img/manuel_thaler.JPEG"'
+  },
+  {
+    'name': 'Tomo',
+    'img': '"img/junus_ergin.jpg"'
+  }
 ];
 /**
  * Loads content which is necessary at the startup for all underpages.
@@ -39,7 +39,7 @@ async function initBoard() {
   await init();
 
   // Timeout should be changed, probably with async and await
- /*  setTimeout(function () { */
+  /*  setTimeout(function () { */
   showBoard();
   /* }, 1000); */
 
@@ -197,7 +197,7 @@ function addBacklogElement(id, category, description) {
 
   return `
 
-    <div onclick="openTask(${id})" id="backlog-element-${id}" class="backlog-element">
+    <div onclick="openTask(${id}, 'backlog')" id="backlog-element-${id}" class="backlog-element">
       <div class="backlog-element-color">
       </div>
       <div class="backlog-element-picture flex-center">
@@ -229,6 +229,11 @@ async function showBoard() {
   let inProgressContent = document.getElementById('in-progress-content');
   let testingContent = document.getElementById('testing-content');
   let doneContent = document.getElementById('done-content');
+
+  toDoContent.innerHTML = '';
+  inProgressContent.innerHTML = '';
+  testingContent.innerHTML = '';
+  doneContent.innerHTML = '';
 
   showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent);
 
@@ -277,7 +282,7 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 function addHTMLBoard(id, title, category, description) {
   return `
 
-    <div onclick="openTask(${id})" class="ticket-box">
+    <div onclick="openTask(${id}, 'board')" class="ticket-box">
       <div class="ticket-title">${title}</div>
       <div class="ticket-category">${category}</div>
       <div class="ticket-description">${description}</div>
@@ -291,9 +296,9 @@ function addHTMLBoard(id, title, category, description) {
  * MDL function
  * @param  {} id
  */
-function openTask(id) {
+function openTask(id, loc) {
 
-  document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id);
+  document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc);
 
   var dialog = document.querySelector('dialog');
   /* var showDialogButton = document.querySelector('#show-dialog'); */
@@ -310,8 +315,10 @@ function openTask(id) {
 
 
 
-function generateHTMLForOpenTask(id) {
-  return ` <table class="table-task mdl-dialog__content">
+function generateHTMLForOpenTask(id, loc) {
+
+  if (loc == 'backlog') {
+    return ` <table class="table-task mdl-dialog__content">
                         <tr>
                             <td>Current Date</td>
                             <td>${allTasks[id]['currentDate']}</td>
@@ -338,20 +345,64 @@ function generateHTMLForOpenTask(id) {
                         </tr>
               </table>
               <div class="mdl-dialog__actions">
-                  <button type="button" onclick="pushToBoard(${id})" class="mdl-button">Push board/next</button>
+                  <button type="button" onclick="pushToBoard(${id})" class="mdl-button close">Push board/next</button>
                   <button type="button" class="mdl-button close">Close</button>
                   <button type="button" class="mdl-button">Delete</button>
               </div>`;
+  }
+
+  if (loc == 'board') {
+    return `
+      <table class="table-task mdl-dialog__content">
+        <tr>
+          <td>Current Date</td>
+          <td>${allTasks[id]['currentDate']}</td>
+        </tr>
+        <tr>
+          <td>Titel</td>
+          <td>${allTasks[id]['title']}</td>
+        </tr>
+        <tr>
+          <td>Category</td>
+          <td>${allTasks[id]['category']}</td>
+        </tr>
+        <tr>
+          <td>Urgency</td>
+          <td>${allTasks[id]['urgency']}</td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>${allTasks[id]['description']}</td>
+        </tr>
+        <tr>
+          <td>Assigned To</td>
+          <td>${allTasks[id]['assignedTo']}</td>
+        </tr>
+      </table>
+
+      <div class="mdl-dialog__actions">
+        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button">To Do</button>
+        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button">In Progress</button>
+        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button">Testing</button>
+        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button">Done</button>
+        <button type="button" class="mdl-button close">Close</button>
+        <button type="button" class="mdl-button">Delete</button>
+      </div>
+    `;
+
+  }
 }
 
 
-function whichUser(){
-  for(i = 0; i < allUsers.length; i++){
-  const showUsers = allUsers[i];
-  document.getElementById('test-choose-user').innerHTML += ` <div id="shownUsers${i}" class="all-users">
-              <img onclick="theOne(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
-              <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
-            `;
+function whichUser() {
+  for (let i = 0; i < allUsers.length; i++) {
+    const showUsers = allUsers[i];
+    document.getElementById('test-choose-user').innerHTML += `
+      <div id="shownUsers${i}" class="all-users">
+        <img onclick="theOne(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
+        <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
+      </div>
+    `;
   }
   document.getElementById('profile-pic').style.display = "none";
 
@@ -359,11 +410,14 @@ function whichUser(){
 
 }
 
-function theOne(i){
+function theOne(i) {
   // document.getElementById('default-user').innerHTML = '';
-  document.getElementById('default-user').innerHTML += `<div class="profile-pics" id="new-default-user${i}"
-                                                        <img src=${allUsers[i].img}></div>`
-  
+  document.getElementById('default-user').innerHTML += `
+    <div class="profile-pics" id="new-default-user${i}">
+      <img src=${allUsers[i].img}>
+    </div>
+  `;
+
 }
 
 
@@ -376,13 +430,20 @@ function theOne(i){
  * 
  * @param {number} id - the id of the ticket
  */
- async function pushToBoard(id) {
+async function pushToBoard(id) {
   await getArrayFromBackend('allTasks');
   if (allTasks[id].status == 'backlog') {
     allTasks[id].status = 'toDo';
   }
   saveArrayToBackend('allTasks', allTasks);
   showBacklog();
+}
+
+async function pushToColumn(id, dest) {
+  await getArrayFromBackend('allTasks');
+  allTasks[id].status = dest;
+  saveArrayToBackend('allTasks', allTasks);
+  showBoard();
 }
 
 /**
@@ -392,26 +453,26 @@ function theOne(i){
  * @param {status} id - The status to become.
  */
 async function changeBoardStatus(id, status) {
-  
+
   await getArrayFromBackend('allTasks');
 
   allTasks[id].status == status;
 
- /*  if (allTasks[id].status == 'done') {
-    allTasks[id].status = 'done';
-  }
-  else if (allTasks[id].status == 'testing') {
-    allTasks[id].status = 'done';
-  }
-  else if (allTasks[id].status == 'inProgress') {
-    allTasks[id].status = 'testing';
-  }
-  else if (allTasks[id].status == 'toDo') {
-    allTasks[id].status = 'inProgress';
-  } */
-/*   else if (allTasks[id].status == 'backlog') {
-    allTasks[id].status = 'toDo';
-  } */
+  /*  if (allTasks[id].status == 'done') {
+     allTasks[id].status = 'done';
+   }
+   else if (allTasks[id].status == 'testing') {
+     allTasks[id].status = 'done';
+   }
+   else if (allTasks[id].status == 'inProgress') {
+     allTasks[id].status = 'testing';
+   }
+   else if (allTasks[id].status == 'toDo') {
+     allTasks[id].status = 'inProgress';
+   } */
+  /*   else if (allTasks[id].status == 'backlog') {
+      allTasks[id].status = 'toDo';
+    } */
 
   saveArrayToBackend('allTasks', allTasks);
   showBoard();
