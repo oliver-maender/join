@@ -83,7 +83,7 @@ function addTask() {
   console.log("currentID", currentID);
 
   showSnackbar("Task pushed to backlog!");
-  clearFields();
+  /* clearFields(); */
 
 }
 
@@ -166,22 +166,22 @@ async function showBacklog() {
   //First step: clear all backlog elements
   backlogElements.innerHTML = '';
 
-  // Not assigned to a variable because 'allTasks' is hard-coded in the function - should be fixed but I can't get it done
-  // [Paul] Fixed: Made showBacklog() an async function and put await in front of getArrayFromBackend('allTasks');
   await getArrayFromBackend('allTasks');
 
   //second step: show alle backlog entries with the currrent information from allTasks
+  //THE FOLLOWING CODE IS NOT EXECUTED when using the pushToBoard() or pushToColumn() function. To show the current entries you need to update the whole page.
   for (let i = 0; i < allTasks.length; i++) {
 
-    /* console.log("i: " + i);
-    console.log("cat: " + allTasks[i].category);
-    console.log("des: " + allTasks[i].description); */
-
     if (allTasks[i].status == 'backlog') {
+
+      console.log("for-Schleife wird ausgeführt!");
+      
       backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
     }
 
   }
+
+  console.log("showBacklog wurde komplett ausgeführt!");
 
 }
 
@@ -381,12 +381,12 @@ function generateHTMLForOpenTask(id, loc) {
       </table>
 
       <div class="mdl-dialog__actions">
-        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button">To Do</button>
-        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button">In Progress</button>
-        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button">Testing</button>
-        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button">Done</button>
-        <button type="button" class="mdl-button close">Close</button>
-        <button type="button" class="mdl-button">Delete</button>
+        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">To Do</button>
+        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">In Progress</button>
+        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">Testing</button>
+        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">Done</button>
+        <button type="button" class="mdl-button close btn">Close</button>
+        <button type="button" class="mdl-button btn">Delete</button>
       </div>
     `;
 
@@ -422,9 +422,6 @@ function theOne(i) {
 
 
 
-
-
-
 /**
  * Pushes the status of a backlog ticket from "backlog" to "toDo".
  * 
@@ -445,40 +442,6 @@ async function pushToColumn(id, dest) {
   saveArrayToBackend('allTasks', allTasks);
   showBoard();
 }
-
-/**
- * Pushes the status of a board ticket one further (except for 'done').
- * 
- * @param {number} id - the id of the ticket
- * @param {status} id - The status to become.
- */
-async function changeBoardStatus(id, status) {
-
-  await getArrayFromBackend('allTasks');
-
-  allTasks[id].status == status;
-
-  /*  if (allTasks[id].status == 'done') {
-     allTasks[id].status = 'done';
-   }
-   else if (allTasks[id].status == 'testing') {
-     allTasks[id].status = 'done';
-   }
-   else if (allTasks[id].status == 'inProgress') {
-     allTasks[id].status = 'testing';
-   }
-   else if (allTasks[id].status == 'toDo') {
-     allTasks[id].status = 'inProgress';
-   } */
-  /*   else if (allTasks[id].status == 'backlog') {
-      allTasks[id].status = 'toDo';
-    } */
-
-  saveArrayToBackend('allTasks', allTasks);
-  showBoard();
-
-}
-
 
 
 /* LOCAL STORAGE */
@@ -545,6 +508,14 @@ function saveArrayToBackend(key, array) {
  */
 function saveIDToBackend(key) {
   backend.setItem(key, currentID);
+}
+
+/**
+ * Just for testing. Resets allTasks and currentID.
+ */
+function reset() {
+  backend.deleteItem('allTasks');
+  backend.deleteItem('currentID');
 }
 
 
