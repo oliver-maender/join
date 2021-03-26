@@ -175,7 +175,7 @@ async function showBacklog() {
     if (allTasks[i].status == 'backlog') {
 
       console.log("for-Schleife wird ausgeführt!");
-      
+
       backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
     }
 
@@ -308,9 +308,16 @@ function openTask(id, loc) {
   /* showDialogButton.addEventListener('click', function() { */
   dialog.showModal();
   /*  }); */
-  dialog.querySelector('.close').addEventListener('click', function () {
-    dialog.close();
-  });
+
+  let closeElements = dialog.querySelectorAll('.close');
+
+  for (let i = 0; i < closeElements.length; i++) {
+
+    closeElements[i].addEventListener('click', function () {
+      dialog.close();
+    });
+
+  }
 }
 
 
@@ -381,10 +388,10 @@ function generateHTMLForOpenTask(id, loc) {
       </table>
 
       <div class="mdl-dialog__actions">
-        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">To Do</button>
-        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">In Progress</button>
-        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">Testing</button>
-        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">Done</button>
+        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">To Do</button>
+        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">In Progress</button>
+        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Testing</button>
+        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Done</button>
         <button type="button" class="mdl-button close btn">Close</button>
         <button type="button" class="mdl-button btn">Delete</button>
       </div>
