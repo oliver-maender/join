@@ -306,13 +306,11 @@ function openTask(id, loc) {
   document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc);
 
   var dialog = document.querySelector('dialog');
-  /* var showDialogButton = document.querySelector('#show-dialog'); */
+  
   if (!dialog.showModal) {
     dialogPolyfill.registerDialog(dialog);
   }
-  /* showDialogButton.addEventListener('click', function() { */
   dialog.showModal();
-  /*  }); */
 
   let closeElements = dialog.querySelectorAll('.close');
 
