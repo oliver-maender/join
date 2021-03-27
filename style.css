@@ -4,14 +4,22 @@
     --content-container-width: 90%;
     --color-primary: rgb(28, 45, 146);
     --color-secondary: rgb(244, 243, 251);
-    --color-tertiary: rgb(86, 124, 252);
+    --color-tertiary: rgb(66, 79, 151);
+    --color-email: rgb(86, 124, 252);
     --color-delete: rgb(170, 57, 57);
     /* The changing colors depending on chosen category will to be implemented via javascript function */
-    --color-category1: linear-gradient(to top, rgb(200, 44, 143) 0%, rgb(227, 119, 255) 50%, rgb(255, 210, 238) 80%);
-    --color-category2: linear-gradient(to top, rgb(255, 153, 0) 0%, rgb(248, 181, 94) 50%, rgb(255, 225, 168) 80%);
-    --color-category3: linear-gradient(to top, rgb(1, 32, 185) 0%, rgb(72, 96, 211) 50%, rgb(157, 172, 250) 80%);
-    --color-category4: linear-gradient(to top, rgb(51, 158, 1) 0%, rgb(164, 231, 76) 50%, rgb(211, 236, 190) 80%);
-    --color-category5: linear-gradient(to top, rgb(230, 226, 0) 0%, rgb(255, 255, 88) 50%, rgb(255, 255, 146) 80%);
+    /* Uni Colors for board */
+    --color-category1: rgb(200, 44, 143);
+    --color-category2: rgb(255, 153, 0);
+    --color-category3: rgb(72, 96, 211);
+    --color-category4: rgb(164, 231, 76);
+    --color-category5: rgb(255, 255, 88);
+    /* Linear gradient colors for backlog */
+    --color-linear-gradient-category1: linear-gradient(to top, rgb(200, 44, 143) 0%, rgb(227, 119, 255) 50%, rgb(255, 210, 238) 80%);
+    --color-linear-gradient-category2: linear-gradient(to top, rgb(255, 153, 0) 0%, rgb(248, 181, 94) 50%, rgb(255, 225, 168) 80%);
+    --color-linear-gradient-category3: linear-gradient(to top, rgb(1, 32, 185) 0%, rgb(72, 96, 211) 50%, rgb(157, 172, 250) 80%);
+    --color-linear-gradient-category4: linear-gradient(to top, rgb(51, 158, 1) 0%, rgb(164, 231, 76) 50%, rgb(211, 236, 190) 80%);
+    --color-linear-gradient-category5: linear-gradient(to top, rgb(230, 226, 0) 0%, rgb(255, 255, 88) 50%, rgb(255, 255, 146) 80%);
     --border-radius-main: 12px;
 }
 
@@ -75,7 +83,7 @@ select {
 }
 
 .email-adress {
-    color: var(--color-tertiary);
+    color: var(--color-email);
     text-decoration: none;
 }
 
@@ -86,6 +94,13 @@ select {
     border: 2px solid white;
     border-radius: 50%;
     margin-bottom: 32px;
+}
+
+.ticket-profile-pic {
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .header-icon {
@@ -102,7 +117,7 @@ select {
 
 .mdl-dialog {
     width: 700px;
-    max-height: 450px;
+    max-height: 550px;
 }
 
 .mdl-dialog__actions {

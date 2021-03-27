@@ -130,7 +130,7 @@ input, textarea, select {
 
     .assigned-to-headline{
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
    .assigned-to-container{
@@ -142,23 +142,23 @@ input, textarea, select {
 
    .description-headline{
        display: flex;
-       justify-content: center;
+       justify-content: flex-start;
        align-items: center;
    }
 
    .urgency-headline{
         display: flex;
-        justify-content: center;    
+        justify-content: flex-start;    
    }
 
    .category-headline{
         display: flex;
-        justify-content: center; 
+        justify-content: flex-start; 
    }
 
    .field-headline{
         display: flex;
-        justify-content: center; 
+        justify-content: flex-start; 
    }
 
 }

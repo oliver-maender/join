@@ -257,19 +257,19 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
   for (let i = 0; i < allTasks.length; i++) {
 
     if (allTasks[i].status == 'toDo') {
-      toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'inProgress') {
-      inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'testing') {
-      testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
     }
 
     else if (allTasks[i].status == 'done') {
-      doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].category, allTasks[i].description);
+      doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
     }
 
   }
@@ -280,18 +280,18 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
  * Adds the HTML for the tickets on the board.
  * 
  * @param {string} title 
- * @param {string} category 
+ * @param {string} urgency 
  * @param {string} description 
  * @returns HTML
  */
-function addHTMLBoard(id, title, category, description) {
+function addHTMLBoard(id, title, urgency, description) {
   return `
 
     <div onclick="openTask(${id}, 'board')" class="ticket-box">
       <div class="ticket-title">${title}</div>
-      <div class="ticket-category">${category}</div>
+      <div class="ticket-category">${urgency}</div>
       <div class="ticket-description">${description}</div>
-      <div class="ticket-profile">profile-pic</div>
+      <div class="ticket-profile"><img title="Junus Ergin" class="ticket-profile-pic" src="img/junus_ergin.jpg" alt="ticket-profile-pic"></div>
     </div>
 
   `;
@@ -350,7 +350,7 @@ function generateHTMLForOpenTask(id, loc) {
                             <td><div class="dialog-description">${allTasks[id]['description']}</div></td>
                         </tr>
                         <tr>
-                            <td>Assigned To</td>
+                            <td>Assigned&nbsp;To</td>
                             <td>${allTasks[id]['assignedTo']}</td>
                         </tr>
                         <tr>
@@ -388,7 +388,7 @@ function generateHTMLForOpenTask(id, loc) {
                           <td><div class="dialog-description">${allTasks[id]['description']}</div></td>
                         </tr>
                         <tr>
-                          <td>Assigned To</td>
+                          <td>Assigned&nbsp;To</td>
                           <td>${allTasks[id]['assignedTo']}</td>
                         </tr>
                         <tr>
