@@ -28,7 +28,7 @@
     <script src="./smallest_backend_ever/mini_backend.js"></script>
 
     <!-- Embed MDL dialog polyfill -->
-    <link rel="stylesheet" type="text/css" href="dist/dialog-polyfill.css"/>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dist/dialog-polyfill.css"/>
     <script src="node_modules/dialog-polyfill/dist/dialog-polyfill.js"></script>
 
     <script src="script.js"></script>
@@ -57,7 +57,7 @@
                             <label for="title-input">TITLE</label>
                         </div>
                         <div class="input-box">
-                            <input id="title-input" type="text" required>
+                            <input id="title-input" type="text" maxlength="80" required>
                         </div>
                     </div>
 

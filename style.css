@@ -2,9 +2,10 @@
     --main-font-family: 'PT Sans', sans-serif;
     --header-width: 10%;
     --content-container-width: 90%;
-    --color-primary: #1c2d92;
-    --color-secondary: #f4f3fb;
-    --color-tertiary: #567cfc;
+    --color-primary: rgb(28, 45, 146);
+    --color-secondary: rgb(244, 243, 251);
+    --color-tertiary: rgb(86, 124, 252);
+    --color-delete: rgb(170, 57, 57);
     /* The changing colors depending on chosen category will to be implemented via javascript function */
     --color-category1: linear-gradient(to top, rgb(200, 44, 143) 0%, rgb(227, 119, 255) 50%, rgb(255, 210, 238) 80%);
     --color-category2: linear-gradient(to top, rgb(255, 153, 0) 0%, rgb(248, 181, 94) 50%, rgb(255, 225, 168) 80%);
@@ -51,6 +52,10 @@ h3 {
     border-radius: var(--border-radius-main);
 }
 
+.btn-delete {
+    background-color: var(--color-delete) !important;
+}
+
 textarea:focus, input:focus, select:focus {
     outline: none;
 }
@@ -95,13 +100,38 @@ select {
     text-align: center;
 }
 
+.mdl-dialog {
+    width: 700px;
+    max-height: 450px;
+}
+
+.mdl-dialog__actions {
+    flex-direction: row !important;
+    padding-left: 8px !important;
+    flex-direction: row !important;
+    justify-content: flex-end;
+}
+
+.mdl-dialog__actions button {
+    margin: 8px !important;
+}
+
 .table-task {
     width: 100%;
-    border-collapse: collapse;
 }
 
 .table-task td {
-    border: 1px solid black;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+.table-task tr td:first-child {
+    padding-right: 32px;
+}
+
+.dialog-description {
+    max-height: 200px;
+    overflow-y: auto;
+    outline: none;
 }
 
 

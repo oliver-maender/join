@@ -118,7 +118,7 @@ function getValues() {
  * @param {string} category - category of the task
  * @param {string} urgency - urgency of the task
  * @param {string} description - description of the task
- * @param {Date} currentDate - today's date
+ * @param {number} currentDate - today's date
  * @returns JSON
  */
 function createTask(title, dueDate, category, urgency, description, currentDate) {
@@ -306,7 +306,7 @@ function openTask(id, loc) {
   document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc);
 
   var dialog = document.querySelector('dialog');
-  
+
   if (!dialog.showModal) {
     dialogPolyfill.registerDialog(dialog);
   }
@@ -331,10 +331,10 @@ function generateHTMLForOpenTask(id, loc) {
     return ` <table class="table-task mdl-dialog__content">
                         <tr>
                             <td>Current Date</td>
-                            <td>${allTasks[id]['currentDate']}</td>
+                            <td>${new Date(allTasks[id]['currentDate'])}</td>
                         </tr>
                         <tr>
-                            <td>Titel</td>
+                            <td>Title</td>
                             <td>${allTasks[id]['title']}</td>
                         </tr>
                         <tr>
@@ -347,57 +347,64 @@ function generateHTMLForOpenTask(id, loc) {
                         </tr>
                         <tr>
                             <td>Description</td>
-                            <td>${allTasks[id]['description']}</td>
+                            <td><div class="dialog-description">${allTasks[id]['description']}</div></td>
                         </tr>
                         <tr>
                             <td>Assigned To</td>
                             <td>${allTasks[id]['assignedTo']}</td>
                         </tr>
+                        <tr>
+                            <td>Due Date</td>
+                            <td>${allTasks[id]['dueDate']}</td>
+                        </tr>
               </table>
               <div class="mdl-dialog__actions">
-                  <button type="button" onclick="pushToBoard(${id})" class="mdl-button close">Push board/next</button>
-                  <button type="button" class="mdl-button close">Close</button>
-                  <button type="button" onclick="deleteTask(${id}, 'backlog')" class="mdl-button close">Delete</button>
+                  <button type="button" onclick="deleteTask(${id}, 'backlog')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect close btn btn-delete">Delete</button>
+                  <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Close</button>
+                  <button type="button" onclick="pushToBoard(${id})" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect close btn">Push board/next</button>
               </div>`;
   }
 
   if (loc == 'board') {
-    return `
-      <table class="table-task mdl-dialog__content">
-        <tr>
-          <td>Current Date</td>
-          <td>${allTasks[id]['currentDate']}</td>
-        </tr>
-        <tr>
-          <td>Titel</td>
-          <td>${allTasks[id]['title']}</td>
-        </tr>
-        <tr>
-          <td>Category</td>
-          <td>${allTasks[id]['category']}</td>
-        </tr>
-        <tr>
-          <td>Urgency</td>
-          <td>${allTasks[id]['urgency']}</td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>${allTasks[id]['description']}</td>
-        </tr>
-        <tr>
-          <td>Assigned To</td>
-          <td>${allTasks[id]['assignedTo']}</td>
-        </tr>
-      </table>
+    return ` <table class="table-task mdl-dialog__content">
+                        <tr>
+                          <td>Current Date</td>
+                          <td>${new Date(allTasks[id]['currentDate'])}</td>
+                        </tr>
+                        <tr>
+                          <td>Title</td>
+                          <td>${allTasks[id]['title']}</td>
+                        </tr>
+                        <tr>
+                          <td>Category</td>
+                          <td>${allTasks[id]['category']}</td>
+                        </tr>
+                        <tr>
+                          <td>Urgency</td>
+                          <td>${allTasks[id]['urgency']}</td>
+                        </tr>
+                        <tr>
+                          <td>Description</td>
+                          <td><div class="dialog-description">${allTasks[id]['description']}</div></td>
+                        </tr>
+                        <tr>
+                          <td>Assigned To</td>
+                          <td>${allTasks[id]['assignedTo']}</td>
+                        </tr>
+                        <tr>
+                          <td>Due Date</td>
+                          <td>${allTasks[id]['dueDate']}</td>
+                        </tr>
+                </table>
 
-      <div class="mdl-dialog__actions">
-        <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">To Do</button>
-        <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">In Progress</button>
-        <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Testing</button>
-        <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Done</button>
-        <button type="button" class="mdl-button btn close">Close</button>
-        <button type="button" onclick="deleteTask(${id}, 'board')" class="mdl-button btn close">Delete</button>
-      </div>
+                <div class="mdl-dialog__actions">
+                  <button type="button" onclick="pushToColumn(${id}, 'toDo')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">To Do</button>
+                  <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">In Progress</button>
+                  <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Testing</button>
+                  <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Done</button>
+                  <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Close</button>
+                  <button type="button" onclick="deleteTask(${id}, 'board')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect close btn btn-delete">Delete</button>
+                </div>
     `;
 
   }
