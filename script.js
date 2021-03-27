@@ -1,5 +1,5 @@
 // currentID needs to be stored in the backend or it will get reset
-let currentID = 0;
+// let currentID = 0;
 
 let allTasks = [];
 
@@ -26,7 +26,7 @@ async function init() {
   includeHTML();
 
   await getArrayFromBackend('allTasks');
-  await getIDFromBackend('currentID');
+  // await getIDFromBackend('currentID');
 
 }
 
@@ -71,16 +71,21 @@ async function initAddTask() {
 /**
  * Manages the ability to add a task to the backlog
  */
-function addTask() {
+async function addTask() {
+
+  // the next line is only for testing purposes
+  await getArrayFromBackend('allTasks');
 
   let task = getValues();
   allTasks.push(task);
 
   saveArrayToBackend('allTasks', allTasks);
+  // the next line is only for testing purposes
+  await getArrayFromBackend('allTasks');
 
-  currentID++;
-  saveIDToBackend('currentID');
-  console.log("currentID", currentID);
+  // currentID++;
+  // saveIDToBackend('currentID');
+  // console.log("currentID", currentID);
 
   showSnackbar("Task pushed to backlog!");
   /* clearFields(); */
@@ -119,7 +124,7 @@ function getValues() {
 function createTask(title, dueDate, category, urgency, description, currentDate) {
 
   return {
-    "id": currentID,
+    "id": allTasks.length,
     "title": title,
     "dueDate": dueDate,
     "category": category,
@@ -168,8 +173,8 @@ async function showBacklog() {
 
   await getArrayFromBackend('allTasks');
 
-  //second step: show alle backlog entries with the currrent information from allTasks
-  //THE FOLLOWING CODE IS NOT EXECUTED when using the pushToBoard() or pushToColumn() function. To show the current entries you need to update the whole page.
+  // second step: show alle backlog entries with the currrent information from allTasks
+  // The following comment is not that accurate anymore: THE FOLLOWING CODE IS NOT EXECUTED when using the pushToBoard() or pushToColumn() function. To show the current entries you need to update the whole page.
   for (let i = 0; i < allTasks.length; i++) {
 
     if (allTasks[i].status == 'backlog') {
@@ -354,7 +359,7 @@ function generateHTMLForOpenTask(id, loc) {
               <div class="mdl-dialog__actions">
                   <button type="button" onclick="pushToBoard(${id})" class="mdl-button close">Push board/next</button>
                   <button type="button" class="mdl-button close">Close</button>
-                  <button type="button" class="mdl-button">Delete</button>
+                  <button type="button" onclick="deleteTask(${id}, 'backlog')" class="mdl-button close">Delete</button>
               </div>`;
   }
 
@@ -392,12 +397,36 @@ function generateHTMLForOpenTask(id, loc) {
         <button type="button" onclick="pushToColumn(${id}, 'inProgress')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">In Progress</button>
         <button type="button" onclick="pushToColumn(${id}, 'testing')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Testing</button>
         <button type="button" onclick="pushToColumn(${id}, 'done')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Done</button>
-        <button type="button" class="mdl-button close btn">Close</button>
-        <button type="button" class="mdl-button btn">Delete</button>
+        <button type="button" class="mdl-button btn close">Close</button>
+        <button type="button" onclick="deleteTask(${id}, 'board')" class="mdl-button btn close">Delete</button>
       </div>
     `;
 
   }
+}
+
+async function deleteTask(id, loc) {
+
+  // the next line is only for testing purposes
+  await getArrayFromBackend('allTasks');
+
+  allTasks.splice(id, 1);
+
+  for (let i = id; i < allTasks.length; i++) {
+    allTasks[i].id = i;
+  }
+
+  saveArrayToBackend('allTasks', allTasks);
+  // the next line is only for testing purposes but this feels like it helps
+  await getArrayFromBackend('allTasks');
+
+  if (loc == 'board') {
+    showBoard();
+  }
+  else if (loc == 'backlog') {
+    showBacklog();
+  }
+
 }
 
 
@@ -440,6 +469,8 @@ async function pushToBoard(id) {
     allTasks[id].status = 'toDo';
   }
   saveArrayToBackend('allTasks', allTasks);
+  // the next line is only for testing purposes but this feels like it helps
+  await getArrayFromBackend('allTasks');
   showBacklog();
 }
 
@@ -447,6 +478,8 @@ async function pushToColumn(id, dest) {
   await getArrayFromBackend('allTasks');
   allTasks[id].status = dest;
   saveArrayToBackend('allTasks', allTasks);
+  // the next line is only for testing purposes but this feels like it helps
+  await getArrayFromBackend('allTasks');
   showBoard();
 }
 
@@ -492,10 +525,10 @@ async function getArrayFromBackend(key) {
  * 
  * @param  {string} key
  */
-async function getIDFromBackend(key) {
-  await downloadFromServer();
-  currentID = backend.getItem(key) || 0;
-}
+// async function getIDFromBackend(key) {
+//   await downloadFromServer();
+//   currentID = backend.getItem(key) || 0;
+// }
 
 
 /**
@@ -513,16 +546,16 @@ function saveArrayToBackend(key, array) {
  * 
  * @param  {string} key
  */
-function saveIDToBackend(key) {
-  backend.setItem(key, currentID);
-}
+// function saveIDToBackend(key) {
+//   backend.setItem(key, currentID);
+// }
 
 /**
  * Just for testing. Resets allTasks and currentID.
  */
 function reset() {
   backend.deleteItem('allTasks');
-  backend.deleteItem('currentID');
+  // backend.deleteItem('currentID');
 }
 
 
