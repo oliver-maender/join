@@ -79,9 +79,9 @@ input, textarea, select {
 }
 
 #add-person-btn {
- min-width: unset;
- width: 32px;
- height: 32px;
+    min-width: unset;
+    width: 32px;
+    height: 32px;
 }
 
 #action-buttons {
@@ -93,72 +93,88 @@ input, textarea, select {
     margin-left: 32px;
 }
 
-.all-users{
+.all-users {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.possible-user{
+.possible-user {
     height: 64px;
     width: 64px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-#test-choose-user{
+#test-choose-user {
     display: flex;
     justify-content: space-around;
 }
 
+.choosen-user {
+    height: 64px;
+    width: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 8px;
+}
 
-@media(max-width: 870px){
+.new-default {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 8px;
+}
 
-    #action-buttons{
+.new-default-1 {
+    display: flex;
+    margin-right: 8px;
+}
+
+@media(max-width: 870px) {
+    #action-buttons {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
         margin-top: 12px;
         margin-right: 18px;
+    }
 }
-    }
 
-    #create{
-        margin-bottom: 12px;
-        
-    }
+#create {
+    margin-bottom: 12px;
+}
 
-    .assigned-to-headline{
-        display: flex;
-        justify-content: flex-start;
-    }
+.assigned-to-headline {
+    display: flex;
+    justify-content: flex-start;
+}
 
-   .assigned-to-container{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-   }
+.assigned-to-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-   .description-headline{
-       display: flex;
-       justify-content: flex-start;
-       align-items: center;
-   }
+.description-headline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 
-   .urgency-headline{
-        display: flex;
-        justify-content: flex-start;    
-   }
+.urgency-headline {
+    display: flex;
+    justify-content: flex-start;
+}
 
-   .category-headline{
-        display: flex;
-        justify-content: flex-start; 
-   }
+.category-headline {
+    display: flex;
+    justify-content: flex-start;
+}
 
-   .field-headline{
-        display: flex;
-        justify-content: flex-start; 
-   }
+.field-headline {
+    display: flex;
+    justify-content: flex-start;
+}
 
 }

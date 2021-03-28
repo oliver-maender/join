@@ -18,6 +18,12 @@ let allUsers = [
     'img': '"img/junus_ergin.jpg"'
   }
 ];
+
+
+let checkUser = [];
+
+var oldUser = 0;
+
 /**
  * Loads content which is necessary at the startup for all underpages.
  */
@@ -439,26 +445,64 @@ function whichUser() {
   for (let i = 0; i < allUsers.length; i++) {
     const showUsers = allUsers[i];
     document.getElementById('test-choose-user').innerHTML += `
-      <div id="shownUsers${i}" class="all-users">
-        <img onclick="theOne(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
+      <div class="all-users">
+        <img onclick="addUser(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
         <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
       </div>
     `;
   }
   document.getElementById('profile-pic').style.display = "none";
-
-
-
 }
 
-function theOne(i) {
-  // document.getElementById('default-user').innerHTML = '';
+function addUser(i) {
   document.getElementById('default-user').innerHTML += `
-    <div class="profile-pics" id="new-default-user${i}">
-      <img src=${allUsers[i].img}>
+    <div  >
+      <img onclick="saveUser(${i})" class="choosen-user" src=${allUsers[i].img}>
+      <div>${allUsers[i].name}</div>
     </div>
   `;
+  document.getElementById('default-user').classList.add("new-default");
+  document.getElementById('test-choose-user').innerHTML = "";
+  checkUser.push([allUsers[i].name, allUsers[i].img])
+}
 
+function saveUser(j) {
+  oldUser = j;
+  console.log("oldUser = " + oldUser);
+  for (let i = 0; i < allUsers.length; i++) {
+    const showUsers = allUsers[i];
+    document.getElementById('test-choose-user').innerHTML += `
+      <div class="all-users">
+        <img onclick="changeUser(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
+        <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
+      </div>
+    `;
+
+  }
+}
+
+function changeUser(i) {
+  console.log("checkUserOld = " + checkUser);
+  checkUser[oldUser] = [allUsers[i].name, allUsers[i].img];
+  console.log("checkUserNew = " + checkUser);
+  document.getElementById('default-user').innerHTML = "";
+  for (let j = 0; j < checkUser.length; j++) {
+    document.getElementById('default-user').innerHTML += `
+        <div>
+          <img onclick="saveUser(${j})" class="choosen-user" src=${checkUser[j][1]}>
+          <div class="show-on-hover" id="user${j}">${checkUser[j][0]}</div>
+        </div>
+      `;
+  }
+  document.getElementById('default-user').innerHTML += `
+    <button onclick="whichUser()" type="button" id="add-person-btn"
+    class="mdl-button mdl-js-button mdl-button--fab">
+    <i class="material-icons">add</i>
+    </button>`;
+
+  document.getElementById('test-choose-user').innerHTML = "";
+  document.getElementById('default-user').classList.remove("new-default");
+  document.getElementById('default-user').classList.add("new-default-1");
 }
 
 
