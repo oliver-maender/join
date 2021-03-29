@@ -3,26 +3,28 @@
 
 let allTasks = [];
 
-
 let allUsers = [
   {
-    'name': 'Paul',
-    'img': '"img/junus_ergin.jpg"'
+    "name": "Paul",
+    "img": "img/paul.png",
+    "checkedStatus": false
   },
   {
-    'name': 'Oliver',
-    'img': '"img/manuel_thaler.JPEG"'
+    "name": "Oliver",
+    "img": "img/profile.png",
+    "checkedStatus": false
   },
   {
-    'name': 'Tomo',
-    'img': '"img/junus_ergin.jpg"'
+    "name": "Tomo",
+    "img": "img/junus_ergin.jpg",
+    "checkedStatus": false
   }
 ];
 
 
-let checkUser = [];
+/* let checkUser = []; */
 
-var oldUser = 0;
+/* var oldUser = 0; */
 
 /**
  * Loads content which is necessary at the startup for all underpages.
@@ -68,7 +70,8 @@ async function initBacklog() {
 async function initAddTask() {
 
   await init();
-
+  setArray('allUsers', allUsers);
+  showAssignedTo();
   preventReload();
 
 
@@ -89,12 +92,8 @@ async function addTask() {
   // the next line is only for testing purposes
   await getArrayFromBackend('allTasks');
 
-  // currentID++;
-  // saveIDToBackend('currentID');
-  // console.log("currentID", currentID);
-
   showSnackbar("Task pushed to backlog!");
-  /* clearFields(); */
+  clearFields();
 
 }
 
@@ -304,29 +303,14 @@ function addHTMLBoard(id, title, urgency, description) {
 }
 
 /**
- * MDL function
+ * function
  * @param  {} id
  */
 function openTask(id, loc) {
 
   document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc);
 
-  var dialog = document.querySelector('dialog');
-
-  if (!dialog.showModal) {
-    dialogPolyfill.registerDialog(dialog);
-  }
-  dialog.showModal();
-
-  let closeElements = dialog.querySelectorAll('.close');
-
-  for (let i = 0; i < closeElements.length; i++) {
-
-    closeElements[i].addEventListener('click', function () {
-      dialog.close();
-    });
-
-  }
+  fillDialog();
 }
 
 
@@ -416,6 +400,127 @@ function generateHTMLForOpenTask(id, loc) {
   }
 }
 
+
+/**
+ * Shows the list of users by clicking on the plus icon.
+ */
+function openUserList() {
+
+  allUsers = getArray('allUsers');
+
+  let dialogUserList = document.getElementById('dialogUserListItem');
+  dialogUserList.innerHTML = '';
+
+  for (let i = 0; i < allUsers.length; i++) {
+    dialogUserList.innerHTML += generateUserEntry(i);
+  }
+
+  dialogUserList.innerHTML += `
+    <div class="mdl-dialog__actions">
+      <button type="button" onclick="showAssignedTo()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Add</button>
+      <button onclick="clearAssignedTo()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Cancel</button>
+    </div>`;
+
+  for (let i = 0; i < allUsers.length; i++) {
+    document.getElementById(`list-checkbox-${i}`).checked = allUsers[i]['checkedStatus'];
+  }
+
+  fillDialog();
+
+}
+
+
+/**
+ * Generates HTML Code for a user entry.
+ * 
+ * @param  {number} i - Index of the allUsers array.
+ */
+function generateUserEntry(i) {
+
+  return `
+              <li class="mdl-list__item">
+                <div class="mdl-list__item-primary-content">
+                  <div><img src="${allUsers[i]['img']}" class="profile-pic"></img></div>
+                  <div>${allUsers[i]['name']}</div>
+                </div>
+                <div class="mdl-list__item-secondary-action">
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-${i}">
+                    <input onclick="toggleUser(${i})" type="checkbox" id="list-checkbox-${i}" class="mdl-checkbox__input" />
+                  </label>
+                </div>
+              </li>`
+};
+
+
+/**
+ * MDL function
+ * Fills the MDL dialog with content.
+ */
+function fillDialog() {
+  var dialog = document.querySelector('dialog');
+
+  if (!dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  dialog.showModal();
+
+  let closeElements = dialog.querySelectorAll('.close');
+
+  for (let i = 0; i < closeElements.length; i++) {
+
+    closeElements[i].addEventListener('click', function () {
+      dialog.close();
+    });
+  }
+}
+
+/**
+ * Pushes an element of allUsers array to checkedUsers array or deletes it from that array.
+ * 
+ * @param  {number} i - Index of the allUsers array.
+ */
+function toggleUser(i) {
+
+  allUsers = getArray('allUsers');
+
+  if (allUsers[i]['checkedStatus'] == true) {
+    allUsers[i]['checkedStatus'] = false;
+    setArray('allUsers', allUsers);
+  }
+
+  else if (allUsers[i]['checkedStatus'] == false) {
+    allUsers[i]['checkedStatus'] = true;
+    setArray('allUsers', allUsers);
+  }
+}
+
+/**
+ * Shows all users who have been chosen for the task in the dialog window by checkboxing.
+ */
+function showAssignedTo() {
+
+  document.getElementById('default-user').innerHTML = '';
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if (allUsers[i]['checkedStatus'] == true) {
+      document.getElementById('default-user').innerHTML += `<img id="profile-pic" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+    }
+  }
+}
+
+//Funktioniert noch nicht....
+//Soll den Status aller User auf false setzen, wenn der Cancel Button gedrückt wird, sodass mit der showAssinedTo() Funktion dann niemand angezeigt wird.
+function clearAssignedTo() {
+  allUsers = getArray('allUsers');
+  for (let i = 0; i < allUsers.length; i++) {
+    allUsers[i]['checkedStatus'] == false;
+    console.log("allUsers[i].checkedStatus", allUsers[i].checkedStatus);
+  }
+  setArray('allUsers', allUsers);
+  showAssignedTo();
+}
+
+
 async function deleteTask(id, loc) {
 
   // the next line is only for testing purposes
@@ -441,7 +546,10 @@ async function deleteTask(id, loc) {
 }
 
 
-function whichUser() {
+
+/* ############### TOMI ANFANG ########################### */
+
+/* function whichUser() {
   for (let i = 0; i < allUsers.length; i++) {
     const showUsers = allUsers[i];
     document.getElementById('test-choose-user').innerHTML += `
@@ -503,7 +611,10 @@ function changeUser(i) {
   document.getElementById('test-choose-user').innerHTML = "";
   document.getElementById('default-user').classList.remove("new-default");
   document.getElementById('default-user').classList.add("new-default-1");
-}
+} */
+
+
+/* ############### TOMI ENDE ########################### */
 
 
 

@@ -71,11 +71,12 @@ input, textarea, select {
     margin-left: 16px;
 }
 
-#profile-pic {
+.profile-pic {
     height: 64px;
     width: 64px;
     object-fit: cover;
     border-radius: 50%;
+    margin-right: 8px;
 }
 
 #add-person-btn {
@@ -93,7 +94,8 @@ input, textarea, select {
     margin-left: 32px;
 }
 
-.all-users {
+
+/* .all-users {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,6 +131,17 @@ input, textarea, select {
     display: flex;
     margin-right: 8px;
 }
+
+.demo-list-control {
+    width: 300px;
+  }
+  
+  .demo-list-radio {
+    display: inline;
+  } */
+
+
+  /* RESPONSIVE DESIGN */
 
 @media(max-width: 870px) {
     #action-buttons {
@@ -177,4 +190,3 @@ input, textarea, select {
     justify-content: flex-start;
 }
 
-}

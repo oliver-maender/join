@@ -87,7 +87,7 @@ select {
     text-decoration: none;
 }
 
-.profile-pic {
+.profile-pic-header {
     width: 64px;
     height: 64px;
     object-fit: cover;
@@ -149,6 +149,16 @@ select {
     outline: none;
 }
 
+input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.mdl-list__item {
+    border: 1px solid var(--color-secondary);
+}
+
 
 /* RESPONSIVE DESIGN */
 
@@ -179,7 +189,7 @@ select {
     #header-content {
         height: 100% !important;
     }
-    .profile-pic {
+    .profile-pic-header {
         width: 48px;
         height: 54px;
     }
@@ -207,7 +217,7 @@ select {
 }
    
 @media (max-width: 412px) {
-        .profile-pic {
+        .profile-pic-header {
             width: 40px;
             height: 45px;
         }

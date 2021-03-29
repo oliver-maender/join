@@ -31,7 +31,7 @@
     <script src="./smallest_backend_ever/mini_backend.js"></script>
 
     <!-- Embed MDL dialog polyfill -->
-    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dist/dialog-polyfill.css"/>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dist/dialog-polyfill.css" />
     <script src="node_modules/dialog-polyfill/dist/dialog-polyfill.js"></script>
 
     <script src="script.js"></script>
@@ -122,20 +122,20 @@
                             <div class="assigned-to-headline">
                                 <label>ASSIGNED TO</label>
                             </div>
-                            <div id="test-choose-user"></div>
+                            <button onclick="openUserList()" type="button" id="add-person-btn"
+                                class="mdl-button mdl-js-button mdl-button--fab">
+                                <i class="material-icons">add</i>
+                            </button>
                             <div class="profile-pics" id="default-user">
-                                <img id="profile-pic" src="./img/junus_ergin.jpg">
-                                <button onclick="whichUser()" type="button" id="add-person-btn"
-                                    class="mdl-button mdl-js-button mdl-button--fab">
-                                    <i class="material-icons">add</i>
-                                </button>
-                                <!-- <img src="./img/icon_plus.png"> -->
+
+                                <!-- Code is injected here with javascript function showAssignedTo() -->
+
                             </div>
                         </div>
 
                         <div id="action-buttons">
                             <div id="cancel">
-                                <button id="cancel-btn"
+                                <button onclick="clearFields()" type="button" id="cancel-btn"
                                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect btn">
                                     Cancel
                                 </button>
@@ -161,7 +161,13 @@
 
         </div>
 
-    </div>
+        <dialog id="dialogUserList" class="mdl-dialog">
+            <ul id="dialogUserListItem" class="demo-list-control mdl-list">
+
+                <!-- MDL Dialog -->
+                
+            </ul>
+        </dialog>
 
 </body>
 
