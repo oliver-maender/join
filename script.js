@@ -1,6 +1,3 @@
-// currentID needs to be stored in the backend or it will get reset
-// let currentID = 0;
-
 let allTasks = [];
 
 let allUsers = [
@@ -21,63 +18,44 @@ let allUsers = [
   }
 ];
 
-// let recentlyChanged = [];
-
-
-/* let checkUser = []; */
-
-/* var oldUser = 0; */
 
 /**
  * Loads content which is necessary at the startup for all underpages.
  */
 async function init() {
-
   includeHTML();
-
   await getArrayFromBackend('allTasks');
-  // await getIDFromBackend('currentID');
-
 }
+
 
 /**
  * Loads content at the startup of the board page
  */
 async function initBoard() {
-  //follows...
-
   await init();
-
-  // Timeout should be changed, probably with async and await
-  /*  setTimeout(function () { */
   showBoard();
-  /* }, 1000); */
-
 }
+
 
 /**
  * Loads content at the startup of the backlog page
  */
 async function initBacklog() {
-
   await init();
-
   showBacklog();
-
 }
+
 
 /**
  * Loads content at the startup of the addTask page
  */
 async function initAddTask() {
-
   await init();
   setArray('allUsers', allUsers);
   showAssignedTo();
   preventReload();
-
-
 }
+
 
 /**
  * Manages the ability to add a task to the backlog
@@ -91,6 +69,7 @@ async function addTask() {
   allTasks.push(task);
 
   saveArrayToBackend('allTasks', allTasks);
+
   // the next line is only for testing purposes
   await getArrayFromBackend('allTasks');
 
@@ -99,8 +78,10 @@ async function addTask() {
 
 }
 
+
 /**
- * Gets the values of the HTML input fields and calls the function createTask() which creates the JSON for the task
+ * Gets the values of the HTML input fields and calls the function createTask() which creates the JSON for the task.
+ * Caches all checked profiles and saves them into the array assignedTo which is part of the created task.
  * 
  * @returns JSON
  */
@@ -158,17 +139,16 @@ function createTask(title, dueDate, category, urgency, description, assignedTo, 
  * MDL (material design lite) function
  * Shows a short popup with a message when a task has been successfully created and pushed to backlog.
  * 
- * @param {string} msg 
+ * @param {string} msg - Messgage for the popup.
  */
 function showSnackbar(msg) {
   let snackbarContainer = document.getElementById('snackbar-container');
-  let showToastButton = document.getElementById('create-btn');
   let data = { message: msg };
   snackbarContainer.MaterialSnackbar.showSnackbar(data);
 }
 
 /**
- * Clears the form input fields.
+ * Clears the form input fields and removes checkbox checks.
  */
 function clearFields() {
   document.getElementById('title-input').value = '';
@@ -177,49 +157,34 @@ function clearFields() {
   document.getElementById('urgency-input').value = '';
   document.getElementById('description-input').value = '';
 
-  // for (let i = 0; i < allUsers.length; i++) {
-  //   if(allUsers[i].checkedStatus == true) {
-  //     recentlyChanged.push(i);
-  //   }
-  // }
-
   for (let i = 0; i < allUsers.length; i++) {
     allUsers[i].checkedStatus = false;
   }
 
   showAssignedTo();
-  
+
 }
 
 /**
  * Displays the elements of the backlog.
  */
 async function showBacklog() {
-  console.log("showBacklog() wurde aufgerufen!");
 
   let backlogElements = document.getElementById('backlog-elements');
   //First step: clear all backlog elements
   backlogElements.innerHTML = '';
 
+  //Load information from server
   await getArrayFromBackend('allTasks');
 
-  // second step: show alle backlog entries with the currrent information from allTasks
-  // The following comment is not that accurate anymore: THE FOLLOWING CODE IS NOT EXECUTED when using the pushToBoard() or pushToColumn() function. To show the current entries you need to update the whole page.
+  //Show all backlog entries with the currrent information from allTasks
   for (let i = 0; i < allTasks.length; i++) {
 
     if (allTasks[i].status == 'backlog') {
-
-      console.log("for-Schleife wird ausgeführt!");
-
       backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
-
       addBacklogProfile(i);
     }
-
   }
-
-  console.log("showBacklog wurde komplett ausgeführt!");
-
 }
 
 /**
@@ -235,44 +200,63 @@ function addBacklogElement(id, category, description) {
   return `
 
     <div onclick="openTask(${id}, 'backlog')" id="backlog-element-${id}" class="backlog-element">
+
       <div class="backlog-element-color">
       </div>
+
       <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture flex-center">
-
       </div>
+
       <div id="backlog-element-profile-name-${id}" class="backlog-element-name">
-
       </div>
+
       <div class="backlog-element-category">
         <span>${category}</span>
       </div>
+
       <div class="backlog-element-details">
         <span>${description}</span>
       </div>
+
     </div>
       
   `;
 }
 
+/**
+ * Shows the profile pictures and names of the users who have been assigned to a task within the backlog element.
+ * 
+ * @param  {number} i - Id of allTasks array
+ */
 function addBacklogProfile(i) {
+
   let ticketProfilePic = document.getElementById(`backlog-element-profile-picture-${i}`);
   let ticketProfileName = document.getElementById(`backlog-element-profile-name-${i}`);
 
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-    // for (let k = 0; k < allUsers.length; k++) {
-    //   if (allUsers[k].name == allTasks[i].assignedTo[j]) {
-        ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
-        ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
-    //     break;
-    //   }
-    // }
+
+      ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
+      ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
+
   }
 }
 
+
+/**
+ * Generates HTML code for profile picture in the backlog.
+ * 
+ * @param  {string} img - Profile picture
+ */
 function addHTMLBacklogMembersImage(img) {
   return `<img src=${img}>`;
 }
 
+
+/**
+ * Generates HTML code for profile name in the backlog.
+ * 
+ * @param  {string} name - Profile picture
+ */
 function addHTMLBacklogMembersName(name) {
   return `
   <span>${name}</span>
@@ -282,18 +266,6 @@ function addHTMLBacklogMembersName(name) {
   `;
 }
 
-function addBoardProfilePics(i) {
-  let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
-
-  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-    // for (let k = 0; k < allUsers.length; k++) {
-      // if (allUsers[k].name == allTasks[i].assignedTo[j]) {
-        ticketProfilePic.innerHTML += addHTMLBoardMembers(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].img);
-        // break;
-      // }
-    // }
-  }
-}
 
 /**
  * Manages to display the tickets on the board.
@@ -307,6 +279,7 @@ async function showBoard() {
   let testingContent = document.getElementById('testing-content');
   let doneContent = document.getElementById('done-content');
 
+  //first step: clear board
   toDoContent.innerHTML = '';
   inProgressContent.innerHTML = '';
   testingContent.innerHTML = '';
@@ -351,6 +324,7 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 
 }
 
+
 /**
  * Adds the HTML for the tickets on the board.
  * 
@@ -372,13 +346,35 @@ function addHTMLBoard(id, title, urgency, description) {
   `;
 }
 
+
+/**
+ * Shows the profile names and pictures of the users who have been assigned to a task within the board ticket.
+ * 
+ * @param  {number} i - Id of allTasks array.
+ */
+ function addBoardProfilePics(i) {
+  let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
+
+  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
+    ticketProfilePic.innerHTML += addHTMLBoardMembers(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].img);
+  }
+}
+
+/**
+ * Generates HTML code for profile on board ticket.
+ * 
+ * @param  {string} name - Profile name.
+ * @param  {string} img - Profile image.
+ */
 function addHTMLBoardMembers(name, img) {
   return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src=${img} alt="ticket-profile-pic"></div>`;
 }
 
+
 /**
- * function
- * @param  {} id
+ * Opens the task in a dialog window with different content depending on the current location.
+ * @param  {number} id - Task number.
+ * @param  {string} loc - Location (board or backlog).
  */
 function openTask(id, loc) {
 
@@ -394,13 +390,19 @@ function openTask(id, loc) {
 }
 
 
-
+/**
+ * Generates the HTML code for openTask()
+ * 
+ * @param  {number} id - Task number.
+ * @param  {string} loc - Location (board or backlog).
+ * @param  {object} assignedToNames - Array of all users' names who have been chosen for a task.
+ */
 function generateHTMLForOpenTask(id, loc, assignedToNames) {
 
   if (loc == 'backlog') {
     return ` <table class="table-task mdl-dialog__content">
                         <tr>
-                            <td>Current Date</td>
+                            <td>Current&nbsp;Date</td>
                             <td>${new Date(allTasks[id]['currentDate'])}</td>
                         </tr>
                         <tr>
@@ -438,7 +440,7 @@ function generateHTMLForOpenTask(id, loc, assignedToNames) {
   if (loc == 'board') {
     return ` <table class="table-task mdl-dialog__content">
                         <tr>
-                          <td>Current Date</td>
+                          <td>Current&nbsp;Date</td>
                           <td>${new Date(allTasks[id]['currentDate'])}</td>
                         </tr>
                         <tr>
@@ -501,6 +503,7 @@ function openUserList() {
       <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Cancel</button>
     </div>`;
 
+  //Shows users' checkboxes checked or unchecked
   for (let i = 0; i < allUsers.length; i++) {
     document.getElementById(`list-checkbox-${i}`).checked = allUsers[i]['checkedStatus'];
   }
@@ -554,77 +557,28 @@ function fillDialog() {
   }
 }
 
+
 /**
- * Pushes an element of allUsers array to checkedUsers array or deletes it from that array.
+ * Changes the checkbox status of every user on click.
  * 
  * @param  {number} i - Index of the allUsers array.
  */
 function toggleUser(i) {
 
-  // allUsers = getArray('allUsers');
-
   if (allUsers[i]['checkedStatus'] == true) {
     allUsers[i]['checkedStatus'] = false;
-    // setArray('allUsers', allUsers);
   }
 
   else if (allUsers[i]['checkedStatus'] == false) {
     allUsers[i]['checkedStatus'] = true;
-    // setArray('allUsers', allUsers);
   }
-
-
-
-
-
-  // let changed = false;
-
-  // for (let j = 0; j < recentlyChanged.length; j++) {
-  //   console.log('executed');
-  //   if (i == recentlyChanged[j]) {
-  //     recentlyChanged.splice(j, 1);
-  //     changed = true;
-  //     break;
-  //   }
-  // }
-
-  // if (changed == false) {
-  //   recentlyChanged.push(i);
-  // }
-
-  // console.log("TU", recentlyChanged);
 }
+
 
 /**
  * Shows all users who have been chosen for the task in the dialog window by checkboxing.
  */
 function showAssignedTo() {
-
-  // allUsers = getArray('allUsers');
-
-  // console.log("SAT", recentlyChanged);
-
-  // for (let i = 0; i < recentlyChanged.length; i++) {
-  //   let currentUser = allUsers[recentlyChanged[i]];
-  //   if (currentUser['checkedStatus'] == true) {
-  //     currentUser['checkedStatus'] = false;
-  //     let profileToDelete = document.getElementById(`profile-pic-${recentlyChanged[i]}`);
-  //     document.getElementById('default-user').removeChild(profileToDelete);
-  //   }
-  //   else {
-  //     currentUser['checkedStatus'] = true;
-  //     document.getElementById('default-user').innerHTML += `<img id="profile-pic-${recentlyChanged[i]}" class="profile-pic" title="${currentUser.name}" src="${currentUser.img}">`;
-  //   }
-  // }
-
-  // recentlyChanged = [];
-
-  // setArray('allUsers', allUsers);
-
-
-
-
-
 
   document.getElementById('default-user').innerHTML = '';
 
@@ -636,19 +590,12 @@ function showAssignedTo() {
   setArray('allUsers', allUsers);
 }
 
-// OLIVER: Sollte jetzt funktionieren, ist aber wohl nicht notwendig
-//Soll den Status aller User auf false setzen, wenn der Cancel Button gedrückt wird, sodass mit der showAssignedTo() Funktion dann niemand angezeigt wird.
-// function clearAssignedTo() {
-//   allUsers = getArray('allUsers');
-//   for (let i = 0; i < allUsers.length; i++) {
-//     allUsers[i]['checkedStatus'] = false;
-//     console.log("allUsers[i].checkedStatus", allUsers[i].checkedStatus);
-//   }
-//   setArray('allUsers', allUsers);
-//   showAssignedTo();
-// }
 
-
+/**
+ * Deletes a task and calls showBoard() or showBacklog() again depending on the curren location.
+ * @param  {number} id - Id of the task.
+ * @param  {string} loc - Location (board or backlog).
+ */
 async function deleteTask(id, loc) {
 
   // the next line is only for testing purposes
@@ -674,78 +621,6 @@ async function deleteTask(id, loc) {
 }
 
 
-
-/* ############### TOMI ANFANG ########################### */
-
-/* function whichUser() {
-  for (let i = 0; i < allUsers.length; i++) {
-    const showUsers = allUsers[i];
-    document.getElementById('test-choose-user').innerHTML += `
-      <div class="all-users">
-        <img onclick="addUser(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
-        <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
-      </div>
-    `;
-  }
-  document.getElementById('profile-pic').style.display = "none";
-}
-
-function addUser(i) {
-  document.getElementById('default-user').innerHTML += `
-    <div  >
-      <img onclick="saveUser(${i})" class="choosen-user" src=${allUsers[i].img}>
-      <div>${allUsers[i].name}</div>
-    </div>
-  `;
-  document.getElementById('default-user').classList.add("new-default");
-  document.getElementById('test-choose-user').innerHTML = "";
-  checkUser.push([allUsers[i].name, allUsers[i].img])
-}
-
-function saveUser(j) {
-  oldUser = j;
-  console.log("oldUser = " + oldUser);
-  for (let i = 0; i < allUsers.length; i++) {
-    const showUsers = allUsers[i];
-    document.getElementById('test-choose-user').innerHTML += `
-      <div class="all-users">
-        <img onclick="changeUser(${i})" id="img-user${i}" class="possible-user" src=${showUsers['img']}>
-        <div class="show-on-hover" id="user${i}">${showUsers['name']}</div>
-      </div>
-    `;
-
-  }
-}
-
-function changeUser(i) {
-  console.log("checkUserOld = " + checkUser);
-  checkUser[oldUser] = [allUsers[i].name, allUsers[i].img];
-  console.log("checkUserNew = " + checkUser);
-  document.getElementById('default-user').innerHTML = "";
-  for (let j = 0; j < checkUser.length; j++) {
-    document.getElementById('default-user').innerHTML += `
-        <div>
-          <img onclick="saveUser(${j})" class="choosen-user" src=${checkUser[j][1]}>
-          <div class="show-on-hover" id="user${j}">${checkUser[j][0]}</div>
-        </div>
-      `;
-  }
-  document.getElementById('default-user').innerHTML += `
-    <button onclick="whichUser()" type="button" id="add-person-btn"
-    class="mdl-button mdl-js-button mdl-button--fab">
-    <i class="material-icons">add</i>
-    </button>`;
-
-  document.getElementById('test-choose-user').innerHTML = "";
-  document.getElementById('default-user').classList.remove("new-default");
-  document.getElementById('default-user').classList.add("new-default-1");
-} */
-
-
-/* ############### TOMI ENDE ########################### */
-
-
-
 /**
  * Pushes the status of a backlog ticket from "backlog" to "toDo".
  * 
@@ -762,6 +637,12 @@ async function pushToBoard(id) {
   showBacklog();
 }
 
+/**
+ * Changes the status of a task.
+ * 
+ * @param  {number} id - The id of the ticket.
+ * @param  {string} dest - One of 4 destinations (doTo, inProgress, testing or done).
+ */
 async function pushToColumn(id, dest) {
   await getArrayFromBackend('allTasks');
   allTasks[id].status = dest;
@@ -773,7 +654,6 @@ async function pushToColumn(id, dest) {
 
 
 /* LOCAL STORAGE */
-/* May be deleted later if not used. */
 
 /**
  * Saves an array to the local storage
@@ -808,16 +688,6 @@ async function getArrayFromBackend(key) {
   allTasks = JSON.parse(backend.getItem(key)) || [];
 }
 
-/**
- * Loads the currentID variable from backend.
- * 
- * @param  {string} key
- */
-// async function getIDFromBackend(key) {
-//   await downloadFromServer();
-//   currentID = backend.getItem(key) || 0;
-// }
-
 
 /**
  * Saves the changed array object (allTasks) to backend.
@@ -829,21 +699,12 @@ function saveArrayToBackend(key, array) {
   backend.setItem(key, JSON.stringify(array));
 }
 
-/**
- * Saves the currentID variable to backend.
- * 
- * @param  {string} key
- */
-// function saveIDToBackend(key) {
-//   backend.setItem(key, currentID);
-// }
 
 /**
  * Just for testing. Resets allTasks and currentID.
  */
 function reset() {
   backend.deleteItem('allTasks');
-  // backend.deleteItem('currentID');
 }
 
 
@@ -855,8 +716,6 @@ function preventReload() {
   function handleForm(event) { event.preventDefault(); }
   form.addEventListener('submit', handleForm);
 }
-
-
 
 
 /**

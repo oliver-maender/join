@@ -26,7 +26,7 @@
 
 .backlog-element {
     display: flex;
-    height: 80px;
+    min-height: 80px;
     background-color: var(--color-secondary);
     border-radius: var(--border-radius-main);
     overflow: hidden;
@@ -43,11 +43,12 @@
 
 .backlog-element-picture {
     min-width: 80px;
+    flex-direction: column;
 }
 
 .backlog-element-picture img {
-    height: 48px;
-    width: 48px;
+    height: 40px;
+    width: 40px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -67,8 +68,10 @@
 }
 
 .backlog-element-details {
+    max-height: 80px;
     align-self: center;
-    padding: 16px;
+    margin: 16px;
+    overflow: hidden;
 }
 
 
@@ -128,5 +131,6 @@
 
     .backlog-element-picture{
         padding-top: 8px;
+        flex-direction: row;
     }
 }
