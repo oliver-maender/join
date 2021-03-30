@@ -21,6 +21,8 @@ let allUsers = [
   }
 ];
 
+let recentlyChanged = [];
+
 
 /* let checkUser = []; */
 
@@ -111,7 +113,16 @@ function getValues() {
   let description = document.getElementById('description-input').value;
   let currentDate = new Date().getTime();
 
-  return createTask(title, dueDate, category, urgency, description, currentDate);
+  let assignedTo = [];
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if (allUsers[i].checkedStatus == true) {
+      assignedTo.push(allUsers[i].name);
+      allUsers[i].checkedStatus = false;
+    }
+  }
+
+  return createTask(title, dueDate, category, urgency, description, assignedTo, currentDate);
 
 }
 
@@ -126,7 +137,7 @@ function getValues() {
  * @param {number} currentDate - today's date
  * @returns JSON
  */
-function createTask(title, dueDate, category, urgency, description, currentDate) {
+function createTask(title, dueDate, category, urgency, description, assignedTo, currentDate) {
 
   return {
     "id": allTasks.length,
@@ -135,7 +146,7 @@ function createTask(title, dueDate, category, urgency, description, currentDate)
     "category": category,
     "urgency": urgency,
     "description": description,
-    "assignedTo": "",
+    "assignedTo": assignedTo,
     "status": "backlog",
     "currentDate": currentDate
   }
@@ -164,6 +175,14 @@ function clearFields() {
   document.getElementById('category-input').value = '';
   document.getElementById('urgency-input').value = '';
   document.getElementById('description-input').value = '';
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].checkedStatus == true) {
+      recentlyChanged.push(i);
+    }
+  }
+  showAssignedTo();
+  
 }
 
 /**
@@ -187,6 +206,8 @@ async function showBacklog() {
       console.log("for-Schleife wird ausgeführt!");
 
       backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
+
+      addBacklogProfile(i);
     }
 
   }
@@ -210,12 +231,11 @@ function addBacklogElement(id, category, description) {
     <div onclick="openTask(${id}, 'backlog')" id="backlog-element-${id}" class="backlog-element">
       <div class="backlog-element-color">
       </div>
-      <div class="backlog-element-picture flex-center">
-        <img src="./img/junus_ergin.jpg">
+      <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture flex-center">
+
       </div>
-      <div class="backlog-element-name">
-        <span>Junus Ergin</span>
-        <a class="email-adress" href="mailto:junus.ergin@googlemail.com" title="send email">junus.ergin@googlemail.com</a>
+      <div id="backlog-element-profile-name-${id}" class="backlog-element-name">
+
       </div>
       <div class="backlog-element-category">
         <span>${category}</span>
@@ -226,6 +246,47 @@ function addBacklogElement(id, category, description) {
     </div>
       
   `;
+}
+
+function addBacklogProfile(i) {
+  let ticketProfilePic = document.getElementById(`backlog-element-profile-picture-${i}`);
+  let ticketProfileName = document.getElementById(`backlog-element-profile-name-${i}`);
+
+  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
+    for (let k = 0; k < allUsers.length; k++) {
+      if (allUsers[k].name == allTasks[i].assignedTo[j]) {
+        ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allUsers[k].img);
+        ticketProfileName.innerHTML += addHTMLBacklogMembersName(allUsers[k].name);
+        break;
+      }
+    }
+  }
+}
+
+function addHTMLBacklogMembersImage(img) {
+  return `<img src=${img}>`;
+}
+
+function addHTMLBacklogMembersName(name) {
+  return `
+  <span>${name}</span>
+  <div class="email-address-container">
+    <a class="email-adress" href="mailto:${name}@gmail.com" title="send email">${name}@gmail.com</a>
+  </div>
+  `;
+}
+
+function addBoardProfilePics(i) {
+  let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
+
+  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
+    for (let k = 0; k < allUsers.length; k++) {
+      if (allUsers[k].name == allTasks[i].assignedTo[j]) {
+        ticketProfilePic.innerHTML += addHTMLBoardMembers(allUsers[k].name, allUsers[k].img);
+        break;
+      }
+    }
+  }
 }
 
 /**
@@ -263,20 +324,23 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 
     if (allTasks[i].status == 'toDo') {
       toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+      addBoardProfilePics(i);
     }
 
     else if (allTasks[i].status == 'inProgress') {
       inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+      addBoardProfilePics(i);
     }
 
     else if (allTasks[i].status == 'testing') {
       testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+      addBoardProfilePics(i);
     }
 
     else if (allTasks[i].status == 'done') {
       doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+      addBoardProfilePics(i);
     }
-
   }
 
 }
@@ -292,14 +356,18 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 function addHTMLBoard(id, title, urgency, description) {
   return `
 
-    <div onclick="openTask(${id}, 'board')" class="ticket-box">
+    <div id="ticket-box-${id}" onclick="openTask(${id}, 'board')" class="ticket-box">
       <div class="ticket-title">${title}</div>
       <div class="ticket-category">${urgency}</div>
       <div class="ticket-description">${description}</div>
-      <div class="ticket-profile"><img title="Junus Ergin" class="ticket-profile-pic" src="img/junus_ergin.jpg" alt="ticket-profile-pic"></div>
+      <div id="ticket-profiles-${id}" class="ticket-profiles"></div>
     </div>
 
   `;
+}
+
+function addHTMLBoardMembers(name, img) {
+  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src=${img} alt="ticket-profile-pic"></div>`;
 }
 
 /**
@@ -418,7 +486,7 @@ function openUserList() {
   dialogUserList.innerHTML += `
     <div class="mdl-dialog__actions">
       <button type="button" onclick="showAssignedTo()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Add</button>
-      <button onclick="clearAssignedTo()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Cancel</button>
+      <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Cancel</button>
     </div>`;
 
   for (let i = 0; i < allUsers.length; i++) {
@@ -481,17 +549,34 @@ function fillDialog() {
  */
 function toggleUser(i) {
 
-  allUsers = getArray('allUsers');
+  // allUsers = getArray('allUsers');
 
-  if (allUsers[i]['checkedStatus'] == true) {
-    allUsers[i]['checkedStatus'] = false;
-    setArray('allUsers', allUsers);
+  // if (allUsers[i]['checkedStatus'] == true) {
+  //   allUsers[i]['checkedStatus'] = false;
+  //   setArray('allUsers', allUsers);
+  // }
+
+  // else if (allUsers[i]['checkedStatus'] == false) {
+  //   allUsers[i]['checkedStatus'] = true;
+  //   setArray('allUsers', allUsers);
+  // }
+
+  let changed = false;
+
+  for (let j = 0; j < recentlyChanged.length; j++) {
+    console.log('executed');
+    if (i == recentlyChanged[j]) {
+      recentlyChanged.splice(j, 1);
+      changed = true;
+      break;
+    }
   }
 
-  else if (allUsers[i]['checkedStatus'] == false) {
-    allUsers[i]['checkedStatus'] = true;
-    setArray('allUsers', allUsers);
+  if (changed == false) {
+    recentlyChanged.push(i);
   }
+
+  console.log("TU", recentlyChanged);
 }
 
 /**
@@ -499,26 +584,45 @@ function toggleUser(i) {
  */
 function showAssignedTo() {
 
-  document.getElementById('default-user').innerHTML = '';
+  // allUsers = getArray('allUsers');
 
-  for (let i = 0; i < allUsers.length; i++) {
-    if (allUsers[i]['checkedStatus'] == true) {
-      document.getElementById('default-user').innerHTML += `<img id="profile-pic" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+  console.log("SAT", recentlyChanged);
+
+  for (let i = 0; i < recentlyChanged.length; i++) {
+    let currentUser = allUsers[recentlyChanged[i]];
+    if (currentUser['checkedStatus'] == true) {
+      currentUser['checkedStatus'] = false;
+      let profileToDelete = document.getElementById(`profile-pic-${recentlyChanged[i]}`);
+      document.getElementById('default-user').removeChild(profileToDelete);
+    }
+    else {
+      currentUser['checkedStatus'] = true;
+      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${recentlyChanged[i]}" class="profile-pic" title="${currentUser.name}" src="${currentUser.img}">`;
     }
   }
+
+  recentlyChanged = [];
+
+  setArray('allUsers', allUsers);
+
+  // for (let i = 0; i < allUsers.length; i++) {
+  //   if (allUsers[i]['checkedStatus'] == true) {
+  //     document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+  //   }
+  // }
 }
 
-//Funktioniert noch nicht....
-//Soll den Status aller User auf false setzen, wenn der Cancel Button gedrückt wird, sodass mit der showAssinedTo() Funktion dann niemand angezeigt wird.
-function clearAssignedTo() {
-  allUsers = getArray('allUsers');
-  for (let i = 0; i < allUsers.length; i++) {
-    allUsers[i]['checkedStatus'] == false;
-    console.log("allUsers[i].checkedStatus", allUsers[i].checkedStatus);
-  }
-  setArray('allUsers', allUsers);
-  showAssignedTo();
-}
+// OLIVER: Sollte jetzt funktionieren, ist aber wohl nicht notwendig
+//Soll den Status aller User auf false setzen, wenn der Cancel Button gedrückt wird, sodass mit der showAssignedTo() Funktion dann niemand angezeigt wird.
+// function clearAssignedTo() {
+//   allUsers = getArray('allUsers');
+//   for (let i = 0; i < allUsers.length; i++) {
+//     allUsers[i]['checkedStatus'] = false;
+//     console.log("allUsers[i].checkedStatus", allUsers[i].checkedStatus);
+//   }
+//   setArray('allUsers', allUsers);
+//   showAssignedTo();
+// }
 
 
 async function deleteTask(id, loc) {
