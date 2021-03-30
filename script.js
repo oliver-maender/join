@@ -21,7 +21,7 @@ let allUsers = [
   }
 ];
 
-let recentlyChanged = [];
+// let recentlyChanged = [];
 
 
 /* let checkUser = []; */
@@ -117,7 +117,8 @@ function getValues() {
 
   for (let i = 0; i < allUsers.length; i++) {
     if (allUsers[i].checkedStatus == true) {
-      assignedTo.push(allUsers[i].name);
+      let user = {name: allUsers[i].name, img: allUsers[i].img};
+      assignedTo.push(user);
       allUsers[i].checkedStatus = false;
     }
   }
@@ -176,11 +177,16 @@ function clearFields() {
   document.getElementById('urgency-input').value = '';
   document.getElementById('description-input').value = '';
 
+  // for (let i = 0; i < allUsers.length; i++) {
+  //   if(allUsers[i].checkedStatus == true) {
+  //     recentlyChanged.push(i);
+  //   }
+  // }
+
   for (let i = 0; i < allUsers.length; i++) {
-    if(allUsers[i].checkedStatus == true) {
-      recentlyChanged.push(i);
-    }
+    allUsers[i].checkedStatus = false;
   }
+
   showAssignedTo();
   
 }
@@ -253,13 +259,13 @@ function addBacklogProfile(i) {
   let ticketProfileName = document.getElementById(`backlog-element-profile-name-${i}`);
 
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-    for (let k = 0; k < allUsers.length; k++) {
-      if (allUsers[k].name == allTasks[i].assignedTo[j]) {
-        ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allUsers[k].img);
-        ticketProfileName.innerHTML += addHTMLBacklogMembersName(allUsers[k].name);
-        break;
-      }
-    }
+    // for (let k = 0; k < allUsers.length; k++) {
+    //   if (allUsers[k].name == allTasks[i].assignedTo[j]) {
+        ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
+        ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
+    //     break;
+    //   }
+    // }
   }
 }
 
@@ -280,12 +286,12 @@ function addBoardProfilePics(i) {
   let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
 
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-    for (let k = 0; k < allUsers.length; k++) {
-      if (allUsers[k].name == allTasks[i].assignedTo[j]) {
-        ticketProfilePic.innerHTML += addHTMLBoardMembers(allUsers[k].name, allUsers[k].img);
-        break;
-      }
-    }
+    // for (let k = 0; k < allUsers.length; k++) {
+      // if (allUsers[k].name == allTasks[i].assignedTo[j]) {
+        ticketProfilePic.innerHTML += addHTMLBoardMembers(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].img);
+        // break;
+      // }
+    // }
   }
 }
 
@@ -376,14 +382,20 @@ function addHTMLBoardMembers(name, img) {
  */
 function openTask(id, loc) {
 
-  document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc);
+  let assignedToNames = [];
+
+  for (let i = 0; i < allTasks[id].assignedTo.length; i++) {
+    assignedToNames.push(allTasks[id].assignedTo[i].name);
+  }
+
+  document.getElementById('dialogTask').innerHTML = generateHTMLForOpenTask(id, loc, assignedToNames);
 
   fillDialog();
 }
 
 
 
-function generateHTMLForOpenTask(id, loc) {
+function generateHTMLForOpenTask(id, loc, assignedToNames) {
 
   if (loc == 'backlog') {
     return ` <table class="table-task mdl-dialog__content">
@@ -409,7 +421,7 @@ function generateHTMLForOpenTask(id, loc) {
                         </tr>
                         <tr>
                             <td>Assigned&nbsp;To</td>
-                            <td>${allTasks[id]['assignedTo']}</td>
+                            <td>${assignedToNames}</td>
                         </tr>
                         <tr>
                             <td>Due Date</td>
@@ -447,7 +459,7 @@ function generateHTMLForOpenTask(id, loc) {
                         </tr>
                         <tr>
                           <td>Assigned&nbsp;To</td>
-                          <td>${allTasks[id]['assignedTo']}</td>
+                          <td>${assignedToNames}</td>
                         </tr>
                         <tr>
                           <td>Due Date</td>
@@ -551,32 +563,36 @@ function toggleUser(i) {
 
   // allUsers = getArray('allUsers');
 
-  // if (allUsers[i]['checkedStatus'] == true) {
-  //   allUsers[i]['checkedStatus'] = false;
-  //   setArray('allUsers', allUsers);
-  // }
-
-  // else if (allUsers[i]['checkedStatus'] == false) {
-  //   allUsers[i]['checkedStatus'] = true;
-  //   setArray('allUsers', allUsers);
-  // }
-
-  let changed = false;
-
-  for (let j = 0; j < recentlyChanged.length; j++) {
-    console.log('executed');
-    if (i == recentlyChanged[j]) {
-      recentlyChanged.splice(j, 1);
-      changed = true;
-      break;
-    }
+  if (allUsers[i]['checkedStatus'] == true) {
+    allUsers[i]['checkedStatus'] = false;
+    // setArray('allUsers', allUsers);
   }
 
-  if (changed == false) {
-    recentlyChanged.push(i);
+  else if (allUsers[i]['checkedStatus'] == false) {
+    allUsers[i]['checkedStatus'] = true;
+    // setArray('allUsers', allUsers);
   }
 
-  console.log("TU", recentlyChanged);
+
+
+
+
+  // let changed = false;
+
+  // for (let j = 0; j < recentlyChanged.length; j++) {
+  //   console.log('executed');
+  //   if (i == recentlyChanged[j]) {
+  //     recentlyChanged.splice(j, 1);
+  //     changed = true;
+  //     break;
+  //   }
+  // }
+
+  // if (changed == false) {
+  //   recentlyChanged.push(i);
+  // }
+
+  // console.log("TU", recentlyChanged);
 }
 
 /**
@@ -586,30 +602,38 @@ function showAssignedTo() {
 
   // allUsers = getArray('allUsers');
 
-  console.log("SAT", recentlyChanged);
+  // console.log("SAT", recentlyChanged);
 
-  for (let i = 0; i < recentlyChanged.length; i++) {
-    let currentUser = allUsers[recentlyChanged[i]];
-    if (currentUser['checkedStatus'] == true) {
-      currentUser['checkedStatus'] = false;
-      let profileToDelete = document.getElementById(`profile-pic-${recentlyChanged[i]}`);
-      document.getElementById('default-user').removeChild(profileToDelete);
-    }
-    else {
-      currentUser['checkedStatus'] = true;
-      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${recentlyChanged[i]}" class="profile-pic" title="${currentUser.name}" src="${currentUser.img}">`;
-    }
-  }
-
-  recentlyChanged = [];
-
-  setArray('allUsers', allUsers);
-
-  // for (let i = 0; i < allUsers.length; i++) {
-  //   if (allUsers[i]['checkedStatus'] == true) {
-  //     document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+  // for (let i = 0; i < recentlyChanged.length; i++) {
+  //   let currentUser = allUsers[recentlyChanged[i]];
+  //   if (currentUser['checkedStatus'] == true) {
+  //     currentUser['checkedStatus'] = false;
+  //     let profileToDelete = document.getElementById(`profile-pic-${recentlyChanged[i]}`);
+  //     document.getElementById('default-user').removeChild(profileToDelete);
+  //   }
+  //   else {
+  //     currentUser['checkedStatus'] = true;
+  //     document.getElementById('default-user').innerHTML += `<img id="profile-pic-${recentlyChanged[i]}" class="profile-pic" title="${currentUser.name}" src="${currentUser.img}">`;
   //   }
   // }
+
+  // recentlyChanged = [];
+
+  // setArray('allUsers', allUsers);
+
+
+
+
+
+
+  document.getElementById('default-user').innerHTML = '';
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if (allUsers[i]['checkedStatus'] == true) {
+      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+    }
+  }
+  setArray('allUsers', allUsers);
 }
 
 // OLIVER: Sollte jetzt funktionieren, ist aber wohl nicht notwendig
