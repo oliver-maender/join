@@ -23,6 +23,7 @@
     flex-direction: column;
     align-items: center;
     overflow: auto;
+    /* border: 3px solid var(--color-secondary); */
 }
 
 .ticket-box {
@@ -30,14 +31,14 @@
     height: 164px;
     margin-top: 5%;
     background-color: var(--color-secondary);
-    border: 3px solid var(--color-category1);
+    /* border: 3px solid var(--color-category1); */
     border-radius: var(--border-radius-main);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     padding: 8px;
-    cursor: crosshair;
+    cursor: pointer;
     box-shadow: 0 0 3px white;
 }
 
@@ -58,6 +59,26 @@
     max-height: 100px;
     overflow-y: hidden;
     text-align: left;
+}
+
+.color-border-category1 {
+    border: 3px solid var(--color-category1);
+}
+
+.color-border-category2 {
+    border: 3px solid var(--color-category2);
+}
+
+.color-border-category3 {
+    border: 3px solid var(--color-category3);
+}
+
+.color-border-category4 {
+    border: 3px solid var(--color-category4);
+}
+
+.color-border-category5 {
+    border: 3px solid var(--color-category5);
 }
 
 

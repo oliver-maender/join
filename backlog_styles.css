@@ -31,12 +31,12 @@
     border-radius: var(--border-radius-main);
     overflow: hidden;
     margin-bottom: 8px;
-    cursor: crosshair;
+    cursor: pointer;
 }
 
 .backlog-element-color {
     min-width: 8px;
-    background-image: var(--color-linear-gradient-category1);
+   /*  background-image: var(--color-linear-gradient-category1); */
     border-top-left-radius: var(--border-radius-main);
     border-bottom-left-radius: var(--border-radius-main);
 }
@@ -72,6 +72,26 @@
     align-self: center;
     margin: 16px;
     overflow: hidden;
+}
+
+.color-category1 {
+    background-color: var(--color-category1);
+}
+
+.color-category2 {
+    background-color: var(--color-category2);
+}
+
+.color-category3 {
+    background-color: var(--color-category3);
+}
+
+.color-category4 {
+    background-color: var(--color-category4);
+}
+
+.color-category5 {
+    background-color: var(--color-category5);
 }
 
 

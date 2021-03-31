@@ -183,6 +183,7 @@ async function showBacklog() {
     if (allTasks[i].status == 'backlog') {
       backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
       addBacklogProfile(i);
+      addColor(i);
     }
   }
 }
@@ -201,7 +202,7 @@ function addBacklogElement(id, category, description) {
 
     <div onclick="openTask(${id}, 'backlog')" id="backlog-element-${id}" class="backlog-element">
 
-      <div class="backlog-element-color">
+      <div id="backlog-element-${id}-color" class="backlog-element-color">
       </div>
 
       <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture flex-center">
@@ -268,6 +269,54 @@ function addHTMLBacklogMembersName(name) {
 
 
 /**
+ * Changes the color of the border task depending on the chosen category when creating the task.
+ * 
+ * @param  {number} i - Id of allTasks array.
+ */
+function addColor (i) {
+  if(allTasks[i].category == "Accounting") {
+    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category1');
+  }
+  else if (allTasks[i].category == "Marketing") {
+    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category2');
+  }
+  else if (allTasks[i].category == "IT") {
+    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category3');
+  }
+  else if (allTasks[i].category == "Controlling") {
+    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category4');
+  }
+  else if (allTasks[i].category == "Others") {
+    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category5');
+  }
+}
+
+
+/**
+ * Changes the border color of the board ticket depending on the chosen category when creating the task.
+ * 
+ * @param  {number} i - Id of allTasks array.
+ */
+function addColorBorder(i) {
+  if(allTasks[i].category == "Accounting") {
+    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category1');
+  }
+  else if (allTasks[i].category == "Marketing") {
+    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category2');
+  }
+  else if (allTasks[i].category == "IT") {
+    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category3');
+  }
+  else if (allTasks[i].category == "Controlling") {
+    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category4');
+  }
+  else if (allTasks[i].category == "Others") {
+    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category5');
+  }
+}
+
+
+/**
  * Manages to display the tickets on the board.
  */
 async function showBoard() {
@@ -304,21 +353,25 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
     if (allTasks[i].status == 'toDo') {
       toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
       addBoardProfilePics(i);
+      addColorBorder(i);
     }
 
     else if (allTasks[i].status == 'inProgress') {
       inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
       addBoardProfilePics(i);
+      addColorBorder(i);
     }
 
     else if (allTasks[i].status == 'testing') {
       testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
       addBoardProfilePics(i);
+      addColorBorder(i);
     }
 
     else if (allTasks[i].status == 'done') {
       doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
       addBoardProfilePics(i);
+      addColorBorder(i);
     }
   }
 
