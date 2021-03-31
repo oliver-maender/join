@@ -17,21 +17,19 @@
 
 .board-category-content {
     height: 84%;
-    background-color: var(--color-tertiary);
+    background-color: var(--color-secondary);
     border-radius: var(--border-radius-main);
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: auto;
-    /* border: 3px solid var(--color-secondary); */
 }
 
 .ticket-box {
     width: 80%;
     height: 164px;
     margin-top: 5%;
-    background-color: var(--color-secondary);
-    /* border: 3px solid var(--color-category1); */
+    background-color: white;
     border-radius: var(--border-radius-main);
     display: flex;
     flex-direction: column;
@@ -39,7 +37,6 @@
     align-items: flex-start;
     padding: 8px;
     cursor: pointer;
-    box-shadow: 0 0 3px white;
 }
 
 .ticket-title {
@@ -101,12 +98,6 @@
     }
 }
 
-@media(max-width: 877px){
-    /* h2{ */
-        /* font-size: 17px; */                                     /* I'm not sure here. I can go down with font size, but then its smaller then a tag. Maybe we need to re-do css here - This is about IN PROGRESS h2 tag */
-    /* }                                                               [Paul]: I tested it. We don't need to go down with the font size. Everything is fine. */
-}
-
 @media(max-width: 700px){
     #whole-board{
         margin-left: 0px;
@@ -116,6 +107,6 @@
 
 @media(max-width:375px){
     .board-category-content{
-        background-color: var(--color-tertiary);
+        background-color: var(--color-secondary);
     }
 }

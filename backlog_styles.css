@@ -35,8 +35,7 @@
 }
 
 .backlog-element-color {
-    min-width: 8px;
-   /*  background-image: var(--color-linear-gradient-category1); */
+    min-width: 6px;
     border-top-left-radius: var(--border-radius-main);
     border-bottom-left-radius: var(--border-radius-main);
 }
@@ -133,7 +132,7 @@
     }
 
     .backlog-element-color{
-        height: 8px;
+        height: 6px;
         width: 100%;
     }
 

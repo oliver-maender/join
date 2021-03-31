@@ -9,7 +9,7 @@
     --color-delete: rgb(170, 57, 57);
     /* Uni Colors */
     --color-category1: rgb(200, 44, 143);
-    --color-category2: rgb(255, 153, 0);
+    --color-category2: rgb(40, 140, 255);
     --color-category3: rgb(72, 96, 211);
     --color-category4: rgb(164, 231, 76);
     --color-category5: rgb(200, 44, 44);
@@ -19,7 +19,7 @@
     --color-linear-gradient-category3: linear-gradient(to top, rgb(1, 32, 185) 0%, rgb(72, 96, 211) 50%, rgb(157, 172, 250) 80%);
     --color-linear-gradient-category4: linear-gradient(to top, rgb(51, 158, 1) 0%, rgb(164, 231, 76) 50%, rgb(211, 236, 190) 80%);
     --color-linear-gradient-category5: linear-gradient(to top, rgb(230, 226, 0) 0%, rgb(255, 255, 88) 50%, rgb(255, 255, 146) 80%); */
-    --border-radius-main: 8px;
+    --border-radius-main: 6px;
 }
 
 body {
@@ -40,7 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 {
     font-size: 24px;
-    font-weight: bold;
     margin-bottom: 0;
 }
 
