@@ -88,69 +88,30 @@ input, textarea, select {
 #action-buttons {
     display: flex;
     justify-content: flex-end;
+    margin-top: 24px;
 }
 
 #action-buttons button {
     margin-left: 32px;
 }
 
-
-/* .all-users {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.possible-user {
-    height: 64px;
-    width: 64px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-#test-choose-user {
-    display: flex;
-    justify-content: space-around;
-}
-
-.choosen-user {
-    height: 64px;
-    width: 64px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.new-default {
-    display: flex;
-    flex-direction: row-reverse;
-    margin-right: 8px;
-}
-
-.new-default-1 {
-    display: flex;
-    margin-right: 8px;
-}
-
-.demo-list-control {
-    width: 300px;
-  }
-  
-  .demo-list-radio {
-    display: inline;
-  } */
-
-
-  /* RESPONSIVE DESIGN */
+/* RESPONSIVE DESIGN */
 
 @media(max-width: 870px) {
-    #action-buttons {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        margin-top: 12px;
-        margin-right: 18px;
+
+    .form-part {
+        width: 88%;
     }
+}
+
+@media(max-width: 500px) {
+
+    .form-part {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
 }
 
 #create {
@@ -189,4 +150,3 @@ input, textarea, select {
     display: flex;
     justify-content: flex-start;
 }
-

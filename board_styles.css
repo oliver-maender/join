@@ -88,13 +88,13 @@
         height: unset;
     }
 
-    .board-category{
+    .board-category {
         width: 88%;
-        margin-bottom: 40px;
     }
 
     .board-category-content{
         max-height: 50vh;
+        padding-bottom: 5%;
     }
 }
 

@@ -46,3 +46,91 @@
     border-radius: 50%;
     margin-bottom: 32px;
 }
+
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width: 870px) {
+
+    #header-content {
+        height: 100% !important;
+    }
+
+    #logo {
+        height: 60px;
+    }
+
+    #header-links a {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .profile-pic-header {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media(max-width: 610px) {
+    
+    .header-icon {
+        display: block;
+        margin-left: 10px;
+    }
+}
+
+@media(max-width: 500px) {
+    #header {
+        width: unset !important;
+        height: 80px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    #header-content {
+        flex-direction: row !important;
+        justify-content: space-around !important;
+    }
+
+    #logo-and-links {
+        flex-direction: row !important;
+        /* align-items: flex-end; */
+    }
+
+    #logo-container {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    #logo {
+        height: 50px;
+    }
+    
+    #header-links {
+        flex-direction: row !important;
+        height: unset !important;
+        margin-left: 16px;
+    }
+
+}
+
+
+@media(max-width: 375px) {
+    .header-icon {
+        height: 20px;
+        width: 20px;
+        margin-left: 8px;
+    }
+
+    #logo {
+        height: 40px !important;
+    }
+
+    .profile-pic-header {
+        height: 40px;
+        width: 40px; 
+    }
+}
