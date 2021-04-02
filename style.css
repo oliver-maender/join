@@ -4,7 +4,7 @@
     --content-container-width: 90%;
     --color-primary: rgb(28, 45, 146);
     --color-secondary: rgb(244, 243, 251);
-    --color-tertiary: rgb(66, 79, 151);
+    --color-tertiary: rgb(37, 61, 201);
     --color-email: rgb(86, 124, 252);
     --color-delete: rgb(170, 57, 57);
     /* Uni Colors */
@@ -20,6 +20,10 @@
     --color-linear-gradient-category4: linear-gradient(to top, rgb(51, 158, 1) 0%, rgb(164, 231, 76) 50%, rgb(211, 236, 190) 80%);
     --color-linear-gradient-category5: linear-gradient(to top, rgb(230, 226, 0) 0%, rgb(255, 255, 88) 50%, rgb(255, 255, 146) 80%); */
     --border-radius-main: 6px;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -186,6 +190,10 @@ input[type="checkbox"] {
 }
 
 @media(max-width: 500px) {
+    h2, h3 {
+        margin-left: 8px;
+    }
+
     .header-and-content {
         display: unset !important;
     }

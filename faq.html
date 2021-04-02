@@ -24,20 +24,228 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./templates/header_styles.css">
+    <link rel="stylesheet" href="faq.css">
+    <link rel="stylesheet" href="addtask_styles.css">
+
 
     <!-- Embed backend -->
     <script src="./smallest_backend_ever/mini_backend.js"></script>
-    
+
     <script src="script.js"></script>
 
 </head>
+
 <body onload="includeHTML()">
     <div class="header-and-content">
 
         <div id="header" w3-include-html="./templates/header.html"></div>
 
         <div class="content-container">
-            FAQ
+            <div id="faq-container">
+                <div id="faq-headline">
+                    <h2>FAQ</h2>
+                    <h3>Frequently Asked Questions</h3>
+                </div>
+                <div id="faq-questions-container">
+                    <ul>
+                        <li><a href="#q1">What is Join?</a></li>
+                        <li><a href="#q2">What is kanban?</a></li>
+                        <li><a href="#q3">What is the functionality of a kanban board?</a></li>
+                        <li><a href="#q4">What is a task and how can I create one?</a></li>
+                        <li><a href="#q5">What is the functionality of the backlog?</a></li>
+                        <li><a href="#q6">How can I push a task from backlog to board?</a></li>
+                        <li><a href="#q7">How can I push a task on the board to the next level?</a></li>
+                        <li><a href="#q8">What do the four different levels on board mean?</a></li>
+                        <li><a href="#q9">Why do my tasks have different colors and what do they mean?</a></li>
+                        <li><a href="#q10">How can I delete a task?</a></li>
+                    </ul>
+                </div>
+
+                <div id="faq-answers-container">
+
+                    <ul>
+                        <li>
+                            <span id="q1">What is Join?</span>
+                            <div class="faq-answer">Join is a group project from three students of <a
+                                    href="https://developerakademie.com/">Developer Akademie</a>. It was developed with
+                                HTML, CSS and javascript. The idea of Join is based on a kanban board. </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q2">What is kanban?</span>
+                            <div class="faq-answer">Kanban is a japanese project management method for creating and
+                                spreading tasks efficiently
+                                by pulling and pushing tasks.
+                            </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q3">What is the functionality of a kanban board?</span>
+                            <div class="faq-answer">
+                                A kanban board is a graphical user interface for living the kanban principle.
+                                At first you create a ticket which all relevant informations and store it in the
+                                backlog.
+                                When your team members and you want to start to work on the task, you can push it to the
+                                board.
+                                The task gets through four states: to do, in progress, testing and done.
+                                Every team member can see the task's working status and push it to the next level until
+                                it's
+                                done.
+                            </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q4">What is a task and how can I create one?</span>
+                            <div class="faq-answer">
+                                A task is an independent work package which can be done by one or more team members in
+                                an
+                                appropriate time slot.
+                                Press "Add Task" at the navigation bar to see the graphical user interface. Fill out the
+                                form input fields (title, description), select a category as well as the urgency of the
+                                task
+                                and define the date by when the task should be done. You can assign the task to one or
+                                more team members by clicking on the
+                                <button type="button" id="faq-plus" class="mdl-button mdl-js-button mdl-button--fab">
+                                    <i class="material-icons">add</i>
+                                </button>
+                                button, filling out the checkboxes and
+                                pressing the
+                                <button type="button"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">Add</button>
+                                button.
+                                Create the task finally by pressing the
+                                <button type="button"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">Create
+                                    Task</button>
+                                button.
+                            </div>
+                            <img src="img/faq_add_task.png" alt="faq-add-task" class="faq-img">
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q5">What is the functionality of the backlog?</span>
+                            <div class="faq-answer">
+                                The backlog is store where all created tasks wait bevor they will be pushed to backlog
+                                and
+                                team members can work on it.
+                                It is like a storage basin for the total work of a project.
+                            </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q6">How can I push a task from backlog to board?</span>
+                            <div class="faq-answer">
+                                In order to push a task from backlog to board just click on the relevant task container.
+                                A
+                                dialog will open with more detailed information about the task.
+                                There you can find the
+                                <button type="button"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect close btn btn-faq">to
+                                    board</button>
+                                button. Just push it and a second later the task will be located on board from now on.
+                            </div>
+                            <img src="" alt="">
+                            SCREENSHOT
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q7">How can I push a task on the board to the next or previous level?</span>
+                            <div class="faq-answer">
+                                In order to push a task on the board to the next (or previous) level just click on the relevant task.
+                                A
+                                dialog will open with more detailed information about the task.
+                                Among others you can find the four buttons 
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">To Do</button> , 
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">In Progress</button> , 
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">Testing</button> 
+                                and 
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn btn-faq">Done</button>.
+                                Press
+                                one of them and the task will change its position on the board immediately.
+                            </div>
+                            <img src="" alt="">
+                            SCREENSHOT
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q8">What do the four different levels on board mean?</span>
+                            <div class="faq-answer">
+                                <ul>
+                                    <li>
+                                        <b>TO DO</b>: Tasks which are located in the to-do-section were pushed from
+                                        backlog.
+                                        Tasks in the to-do-section will be need to be worked soon.
+                                        But none of the team members has been working on the task yet.
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <b>IN PROGRESS</b>: Tasks which are located in the in-progress-section are
+                                        handled
+                                        by one or more team members right now.
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <b>TESTING</b>: Tasks which are located in the testing-section have alreading
+                                        been
+                                        handled by one or more team members.
+                                        They are ready to be tested in order to recognize bugs or rethink functionality
+                                        in
+                                        need of improvement.
+                                        The most efficient way for testing is when the testers differ from the team
+                                        members
+                                        who have been working on the task.
+                                        If everything is fine with the task, it can be pushed to the done-section.
+                                        Otherwise
+                                        it can be pushed back to the previous level "in progress" for reworking.
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <b>DONE</b>: Tasks which are located in the done-section have been successfully
+                                        handeled, tested and finished.
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q9">Why do my tasks have different colors and what do they mean?</span>
+                            <div class="faq-answer">
+                                In the backlog and on the board every task has a special color. Every color stands for a
+                                category (e.g. department/division) which is defined when creating a new task.
+                                Therefore team members can recognize faster if the task is within their area of
+                                expertise
+                                and accordingly relevant for them to be handeled.
+                            </div>
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+
+                        <li>
+                            <span id="q10">How can I delete a task?</span>
+                            <div class="faq-answer">
+                                In order to delete a task, just click on the relevant task in the backlog or on the
+                                board. A
+                                new dialog will open with more detailed information about the task.
+                                Just press the 
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect close btn btn-delete btn-faq">Delete</button> 
+                                button and your task will finally be deleted.
+                            </div>
+                            <img src="" alt="">
+                            SCREENSHOT
+                            <a href="#faq-container"><img src="img/arrow_up.png" alt="arrow-up" class="arrow-up"></a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
         </div>
 
     </div>
