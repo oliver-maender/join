@@ -12,12 +12,14 @@ let allUsers = [
     "checkedStatus": false
   },
   {
-    "name": "Tomo",
-    "img": "img/junus_ergin.jpg",
+    "name": "Tomislav",
+    "img": "img/tomislav.jpg",
     "checkedStatus": false
   }
 ];
 
+
+let currentDraggedElement;
 
 /**
  * Loads content which is necessary at the startup for all underpages.
@@ -98,7 +100,7 @@ function getValues() {
 
   for (let i = 0; i < allUsers.length; i++) {
     if (allUsers[i].checkedStatus == true) {
-      let user = {name: allUsers[i].name, img: allUsers[i].img};
+      let user = { name: allUsers[i].name, img: allUsers[i].img };
       assignedTo.push(user);
       allUsers[i].checkedStatus = false;
     }
@@ -236,8 +238,8 @@ function addBacklogProfile(i) {
 
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
 
-      ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
-      ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
+    ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
+    ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
 
   }
 }
@@ -273,8 +275,8 @@ function addHTMLBacklogMembersName(name) {
  * 
  * @param  {number} i - Id of allTasks array.
  */
-function addColor (i) {
-  if(allTasks[i].category == "Accounting") {
+function addColor(i) {
+  if (allTasks[i].category == "Accounting") {
     document.getElementById(`backlog-element-${i}-color`).classList.add('color-category1');
   }
   else if (allTasks[i].category == "Marketing") {
@@ -298,7 +300,7 @@ function addColor (i) {
  * @param  {number} i - Id of allTasks array.
  */
 function addColorBorder(i) {
-  if(allTasks[i].category == "Accounting") {
+  if (allTasks[i].category == "Accounting") {
     document.getElementById(`ticket-box-${i}`).classList.add('color-border-category1');
   }
   else if (allTasks[i].category == "Marketing") {
@@ -389,7 +391,7 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 function addHTMLBoard(id, title, urgency, description) {
   return `
 
-    <div id="ticket-box-${id}" onclick="openTask(${id}, 'board')" class="ticket-box">
+    <div id="ticket-box-${id}" draggable="true" ondragstart="startDragging(${id})" onclick="openTask(${id}, 'board')" class="ticket-box">
       <div class="ticket-title">${title}</div>
       <div class="ticket-category">${urgency}</div>
       <div class="ticket-description">${description}</div>
@@ -405,7 +407,7 @@ function addHTMLBoard(id, title, urgency, description) {
  * 
  * @param  {number} i - Id of allTasks array.
  */
- function addBoardProfilePics(i) {
+function addBoardProfilePics(i) {
   let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
 
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
@@ -802,4 +804,20 @@ function includeHTML() {
       return;
     }
   }
+}
+
+function startDragging(id) {
+  currentDraggedElement = id;
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function moveTo(status) {
+  allTasks[currentDraggedElement]['status'] = status;
+  saveArrayToBackend('allTasks', allTasks);
+  setTimeout(showBoard, 300);
+
+
 }
