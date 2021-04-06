@@ -8,7 +8,7 @@ let allUsers = [
   },
   {
     "name": "Oliver",
-    "img": "img/profile.png",
+    "img": "img/oliver.jpg",
     "checkedStatus": false
   },
   {
@@ -739,6 +739,20 @@ setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
  * @param  {string} key - Loads an array (object) from backend.
  */
 async function getArrayFromBackend(key) {
+  // The following code I commented out catches an error in relation with "downloadFromServer()", mostly called ("unexpected JSON input") and just tries it again (on the second try it works 100% but maximum tries are capped to 5 so that there will be no infinite loop guaranteed)
+
+  // let count = 0;
+  // let maxTries = 5;
+
+  // while (count < maxTries) {
+  //   try {
+  //     await downloadFromServer();
+  //     break;
+  //   } catch (error) {
+  //     count++;
+  //     console.log("Error avoided");
+  //   }
+  // }
   await downloadFromServer();
   allTasks = JSON.parse(backend.getItem(key)) || [];
 }
@@ -750,8 +764,8 @@ async function getArrayFromBackend(key) {
  * @param  {string} key
  * @param  {obj} array
  */
-function saveArrayToBackend(key, array) {
-  backend.setItem(key, JSON.stringify(array));
+async function saveArrayToBackend(key, array) {
+  await backend.setItem(key, JSON.stringify(array));
 }
 
 
@@ -814,10 +828,8 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function moveTo(status) {
+async function moveTo(status) {
   allTasks[currentDraggedElement]['status'] = status;
-  saveArrayToBackend('allTasks', allTasks);
-  setTimeout(showBoard, 300);
-
-
+  await saveArrayToBackend('allTasks', allTasks);
+  showBoard();
 }
