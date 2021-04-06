@@ -4,16 +4,19 @@ let allUsers = [
   {
     "name": "Paul",
     "img": "img/paul.png",
+    "email": "paul@mail.de",
     "checkedStatus": false
   },
   {
     "name": "Oliver",
     "img": "img/oliver.jpg",
+    "email": "oliver@gmail.com",
     "checkedStatus": false
   },
   {
     "name": "Tomislav",
     "img": "img/tomislav.jpg",
+    "email": "tomislav@web.de",
     "checkedStatus": false
   }
 ];
@@ -100,7 +103,7 @@ function getValues() {
 
   for (let i = 0; i < allUsers.length; i++) {
     if (allUsers[i].checkedStatus == true) {
-      let user = { name: allUsers[i].name, img: allUsers[i].img };
+      let user = { name: allUsers[i].name, img: allUsers[i].img, email: allUsers[i].email };
       assignedTo.push(user);
       allUsers[i].checkedStatus = false;
     }
@@ -239,7 +242,7 @@ function addBacklogProfile(i) {
   for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
 
     ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
-    ticketProfileName.innerHTML += addHTMLBacklogMembersName(allTasks[i].assignedTo[j].name);
+    ticketProfileName.innerHTML += addHTMLBacklogMembersNameAndEmail(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].email);
 
   }
 }
@@ -258,13 +261,14 @@ function addHTMLBacklogMembersImage(img) {
 /**
  * Generates HTML code for profile name in the backlog.
  * 
- * @param  {string} name - Profile picture
+ * @param  {string} name - Profile name
+ * @param  {string} email - Profile email
  */
-function addHTMLBacklogMembersName(name) {
+function addHTMLBacklogMembersNameAndEmail(name, email) {
   return `
   <span>${name}</span>
   <div class="email-address-container">
-    <a class="email-adress" href="mailto:${name}@gmail.com" title="send email">${name}@gmail.com</a>
+    <a class="email-adress" href="mailto:${email}" title="send email">${email}</a>
   </div>
   `;
 }
