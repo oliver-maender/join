@@ -61,6 +61,27 @@ async function initAddTask() {
   preventReload();
 }
 
+function initFAQ() {
+  includeHTML();
+  setTimeout(function () {
+    document.getElementsByClassName("content-container")[0].innerHTML += "FAQ";
+  }, 100);
+}
+
+function initLegalNotice() {
+  includeHTML();
+  setTimeout(function () {
+    document.getElementsByClassName("content-container")[0].innerHTML += "Legal Notice";
+  }, 100);
+}
+
+function initDataPrivacy() {
+  includeHTML();
+  setTimeout(function () {
+    document.getElementsByClassName("content-container")[0].innerHTML += "Data Privacy";
+  }, 100);
+}
+
 
 /**
  * Manages the ability to add a task to the backlog
