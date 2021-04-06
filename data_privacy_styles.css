@@ -2,14 +2,14 @@
     margin: 32px;
 }
 
-h2 {
-    font-size: 2em;
+#data-privacy h2 {
+    font-size: 1.8em;
 }
 
-h3 {
+#data-privacy h3 {
     font-size: 1.2em;
 }
 
-h4 {
+#data-privacy h4 {
     font-size: 1.1em;
 }

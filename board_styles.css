@@ -52,6 +52,10 @@
     align-self: flex-end;
 }
 
+.ticket-profile {
+    margin-left: 4px;
+}
+
 .ticket-description {
     max-height: 100px;
     overflow-y: hidden;
@@ -76,6 +80,10 @@
 
 .color-border-category5 {
     border: 3px solid var(--color-category5);
+}
+
+.drag-area-highlight {
+    background-color: rgb(232, 234, 243);
 }
 
 

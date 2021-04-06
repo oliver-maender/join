@@ -93,10 +93,7 @@
     background-color: var(--color-category5);
 }
 
-
 /* Here is the question, how soon should we do column and not row, my opinion is that the column looks better. */
-
-
 
 @media(max-width:1000px) {
     .backlog-element-name {
@@ -121,7 +118,6 @@
     }
 }
 
-
 @media(max-width:800px) {
     .backlog-element {
         display: flex;
@@ -130,26 +126,25 @@
         align-items: center;
         text-align: center;
     }
-
-    .backlog-element-color{
+    .backlog-element-color {
         height: 6px;
         width: 100%;
     }
-
-
-    .column-assigned-to{
+    .column-assigned-to {
         display: none;
     }
-    .column-category{
+    .column-category {
         display: none;
     }
-
-    .column-details{
+    .column-details {
         display: none;
     }
-
-    .backlog-element-picture{
+    .backlog-element-picture {
         padding-top: 8px;
         flex-direction: row;
+    }
+    .backlog-element-picture img {
+        margin-left: 4px;
+        margin-right: 4px;
     }
 }
