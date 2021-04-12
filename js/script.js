@@ -3,19 +3,19 @@ let allTasks = [];
 let allUsers = [
   {
     "name": "Paul",
-    "img": "img/paul.png",
+    "img": "../img/paul.png",
     "email": "paul@mail.de",
     "checkedStatus": false
   },
   {
     "name": "Oliver",
-    "img": "img/oliver.jpg",
+    "img": "../img/oliver.jpg",
     "email": "oliver@gmail.com",
     "checkedStatus": false
   },
   {
     "name": "Tomislav",
-    "img": "img/tomislav.jpg",
+    "img": "../img/tomislav.jpg",
     "email": "tomislav@web.de",
     "checkedStatus": false
   }
@@ -275,7 +275,7 @@ function addBacklogProfile(i) {
  * @param  {string} img - Profile picture
  */
 function addHTMLBacklogMembersImage(img) {
-  return `<img src=${img}>`;
+  return `<img src="${img}">`;
 }
 
 
@@ -447,7 +447,7 @@ function addBoardProfilePics(i) {
  * @param  {string} img - Profile image.
  */
 function addHTMLBoardMembers(name, img) {
-  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src=${img} alt="ticket-profile-pic"></div>`;
+  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src="${img}" alt="ticket-profile-pic"></div>`;
 }
 
 
