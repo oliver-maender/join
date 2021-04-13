@@ -84,6 +84,7 @@
 
 .drag-area-highlight {
     background-color: rgb(232, 234, 243);
+    border: 2px dashed rgb(37, 61, 201);
 }
 
 

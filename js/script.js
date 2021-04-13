@@ -99,9 +99,13 @@ async function addTask() {
   // the next line is only for testing purposes
   await getArrayFromBackend('allTasks');
 
-  showSnackbar("Task pushed to backlog!");
   clearFields();
+  showSnackbar("Task pushed to backlog!");
 
+  //Show backlog page with new task added
+  setTimeout(function () {
+    document.location.href = "../pages/backlog.html";
+  }, 3000);
 }
 
 
@@ -296,26 +300,22 @@ function addHTMLBacklogMembersNameAndEmail(name, email) {
 
 
 /**
- * Changes the color of the border task depending on the chosen category when creating the task.
+ * Changes the color of the backlog task depending on the chosen category when creating the task.
  * 
  * @param  {number} i - Id of allTasks array.
  */
 function addColor(i) {
-  if (allTasks[i].category == "Accounting") {
-    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category1');
+
+  let colors = {
+    "Accounting": "color-category1",
+    "Marketing": "color-category2",
+    "IT": "color-category3",
+    "Controlling": "color-category4",
+    "Others": "color-category5"
   }
-  else if (allTasks[i].category == "Marketing") {
-    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category2');
-  }
-  else if (allTasks[i].category == "IT") {
-    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category3');
-  }
-  else if (allTasks[i].category == "Controlling") {
-    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category4');
-  }
-  else if (allTasks[i].category == "Others") {
-    document.getElementById(`backlog-element-${i}-color`).classList.add('color-category5');
-  }
+
+  document.getElementById(`backlog-element-${i}-color`).classList.add(colors[allTasks[i].category]);
+
 }
 
 
@@ -325,21 +325,17 @@ function addColor(i) {
  * @param  {number} i - Id of allTasks array.
  */
 function addColorBorder(i) {
-  if (allTasks[i].category == "Accounting") {
-    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category1');
+
+  let borderColors = {
+    "Accounting": "color-border-category1",
+    "Marketing": "color-border-category2",
+    "IT": "color-border-category3",
+    "Controlling": "color-border-category4",
+    "Others": "color-border-category5"
   }
-  else if (allTasks[i].category == "Marketing") {
-    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category2');
-  }
-  else if (allTasks[i].category == "IT") {
-    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category3');
-  }
-  else if (allTasks[i].category == "Controlling") {
-    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category4');
-  }
-  else if (allTasks[i].category == "Others") {
-    document.getElementById(`ticket-box-${i}`).classList.add('color-border-category5');
-  }
+
+  document.getElementById(`ticket-box-${i}`).classList.add(borderColors[allTasks[i].category]);
+
 }
 
 
@@ -377,29 +373,19 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 
   for (let i = 0; i < allTasks.length; i++) {
 
-    if (allTasks[i].status == 'toDo') {
-      toDoContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-      addBoardProfilePics(i);
-      addColorBorder(i);
+    let container;
+
+    switch(allTasks[i].status) {
+      case 'toDo': container = toDoContent; break;
+      case 'inProgress': container = inProgressContent; break;
+      case 'testing': container = testingContent; break;
+      case 'done': container = doneContent; break;
     }
 
-    else if (allTasks[i].status == 'inProgress') {
-      inProgressContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-      addBoardProfilePics(i);
-      addColorBorder(i);
-    }
-
-    else if (allTasks[i].status == 'testing') {
-      testingContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-      addBoardProfilePics(i);
-      addColorBorder(i);
-    }
-
-    else if (allTasks[i].status == 'done') {
-      doneContent.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-      addBoardProfilePics(i);
-      addColorBorder(i);
-    }
+    container.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+    addBoardProfilePics(i);
+    addColorBorder(i);
+  
   }
 
 }
