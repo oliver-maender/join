@@ -1,5 +1,5 @@
 /**
- * 
+ * Manages user login on the start page when clicking the login button.
  */
 function login() {
 
@@ -12,21 +12,27 @@ function login() {
     snackbar.classList.remove('snackbar-warning');
 
     for (let i = 0; i < allUsers.length; i++) {
+
+        //login successful (match)
         if (username.value == allUsers[i].name && password.value == allUsers[i].password) {
             match = true;
             form.reset();
             showSnackbar("Successfully logged in!");
+            saveUserId(i);
             setTimeout(function () {
                 document.location.href = 'pages/board.html';
             }, 3000);
         }
+
     }
 
+    //login incorrect (no match)
     if (!match) {
         changeSnackbarToWarning(snackbar);
         showSnackbar("Login incorrect!");
     }
 }
+
 
 /**
  * Changes the snackbar background color to warning.
@@ -36,4 +42,41 @@ function login() {
 function changeSnackbarToWarning(snackbar) {
     console.log(typeof(snackbar));
     snackbar.classList.add('snackbar-warning');
+}
+
+
+/**
+ * Saves the id of logged in user to local storage.
+ * 
+ * @param  {number} id - Id of logged in user.
+ */
+function saveUserId(id) {
+    setArray('currentUserId', id);
+}
+
+
+
+/**
+ * Shows the image of the logged in user in the header.
+ */
+function showLoggedInUser() {
+
+    let currentUserId = getArray('currentUserId');
+    let profile = document.getElementById('profile');
+
+    if(currentUserId) {
+        profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="${allUsers[currentUserId].img}"></img>`;
+    }
+    else {
+        profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="../img/profile.png"></img>`;
+    }
+
+}
+
+/**
+ * Removes current user and redirects to the start page.
+ */
+function logout() {
+    localStorage.removeItem('currentUserId');
+    document.location.href = '../index.html';
 }

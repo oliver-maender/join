@@ -33,6 +33,7 @@ let currentDraggedElement;
 async function init() {
   includeHTML();
   await getArrayFromBackend('allTasks');
+  showLoggedInUser();
 }
 
 
@@ -59,27 +60,27 @@ async function initBacklog() {
  */
 async function initAddTask() {
   await init();
-  setArray('allUsers', allUsers);
+  //setArray('allUsers', allUsers);
   showAssignedTo();
   preventReload();
 }
 
-function initFAQ() {
-  includeHTML();
+async function initFAQ() {
+  await init();
   setTimeout(function () {
     document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
 }
 
-function initLegalNotice() {
-  includeHTML();
+async function initLegalNotice() {
+  await init();
   setTimeout(function () {
     document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
 }
 
-function initDataPrivacy() {
-  includeHTML();
+async function initDataPrivacy() {
+  await init();
   setTimeout(function () {
     document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
@@ -596,7 +597,7 @@ function generateHTMLForOpenTask(id, loc, assignedToNames) {
  */
 function openUserList() {
 
-  allUsers = getArray('allUsers');
+  //allUsers = getArray('allUsers');
 
   let dialogUserList = document.getElementById('dialogUserListItem');
   dialogUserList.innerHTML = '';
@@ -695,7 +696,7 @@ function showAssignedTo() {
       document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
     }
   }
-  setArray('allUsers', allUsers);
+  //setArray('allUsers', allUsers);
 }
 
 
