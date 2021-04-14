@@ -5,19 +5,22 @@ let allUsers = [
     "name": "Paul",
     "img": "../img/paul.png",
     "email": "paul@mail.de",
-    "checkedStatus": false
+    "checkedStatus": false,
+    "password": "Paul123"
   },
   {
     "name": "Oliver",
     "img": "../img/oliver.jpg",
     "email": "oliver@gmail.com",
-    "checkedStatus": false
+    "checkedStatus": false,
+    "password": "Oliver123"
   },
   {
     "name": "Tomislav",
     "img": "../img/tomislav.jpg",
     "email": "tomislav@web.de",
-    "checkedStatus": false
+    "checkedStatus": false,
+    "password": "Tomislav123"
   }
 ];
 

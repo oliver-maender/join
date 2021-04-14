@@ -25,6 +25,7 @@
     <script src="../smallest_backend_ever/mini_backend.js"></script>
 
     <script src="js/script.js"></script>
+    <script src="js/login.js"></script>
 
     <!-- Embed Font Awesome -->
     <script src="https://kit.fontawesome.com/c8b4666b1b.js" crossorigin="anonymous"></script>
@@ -45,15 +46,15 @@
                 <i class="far fa-user"></i>
                 <h2 class="mdl-card__title-text">Welcome to Join</h2>
             </div>
-            <form action="#" class="form-login">
+            <form onsubmit="login(); return false" action="#" class="form-login" id="form-login">
                 <div class="mdl-card__supporting-text">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="sample3">
                         <label class="mdl-textfield__label" for="sample3">username</label>
+                        <input class="mdl-textfield__input" type="text" id="username">
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="sample3">
                         <label class="mdl-textfield__label" for="sample3">password</label>
+                        <input class="mdl-textfield__input" type="password" id="password">
                     </div>
                 </div>
                 <button type="submit" id="login-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
@@ -67,10 +68,16 @@
                 </a>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a href="#" class="links-login">
+                <a href="./pages/board.html" class="links-login">
                     Continue as guest
                 </a>
             </div>
+        </div>
+
+        <!-- PopUp Snackbar (MDL) -->
+        <div id="snackbar-container" class="mdl-js-snackbar mdl-snackbar flex-center">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
         </div>
 
     </div>

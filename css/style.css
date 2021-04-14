@@ -106,6 +106,10 @@ select {
     background-color: var(--color-primary);  
 }
 
+.snackbar-warning {
+    background-color: var(--color-delete);
+}
+
 .mdl-snackbar__text {
     text-align: center;
 }
