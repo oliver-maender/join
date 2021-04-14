@@ -425,9 +425,11 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
       case 'done': container = doneContent; break;
     }
 
-    container.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-    addBoardProfilePics(i);
-    addColorBorder(i);
+    if (container != null) {
+      container.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
+      addBoardProfilePics(i);
+      addColorBorder(i);
+    }
 
   }
 

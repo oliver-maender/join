@@ -64,7 +64,7 @@ function showLoggedInUser() {
     let currentUserId = getArray('currentUserId');
     let profile = document.getElementById('profile');
 
-    if(currentUserId) {
+    if(currentUserId < allUsers.length) {
         profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="${allUsers[currentUserId].img}"></img>`;
     }
     else {
