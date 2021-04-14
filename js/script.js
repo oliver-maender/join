@@ -64,22 +64,61 @@ async function initAddTask() {
 function initFAQ() {
   includeHTML();
   setTimeout(function () {
-    document.getElementsByClassName("content-container")[0].innerHTML += "FAQ";
+    document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
 }
 
 function initLegalNotice() {
   includeHTML();
   setTimeout(function () {
-    document.getElementsByClassName("content-container")[0].innerHTML += "Legal Notice";
+    document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
 }
 
 function initDataPrivacy() {
   includeHTML();
   setTimeout(function () {
-    document.getElementsByClassName("content-container")[0].innerHTML += "Data Privacy";
+    document.getElementsByClassName("content-container")[0].innerHTML += removeGhostHeader();
   }, 100);
+}
+
+function removeGhostHeader() {
+  return `
+    <div class="init">initialised</div>
+  `;
+}
+
+function changeNavbar() {
+  let button = document.getElementById('change-navbar-btn');
+  let headerTexts = document.getElementsByClassName('header-txt');
+  let headerIcons = document.getElementsByClassName('header-icon');
+
+  if (button.innerHTML == "Expand") {
+    for (let i = 0; i < headerTexts.length; i++) {
+      const text = headerTexts[i];
+      text.style.display = 'block';
+    }
+
+    for (let i = 0; i < headerIcons.length; i++) {
+      const icons = headerIcons[i];
+      icons.style.display = 'none';
+    }
+
+    button.innerHTML = "Reduce";
+
+  }
+  else {
+    for (let i = 0; i < headerTexts.length; i++) {
+      const text = headerTexts[i];
+      text.style.display = 'none';
+    }
+
+    for (let i = 0; i < headerIcons.length; i++) {
+      const icons = headerIcons[i];
+      icons.style.display = 'block';
+    }
+    button.innerHTML = "Expand";
+  }
 }
 
 
@@ -375,7 +414,7 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 
     let container;
 
-    switch(allTasks[i].status) {
+    switch (allTasks[i].status) {
       case 'toDo': container = toDoContent; break;
       case 'inProgress': container = inProgressContent; break;
       case 'testing': container = testingContent; break;
@@ -385,7 +424,7 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
     container.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
     addBoardProfilePics(i);
     addColorBorder(i);
-  
+
   }
 
 }

@@ -154,6 +154,14 @@ input[type="checkbox"] {
     border: 1px solid var(--color-secondary);
 }
 
+.init {
+    opacity: 0;
+}
+
+.mdl-button:hover {
+    opacity: 0.8;
+}
+
 
 /* RESPONSIVE DESIGN */
 
