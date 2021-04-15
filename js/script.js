@@ -6,21 +6,21 @@ let allUsers = [
     "img": "../img/paul.png",
     "email": "paul@mail.de",
     "checkedStatus": false,
-    "password": "Paul123"
+    "password": "1bb78288d604d97f57237f3a1586b567b928d97b9bdbdbf44855be2f3c75bea7"
   },
   {
     "name": "Oliver",
     "img": "../img/oliver.jpg",
     "email": "oliver@gmail.com",
     "checkedStatus": false,
-    "password": "Oliver123"
+    "password": "3dc9ade97759bffcdeb9c5adca0b1614f02f0c67cc47cf72a78cf2f8163341a4"
   },
   {
     "name": "Tomislav",
     "img": "../img/tomislav.jpg",
     "email": "tomislav@web.de",
     "checkedStatus": false,
-    "password": "Tomislav123"
+    "password": "442fa2167e29c1843cd3cf62a8951ac0ad6eab20ef99282d89f34c347e9451b8"
   }
 ];
 

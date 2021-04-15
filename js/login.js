@@ -5,7 +5,8 @@ function login() {
 
     let form = document.getElementById('form-login');
     let username = document.getElementById('username');
-    let password = document.getElementById('password');
+    //encrypt password
+    let encryptedPassword = sha256(document.getElementById('password').value);
     let match;
 
     let snackbar = document.getElementById('snackbar-container');
@@ -14,7 +15,7 @@ function login() {
     for (let i = 0; i < allUsers.length; i++) {
 
         //login successful (match)
-        if (username.value == allUsers[i].name && password.value == allUsers[i].password) {
+        if (username.value == allUsers[i].name && encryptedPassword == allUsers[i].password) {
             match = true;
             form.reset();
             showSnackbar("Successfully logged in!");
@@ -64,7 +65,7 @@ function showLoggedInUser() {
     let currentUserId = getArray('currentUserId');
     let profile = document.getElementById('profile');
 
-    if(currentUserId < allUsers.length) {
+    if(currentUserId != undefined) {
         profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="${allUsers[currentUserId].img}"></img>`;
     }
     else {
