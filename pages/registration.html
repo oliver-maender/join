@@ -18,16 +18,17 @@
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login_styles.css">
-    <link rel="stylesheet" href="css/registration_styles.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login_styles.css">
+    <link rel="stylesheet" href="../css/registration_styles.css">
 
     <!-- Embed backend -->
-    <script src="smallest_backend_ever/mini_backend.js"></script>
+    <script src="../smallest_backend_ever/mini_backend.js"></script>
 
-    <script src="js/script.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/sha256.js"></script>
+    <script src="../js/script.js"></script>
+   <!--  Ggf. nachher entfernen -->
+    <script src="../js/login.js"></script>
+    <script src="../js/sha256.js"></script>
 
 
     <!-- Embed Font Awesome -->
@@ -39,17 +40,18 @@
 
     <div class="login-container">
 
-        <img src="./img/background_login.jpg" alt="background-login" class="background-image-login">
+        <img src="../img/background_registration.jpg" alt="background-login" class="background-image-login">
 
         <div class="demo-card-wide mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title mdl-card--border">
-                <div onclick="location.href='index.html';" id="join-logo-login-container">
-                    <img src="./img/joinlogo.png" alt="join-logo" id="join-logo-login">
+                <div onclick="location.href='../index.html';" id="join-logo-login-container">
+                    <img src="../img/joinlogo.png" alt="join-logo" id="join-logo-login">
                 </div>
-                <i class="far fa-user"></i>
-                <h2 class="mdl-card__title-text">Welcome to Join</h2>
+                <i class="fas fa-users"></i>
+                <h2 class="mdl-card__title-text">Join the team!</h2>
             </div>
-            <form onsubmit="login(); return false" action="#" class="form-login" id="form-login">
+
+            <form onsubmit="register(); return false" action="#" class="form-login" id="form-login">
                 <div class="mdl-card__supporting-text">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label class="mdl-textfield__label" for="username">username</label>
@@ -59,19 +61,22 @@
                         <label class="mdl-textfield__label" for="password">password</label>
                         <input class="mdl-textfield__input" type="password" id="password" name="password">
                     </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="email">e-mail</label>
+                        <input class="mdl-textfield__input" type="email" id="email" name="e-mail">
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="profilePicUpload">profile picture</label>
+                        <input class="mdl-textfield__input" type="text" id="profilePicUpload" name="profilePicUpload">
+                    </div>
                 </div>
                 <button type="submit" id="login-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
-                    Login
+                    Register
                 </button>
             </form>
+
             <div class="mdl-card__actions mdl-card--border">
-                <span>No account?</span>&nbsp;
-                <a href="./pages/registration.html" class="links-login">
-                    Register
-                </a>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a href="./pages/board.html" class="links-login">
+                <a href="board.html" class="links-login">
                     Continue as guest
                 </a>
             </div>
