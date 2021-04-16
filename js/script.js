@@ -97,31 +97,40 @@ function changeNavbar() {
   let headerTexts = document.getElementsByClassName('header-txt');
   let headerIcons = document.getElementsByClassName('header-icon');
 
-  if (button.innerHTML == "Expand") {
+  if (button.innerHTML == "&gt;") {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
-      text.style.display = 'block';
+      text.classList.remove('d-none');
+      text.classList.add('d-block');
     }
 
     for (let i = 0; i < headerIcons.length; i++) {
       const icons = headerIcons[i];
-      icons.style.display = 'none';
+      icons.classList.remove('d-block');
+      icons.classList.add('d-none');
     }
 
-    button.innerHTML = "Reduce";
+    // document.getElementById('header').style.width = 'calc(var(--header-width) + 100px)';
+
+    button.innerHTML = "&lt;";
 
   }
   else {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
-      text.style.display = 'none';
+      text.classList.add('d-none');
+      text.classList.remove('d-block');
     }
 
     for (let i = 0; i < headerIcons.length; i++) {
       const icons = headerIcons[i];
-      icons.style.display = 'block';
+      icons.classList.add('d-block');
+      icons.classList.remove('d-none');
     }
-    button.innerHTML = "Expand";
+
+    document.getElementById('header').style.width = 'var(--header-width)';
+
+    button.innerHTML = "&gt;";
   }
 }
 

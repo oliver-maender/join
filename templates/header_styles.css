@@ -1,3 +1,11 @@
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
+}
+
 #header {
     width: var(--header-width);
 }
@@ -8,6 +16,7 @@
 }
 
 #header-content {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -49,33 +58,37 @@
     cursor: pointer;
 }
 
+#change-navbar-btn {
+    display: none;
+}
 
 /* RESPONSIVE DESIGN */
 
 @media(max-width: 870px) {
-
     /* #header-content {
         height: 100% !important;
     } */
-
     #logo {
         height: 60px;
     }
-
     #header-links a {
         padding-top: 12px;
         padding-bottom: 12px;
     }
-
     .profile-pic-header {
         width: 40px;
         height: 40px;
         margin-bottom: 0 !important;
     }
+    #change-navbar-btn {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 50%;
+    }
 }
 
 @media(max-width: 610px) {
-    
     .header-icon {
         display: block;
         margin-left: 10px;
@@ -91,35 +104,28 @@
         left: 0;
         right: 0;
     }
-
     #header-content {
         flex-direction: row !important;
         justify-content: space-around !important;
         height: 100% !important;
     }
-
     #logo-and-links {
         flex-direction: row !important;
         /* align-items: flex-end; */
     }
-
     #logo-container {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
     }
-
     #logo {
         height: 40px;
     }
-    
     #header-links {
         flex-direction: row !important;
         height: unset !important;
         margin-left: 16px;
     }
-
 }
-
 
 @media(max-width: 375px) {
     .header-icon {
@@ -127,13 +133,11 @@
         width: 20px;
         margin-left: 8px;
     }
-
     #logo {
         height: 40px !important;
     }
-
     .profile-pic-header {
         height: 40px;
-        width: 40px; 
+        width: 40px;
     }
 }
