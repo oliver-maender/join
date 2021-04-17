@@ -6,8 +6,16 @@
     display: block;
 }
 
-#header {
+/* #header {
     width: var(--header-width);
+} */
+
+.header {
+    width: var(--header-width);
+}
+
+.expanded-header {
+    width: calc(var(--header-width) + 100px);
 }
 
 #header-links a {
@@ -24,6 +32,10 @@
     min-height: 100%;
     height: 100vh;
     background-color: var(--color-primary);
+}
+
+.header-txt {
+    color: white;
 }
 
 #logo-and-links {

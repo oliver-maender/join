@@ -94,21 +94,24 @@ function removeGhostHeader() {
 
 function changeNavbar() {
   let button = document.getElementById('change-navbar-btn');
+  let header = document.getElementById('header');
   let headerTexts = document.getElementsByClassName('header-txt');
-  let headerIcons = document.getElementsByClassName('header-icon');
+  // let headerIcons = document.getElementsByClassName('header-icon');
 
   if (button.innerHTML == "&gt;") {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
-      text.classList.remove('d-none');
-      text.classList.add('d-block');
+      // header.classList.remove('header');
+      header.classList.add('expanded-header');
+      // text.classList.remove('d-none');
+      // text.classList.add('d-block');
     }
 
-    for (let i = 0; i < headerIcons.length; i++) {
-      const icons = headerIcons[i];
-      icons.classList.remove('d-block');
-      icons.classList.add('d-none');
-    }
+    // for (let i = 0; i < headerIcons.length; i++) {
+    //   const icons = headerIcons[i];
+    //   icons.classList.remove('d-block');
+    //   icons.classList.add('d-none');
+    // }
 
     // document.getElementById('header').style.width = 'calc(var(--header-width) + 100px)';
 
@@ -118,17 +121,19 @@ function changeNavbar() {
   else {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
-      text.classList.add('d-none');
-      text.classList.remove('d-block');
+      header.classList.remove('expanded-header');
+      // text.classList.remove('d-block');
+      // text.classList.add('d-none');
+      // header.classList.add('header');
     }
 
-    for (let i = 0; i < headerIcons.length; i++) {
-      const icons = headerIcons[i];
-      icons.classList.add('d-block');
-      icons.classList.remove('d-none');
-    }
+    // for (let i = 0; i < headerIcons.length; i++) {
+    //   const icons = headerIcons[i];
+    //   icons.classList.add('d-block');
+    //   icons.classList.remove('d-none');
+    // }
 
-    document.getElementById('header').style.width = 'var(--header-width)';
+    // document.getElementById('header').style.width = 'var(--header-width)';
 
     button.innerHTML = "&gt;";
   }

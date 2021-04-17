@@ -174,9 +174,9 @@ input[type="checkbox"] {
         display: block;
         margin-left: 12px;
     }
-    .header-txt {
+    /* .header-txt {
         display: none;
-    }
+    } */
     .form {
         height: 100% !important;
     }
