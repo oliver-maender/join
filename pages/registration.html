@@ -28,6 +28,7 @@
     <script src="../js/script.js"></script>
    <!--  Ggf. nachher entfernen -->
     <script src="../js/login.js"></script>
+    <script src="../js/registration.js"></script>
     <script src="../js/sha256.js"></script>
 
 
@@ -36,7 +37,7 @@
 
 </head>
 
-<body>
+<body onload="initUsers()">
 
     <div class="login-container">
 
@@ -54,16 +55,16 @@
             <form onsubmit="register(); return false" action="#" class="form-login" id="form-login">
                 <div class="mdl-card__supporting-text">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="username">username</label>
-                        <input class="mdl-textfield__input" type="text" id="username" name="username">
+                        <label class="mdl-textfield__label" for="myUsername">username</label>
+                        <input class="mdl-textfield__input" type="text" id="myUsername" name="myUsername">
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="password">password</label>
-                        <input class="mdl-textfield__input" type="password" id="password" name="password">
+                        <label class="mdl-textfield__label" for="myPassword">password</label>
+                        <input class="mdl-textfield__input" type="password" id="myPassword" name="myPassword">
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="email">e-mail</label>
-                        <input class="mdl-textfield__input" type="email" id="email" name="e-mail">
+                        <label class="mdl-textfield__label" for="myEmail">e-mail</label>
+                        <input class="mdl-textfield__input" type="email" id="myEmail" name="myEmail">
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label class="mdl-textfield__label" for="profilePicUpload">profile picture</label>

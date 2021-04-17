@@ -1,6 +1,8 @@
 let allTasks = [];
 
-let allUsers = [
+let allUsers = [];
+
+/* let allUsers = [
   {
     "name": "Paul",
     "img": "../img/paul.png",
@@ -22,7 +24,7 @@ let allUsers = [
     "checkedStatus": false,
     "password": "442fa2167e29c1843cd3cf62a8951ac0ad6eab20ef99282d89f34c347e9451b8"
   }
-];
+]; */
 
 
 let currentDraggedElement;
@@ -32,8 +34,15 @@ let currentDraggedElement;
  */
 async function init() {
   includeHTML();
-  await getArrayFromBackend('allTasks');
+  allUsers = await getArrayFromBackend('allUsers');
+  allTasks = await getArrayFromBackend('allTasks');
   showLoggedInUser();
+}
+
+//for login and registration
+async function initUsers() {
+  allUsers = await getArrayFromBackend('allUsers');
+  console.log("initUsers() wurde aufgerufen!");
 }
 
 
@@ -146,7 +155,7 @@ function changeNavbar() {
 async function addTask() {
 
   // the next line is only for testing purposes
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   let task = getValues();
   allTasks.push(task);
@@ -154,7 +163,7 @@ async function addTask() {
   saveArrayToBackend('allTasks', allTasks);
 
   // the next line is only for testing purposes
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   clearFields();
   showSnackbar("Task pushed to backlog!");
@@ -262,7 +271,7 @@ async function showBacklog() {
   backlogElements.innerHTML = '';
 
   //Load information from server
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   //Show all backlog entries with the currrent information from allTasks
   for (let i = 0; i < allTasks.length; i++) {
@@ -401,7 +410,7 @@ function addColorBorder(i) {
  */
 async function showBoard() {
 
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   let toDoContent = document.getElementById('to-do-content');
   let inProgressContent = document.getElementById('in-progress-content');
@@ -724,7 +733,7 @@ function showAssignedTo() {
 async function deleteTask(id, loc) {
 
   // the next line is only for testing purposes
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   allTasks.splice(id, 1);
 
@@ -734,7 +743,7 @@ async function deleteTask(id, loc) {
 
   saveArrayToBackend('allTasks', allTasks);
   // the next line is only for testing purposes but this feels like it helps
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
 
   if (loc == 'board') {
     showBoard();
@@ -752,13 +761,13 @@ async function deleteTask(id, loc) {
  * @param {number} id - the id of the ticket
  */
 async function pushToBoard(id) {
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
   if (allTasks[id].status == 'backlog') {
     allTasks[id].status = 'toDo';
   }
   saveArrayToBackend('allTasks', allTasks);
   // the next line is only for testing purposes but this feels like it helps
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
   showBacklog();
 }
 
@@ -769,11 +778,11 @@ async function pushToBoard(id) {
  * @param  {string} dest - One of 4 destinations (doTo, inProgress, testing or done).
  */
 async function pushToColumn(id, dest) {
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
   allTasks[id].status = dest;
   saveArrayToBackend('allTasks', allTasks);
   // the next line is only for testing purposes but this feels like it helps
-  await getArrayFromBackend('allTasks');
+  allTasks = await getArrayFromBackend('allTasks');
   showBoard();
 }
 
@@ -824,7 +833,7 @@ async function getArrayFromBackend(key) {
   //   }
   // }
   await downloadFromServer();
-  allTasks = JSON.parse(backend.getItem(key)) || [];
+  return JSON.parse(backend.getItem(key)) || [];
 }
 
 
@@ -840,10 +849,12 @@ async function saveArrayToBackend(key, array) {
 
 
 /**
- * Just for testing. Resets allTasks and currentID.
+ * Just for testing. Resets allTasks or allUsers.
+ * 
+ * @param  {Object} key - Name of the array (allTasks or allUsers).
  */
-function reset() {
-  backend.deleteItem('allTasks');
+function reset(key) {
+  backend.deleteItem(key);
 }
 
 
