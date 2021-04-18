@@ -104,6 +104,7 @@ function removeGhostHeader() {
 function changeNavbar() {
   let button = document.getElementById('change-navbar-btn');
   let header = document.getElementById('header');
+  let headerLinks = document.getElementById('header-links');
   let headerTexts = document.getElementsByClassName('header-txt');
   // let headerIcons = document.getElementsByClassName('header-icon');
 
@@ -112,6 +113,8 @@ function changeNavbar() {
       const text = headerTexts[i];
       // header.classList.remove('header');
       header.classList.add('expanded-header');
+      headerLinks.classList.remove('hl-dont-show');
+      headerLinks.classList.add('hl-show');
       // text.classList.remove('d-none');
       // text.classList.add('d-block');
     }
@@ -131,6 +134,8 @@ function changeNavbar() {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
       header.classList.remove('expanded-header');
+      headerLinks.classList.remove('hl-show');
+      headerLinks.classList.add('hl-dont-show');
       // text.classList.remove('d-block');
       // text.classList.add('d-none');
       // header.classList.add('header');
