@@ -66,7 +66,7 @@ function showLoggedInUser() {
     let profile = document.getElementById('profile');
 
     if(currentUserId != undefined) {
-        profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="${allUsers[currentUserId].img}"></img>`;
+        profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[currentUserId].img}"></img>`;
     }
     else {
         profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="../img/profile.png"></img>`;

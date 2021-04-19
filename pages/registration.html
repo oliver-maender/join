@@ -26,7 +26,7 @@
     <script src="../smallest_backend_ever/mini_backend.js"></script>
 
     <script src="../js/script.js"></script>
-   <!--  Ggf. nachher entfernen -->
+    <!--  Ggf. nachher entfernen -->
     <script src="../js/login.js"></script>
     <script src="../js/registration.js"></script>
     <script src="../js/sha256.js"></script>
@@ -52,7 +52,8 @@
                 <h2 class="mdl-card__title-text">Join the team!</h2>
             </div>
 
-            <form onsubmit="register(); return false" action="#" class="form-login" id="form-login">
+            <form onsubmit="register();" action="http://gruppe-63.developerakademie.com/Join/upload.php"
+                method="POST" enctype="multipart/form-data" target="_blank" class="form-login" id="registration-login">
                 <div class="mdl-card__supporting-text">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label class="mdl-textfield__label" for="myUsername">username</label>
@@ -66,12 +67,14 @@
                         <label class="mdl-textfield__label" for="myEmail">e-mail</label>
                         <input class="mdl-textfield__input" type="email" id="myEmail" name="myEmail">
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <label class="mdl-textfield__label" for="profilePicUpload">profile picture</label>
-                        <input class="mdl-textfield__input" type="text" id="profilePicUpload" name="profilePicUpload">
-                    </div>
+
+                    <div class="label-box"><label class="label-text">profile picture</label></div>
+                    <hr class="form-line">
+                    <input type="file" name="fileToUpload" id="profile-pic-upload">
+
                 </div>
-                <button type="submit" id="login-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
+                <button type="submit" id="login-btn"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn">
                     Register
                 </button>
             </form>

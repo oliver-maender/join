@@ -2,3 +2,30 @@
     font-size: 3em;
     margin-bottom: 8px;
 }
+
+.label-box {
+    margin-top: 20px;
+}
+
+.label-text {
+   color: black;
+   opacity: 0.3;
+   font-size: 16px;
+}
+
+.form-line {
+    color: black;
+    opacity: 0.7;
+    margin-top: 6px;
+}
+
+#profile-pic-upload {
+    font-family: var(--main-font-family) !important;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+
+input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+    cursor: pointer; 
+}
