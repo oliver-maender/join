@@ -3,12 +3,12 @@
  */
 async function validateRegistration() {
 
-    console.log("Funktion register aufgerufen!");
-
     allUsers = await getArrayFromBackend('allUsers');
 
     let snackbar = document.getElementById('snackbar-container');
     snackbar.classList.remove('snackbar-warning');
+
+    document.getElementById('uploadErrorBox').classList.remove('d-none');
 
     let newUser = getUserData();
 
@@ -25,6 +25,7 @@ async function validateRegistration() {
             }
         }
         else {
+            console.log("nameAlreadyExists(newUser)", nameAlreadyExists(newUser));
             changeSnackbarToWarning(snackbar);
             showSnackbar("Name already exists. Please choose another!");
         }
@@ -72,13 +73,8 @@ function createUser(myUsername, myPassword, myEmail, profilePicUpload) {
 }
 
 
-/**
- * Checks if a user name already exists.
- * 
- * @param  {Object} newUser - JSON with all user data.
- * returns boolen
- */
-function nameAlreadyExists(newUser) {
+
+/* function nameAlreadyExists(newUser) {
     for (let i = 0; i < allUsers.length; i++) {
         if (newUser.name == allUsers[i].name) {
             return true;
@@ -87,17 +83,22 @@ function nameAlreadyExists(newUser) {
             return false;
         }
     }
-}
-
-
+} */
 
 /**
- * Checks if a user email adress already exists.
+ * Checks if a user name already exists.
  * 
  * @param  {Object} newUser - JSON with all user data.
  * returns boolen
  */
-function emailAlreadyExists(newUser) {
+function nameAlreadyExists(newUser) {
+    let match = allUsers.find(u => u.name == newUser.name);
+    return !!match; // Nutzer existiert => true; sonst false
+}
+
+
+
+/* function emailAlreadyExists(newUser) {
     for (let i = 0; i < allUsers.length; i++) {
         if (newUser.email == allUsers[i].email) {
             return true;
@@ -106,7 +107,19 @@ function emailAlreadyExists(newUser) {
             return false;
         }
     }
+} */
+
+/**
+ * Checks if a user email adress already exists.
+ * 
+ * @param  {Object} newUser - JSON with all user data.
+ * returns boolen
+ */
+function emailAlreadyExists(newUser) {
+    let match = allUsers.find(u => u.email == newUser.email);
+    return !!match; // Nutzer existiert => true; sonst false
 }
+
 
 
 
@@ -130,3 +143,5 @@ async function registerUser(newUser) {
     }, 3000);
 
 }
+
+

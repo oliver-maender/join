@@ -53,7 +53,7 @@
             </div>
 
             <form onsubmit="validateRegistration();" action="http://gruppe-63.developerakademie.com/Join/upload.php"
-                method="POST" enctype="multipart/form-data" target="_blank" class="form-login" id="form-registration">
+                method="POST" enctype="multipart/form-data" target="uploadErrorBox" class="form-login" id="form-registration">
                 <div class="mdl-card__supporting-text">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label class="mdl-textfield__label" for="myUsername">username</label>
@@ -71,6 +71,7 @@
                     <div class="label-box"><label class="label-text">profile picture</label></div>
                     <hr class="form-line">
                     <input type="file" name="fileToUpload" id="profile-pic-upload">
+                    <iframe id="uploadErrorBox" name="uploadErrorBox" class="d-none"></iframe>
 
                 </div>
                 <button type="submit" id="login-btn"

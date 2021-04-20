@@ -350,7 +350,7 @@ function addBacklogProfile(i) {
  * @param  {string} img - Profile picture
  */
 function addHTMLBacklogMembersImage(img) {
-  return `<img src="${img}">`;
+  return `<img src="http://gruppe-63.developerakademie.com/Join/uploads/${img}">`;
 }
 
 
@@ -506,7 +506,7 @@ function addBoardProfilePics(i) {
  * @param  {string} img - Profile image.
  */
 function addHTMLBoardMembers(name, img) {
-  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src="${img}" alt="ticket-profile-pic"></div>`;
+  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src="http://gruppe-63.developerakademie.com/Join/uploads/${img}" alt="ticket-profile-pic"></div>`;
 }
 
 
@@ -662,7 +662,7 @@ function generateUserEntry(i) {
   return `
               <li class="mdl-list__item">
                 <div class="mdl-list__item-primary-content">
-                  <div><img src="${allUsers[i]['img']}" class="profile-pic"></img></div>
+                  <div><img src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[i]['img']}" class="profile-pic"></img></div>
                   <div>${allUsers[i]['name']}</div>
                 </div>
                 <div class="mdl-list__item-secondary-action">
@@ -723,7 +723,7 @@ function showAssignedTo() {
 
   for (let i = 0; i < allUsers.length; i++) {
     if (allUsers[i]['checkedStatus'] == true) {
-      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="${allUsers[i].img}">`;
+      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[i].img}">`;
     }
   }
   //setArray('allUsers', allUsers);

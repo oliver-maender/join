@@ -32,6 +32,10 @@ body {
     font-size: 16px;
 }
 
+.d-none {
+    display: none;
+}
+
 .flex-center {
     display: flex;
     justify-content: center;
