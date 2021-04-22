@@ -1,3 +1,7 @@
+#registration-box-top {
+    cursor: pointer;
+}
+
 .fa-users {
     font-size: 3em;
     margin-bottom: 8px;
@@ -8,9 +12,9 @@
 }
 
 .label-text {
-   color: black;
-   opacity: 0.3;
-   font-size: 16px;
+    color: black;
+    opacity: 0.3;
+    font-size: 16px;
 }
 
 .form-line {
@@ -25,11 +29,67 @@
     margin-top: 8px;
 }
 
-input[type=file], /* FF, IE7+, chrome (except button) */
-input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
-    cursor: pointer; 
+input[type=file],
+/* FF, IE7+, chrome (except button) */
+
+input[type=file]::-webkit-file-upload-button {
+    /* chromes and blink button */
+    cursor: pointer;
 }
 
 #uploadErrorBox {
-    height: 60px;
+    height: 81px;
+    font-family: var(--main-font-family);
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width: 1400px) {
+    #registration-background-image {
+        object-position: left;
+    }
+}
+
+@media(max-width: 800px) {
+    #registration-background-image {
+        object-position: 15% 50%;
+    }
+}
+
+@media(max-width: 700px) {
+    #registration-background-image {
+        object-position: 30% 50%;
+    }
+}
+
+@media(max-width: 540px) {
+    #join-logo-registration-container {
+        display: none;
+    }
+}
+
+@media(max-width: 500px) {
+    #registration-box {
+        margin-top: 0 !important;
+        max-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 350px) {
+    #uploadErrorBox {
+        height: 81px;
+    }
+}
+
+@media(max-width: 320px) {
+    #uploadErrorBox {
+        height: 102px;
+    }
+    #registration-box {
+        width: 100%;
+        height: 100vh;
+    }
 }

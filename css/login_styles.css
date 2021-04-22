@@ -1,4 +1,4 @@
-#join-logo-login-container {
+.join-logo-login-container {
     height: 88px;
     width: 88px;
     position: absolute;
@@ -12,8 +12,8 @@
     cursor: pointer;
 }
 
-#join-logo-login {
-   height: 64px;
+.join-logo-login {
+    height: 64px;
 }
 
 .background-image-login {
@@ -86,4 +86,31 @@
 .links-login {
     color: var(--color-email);
     text-decoration: none;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width: 890px) {
+    .login-container {
+        justify-content: center;
+    }
+    .demo-card-wide.mdl-card {
+        margin-left: unset;
+    }
+}
+
+@media(max-width: 500px) {
+    .join-logo-login-container {
+        width: 100%;
+        border-radius: unset;
+    }
+    .demo-card-wide.mdl-card {
+        margin-top: 88px;
+    }
+}
+
+@media(max-width: 320px) {
+    .demo-card-wide.mdl-card {
+        width: 92%;
+    }
 }
