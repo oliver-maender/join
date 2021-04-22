@@ -5,13 +5,14 @@ async function validateRegistration() {
 
     allUsers = await getArrayFromBackend('allUsers');
 
+    //change snackbar color to blue
     let snackbar = document.getElementById('snackbar-container');
     snackbar.classList.remove('snackbar-warning');
 
+    //fade out iframe if no upload error is shown
     document.getElementById('uploadErrorBox').classList.remove('d-none');
 
     let newUser = getUserData();
-
     let allFieldsFilledOut = newUser.name !== '' && newUser.email !== '' && newUser.password !== '' && newUser.img !== '';
 
     if (allFieldsFilledOut == true) {
@@ -25,7 +26,6 @@ async function validateRegistration() {
             }
         }
         else {
-            console.log("nameAlreadyExists(newUser)", nameAlreadyExists(newUser));
             changeSnackbarToWarning(snackbar);
             showSnackbar("Name already exists. Please choose another!");
         }
@@ -35,7 +35,6 @@ async function validateRegistration() {
         showSnackbar("Please fill out the fields!");
     }
 }
-
 
 /**
  * Gets user data from input fields.
@@ -49,7 +48,6 @@ function getUserData() {
 
     return createUser(myUsername, myPassword, myEmail, profilePicUpload);
 }
-
 
 /**
  * Creates the user with all user data.
@@ -72,19 +70,6 @@ function createUser(myUsername, myPassword, myEmail, profilePicUpload) {
 
 }
 
-
-
-/* function nameAlreadyExists(newUser) {
-    for (let i = 0; i < allUsers.length; i++) {
-        if (newUser.name == allUsers[i].name) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-} */
-
 /**
  * Checks if a user name already exists.
  * 
@@ -96,19 +81,6 @@ function nameAlreadyExists(newUser) {
     return !!match; // Nutzer existiert => true; sonst false
 }
 
-
-
-/* function emailAlreadyExists(newUser) {
-    for (let i = 0; i < allUsers.length; i++) {
-        if (newUser.email == allUsers[i].email) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-} */
-
 /**
  * Checks if a user email adress already exists.
  * 
@@ -119,9 +91,6 @@ function emailAlreadyExists(newUser) {
     let match = allUsers.find(u => u.email == newUser.email);
     return !!match; // Nutzer existiert => true; sonst false
 }
-
-
-
 
 /**
  * Adds user to allUsers array, clears registration form, confirms registration and transfers to the login page.
@@ -138,10 +107,16 @@ async function registerUser(newUser) {
     registrationForm.reset();
     showSnackbar("Registration was successful!");
 
+    backToLoginPage();
+}
+
+/**
+ * Redirects the user to login page.
+ */
+function backToLoginPage() {
     setTimeout(function () {
         document.location.href = '../index.html';
     }, 3000);
-
 }
 
 

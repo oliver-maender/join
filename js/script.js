@@ -46,33 +46,13 @@ async function initUsers() {
 }
 
 
-/**
- * Loads content at the startup of the board page
- */
-async function initBoard() {
-  await init();
-  showBoard();
-}
 
 
-/**
- * Loads content at the startup of the backlog page
- */
-async function initBacklog() {
-  await init();
-  showBacklog();
-}
 
 
-/**
- * Loads content at the startup of the addTask page
- */
-async function initAddTask() {
-  await init();
-  //setArray('allUsers', allUsers);
-  showAssignedTo();
-  preventReload();
-}
+
+
+
 
 async function initFAQ() {
   await init();
@@ -154,87 +134,7 @@ function changeNavbar() {
 }
 
 
-/**
- * Manages the ability to add a task to the backlog
- */
-async function addTask() {
 
-  // the next line is only for testing purposes
-  allTasks = await getArrayFromBackend('allTasks');
-
-  let task = getValues();
-  allTasks.push(task);
-
-  saveArrayToBackend('allTasks', allTasks);
-
-  // the next line is only for testing purposes
-  allTasks = await getArrayFromBackend('allTasks');
-
-  clearFields();
-  showSnackbar("Task pushed to backlog!");
-
-  //Show backlog page with new task added
-  setTimeout(function () {
-    document.location.href = "../pages/backlog.html";
-  }, 3000);
-}
-
-
-/**
- * Gets the values of the HTML input fields and calls the function createTask() which creates the JSON for the task.
- * Caches all checked profiles and saves them into the array assignedTo which is part of the created task.
- * 
- * @returns JSON
- */
-function getValues() {
-
-  let title = document.getElementById('title-input').value;
-  let dueDate = document.getElementById('due-date-input').value;
-  let category = document.getElementById('category-input').value;
-  let urgency = document.getElementById('urgency-input').value;
-  let description = document.getElementById('description-input').value;
-  let currentDate = new Date().getTime();
-
-  let assignedTo = [];
-
-  for (let i = 0; i < allUsers.length; i++) {
-    if (allUsers[i].checkedStatus == true) {
-      let user = { name: allUsers[i].name, img: allUsers[i].img, email: allUsers[i].email };
-      assignedTo.push(user);
-      allUsers[i].checkedStatus = false;
-    }
-  }
-
-  return createTask(title, dueDate, category, urgency, description, assignedTo, currentDate);
-
-}
-
-/**
- * Creates the JSON for the task
- * 
- * @param {string} title - title of the task
- * @param {string} dueDate - due date of the task
- * @param {string} category - category of the task
- * @param {string} urgency - urgency of the task
- * @param {string} description - description of the task
- * @param {number} currentDate - today's date
- * @returns JSON
- */
-function createTask(title, dueDate, category, urgency, description, assignedTo, currentDate) {
-
-  return {
-    "id": allTasks.length,
-    "title": title,
-    "dueDate": dueDate,
-    "category": category,
-    "urgency": urgency,
-    "description": description,
-    "assignedTo": assignedTo,
-    "status": "backlog",
-    "currentDate": currentDate
-  }
-
-}
 
 /**
  * MDL (material design lite) function
@@ -248,266 +148,12 @@ function showSnackbar(msg) {
   snackbarContainer.MaterialSnackbar.showSnackbar(data);
 }
 
-/**
- * Clears the form input fields and removes checkbox checks.
- */
-function clearFields() {
-  document.getElementById('title-input').value = '';
-  document.getElementById('due-date-input').value = '';
-  document.getElementById('category-input').value = '';
-  document.getElementById('urgency-input').value = '';
-  document.getElementById('description-input').value = '';
-
-  for (let i = 0; i < allUsers.length; i++) {
-    allUsers[i].checkedStatus = false;
-  }
-
-  showAssignedTo();
-
-}
-
-/**
- * Displays the elements of the backlog.
- */
-async function showBacklog() {
-
-  let backlogElements = document.getElementById('backlog-elements');
-  //First step: clear all backlog elements
-  backlogElements.innerHTML = '';
-
-  //Load information from server
-  allTasks = await getArrayFromBackend('allTasks');
-
-  //Show all backlog entries with the currrent information from allTasks
-  for (let i = 0; i < allTasks.length; i++) {
-
-    if (allTasks[i].status == 'backlog') {
-      backlogElements.innerHTML += addBacklogElement(allTasks[i].id, allTasks[i].category, allTasks[i].description);
-      addBacklogProfile(i);
-      addColor(i);
-    }
-  }
-}
-
-/**
- * Adds the HTML for every backlog element.
- * 
- * @param {number} id 
- * @param {string} category 
- * @param {string} description 
- * @returns HTML
- */
-function addBacklogElement(id, category, description) {
-
-  return `
-
-    <div onclick="openTask(${id}, 'backlog')" id="backlog-element-${id}" class="backlog-element">
-
-      <div id="backlog-element-${id}-color" class="backlog-element-color">
-      </div>
-
-      <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture">
-      </div>
-
-      <div id="backlog-element-profile-name-${id}" class="backlog-element-name">
-      </div>
-
-      <div class="backlog-element-category">
-        <span>${category}</span>
-      </div>
-
-      <div class="backlog-element-details">
-        <span>${description}</span>
-      </div>
-
-    </div>
-      
-  `;
-}
-
-/**
- * Shows the profile pictures and names of the users who have been assigned to a task within the backlog element.
- * 
- * @param  {number} i - Id of allTasks array
- */
-function addBacklogProfile(i) {
-
-  let ticketProfilePic = document.getElementById(`backlog-element-profile-picture-${i}`);
-  let ticketProfileName = document.getElementById(`backlog-element-profile-name-${i}`);
-
-  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-
-    ticketProfilePic.innerHTML += addHTMLBacklogMembersImage(allTasks[i].assignedTo[j].img);
-    ticketProfileName.innerHTML += addHTMLBacklogMembersNameAndEmail(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].email);
-
-  }
-}
 
 
-/**
- * Generates HTML code for profile picture in the backlog.
- * 
- * @param  {string} img - Profile picture
- */
-function addHTMLBacklogMembersImage(img) {
-  return `<img src="http://gruppe-63.developerakademie.com/Join/uploads/${img}">`;
-}
 
 
-/**
- * Generates HTML code for profile name in the backlog.
- * 
- * @param  {string} name - Profile name
- * @param  {string} email - Profile email
- */
-function addHTMLBacklogMembersNameAndEmail(name, email) {
-  return `
-  <span>${name}</span>
-  <div class="email-address-container">
-    <a class="email-adress" href="mailto:${email}" title="send email">${email}</a>
-  </div>
-  `;
-}
 
 
-/**
- * Changes the color of the backlog task depending on the chosen category when creating the task.
- * 
- * @param  {number} i - Id of allTasks array.
- */
-function addColor(i) {
-
-  let colors = {
-    "Accounting": "color-category1",
-    "Marketing": "color-category2",
-    "IT": "color-category3",
-    "Controlling": "color-category4",
-    "Others": "color-category5"
-  }
-
-  document.getElementById(`backlog-element-${i}-color`).classList.add(colors[allTasks[i].category]);
-
-}
-
-
-/**
- * Changes the border color of the board ticket depending on the chosen category when creating the task.
- * 
- * @param  {number} i - Id of allTasks array.
- */
-function addColorBorder(i) {
-
-  let borderColors = {
-    "Accounting": "color-border-category1",
-    "Marketing": "color-border-category2",
-    "IT": "color-border-category3",
-    "Controlling": "color-border-category4",
-    "Others": "color-border-category5"
-  }
-
-  document.getElementById(`ticket-box-${i}`).classList.add(borderColors[allTasks[i].category]);
-
-}
-
-
-/**
- * Manages to display the tickets on the board.
- */
-async function showBoard() {
-
-  allTasks = await getArrayFromBackend('allTasks');
-
-  let toDoContent = document.getElementById('to-do-content');
-  let inProgressContent = document.getElementById('in-progress-content');
-  let testingContent = document.getElementById('testing-content');
-  let doneContent = document.getElementById('done-content');
-
-  //first step: clear board
-  toDoContent.innerHTML = '';
-  inProgressContent.innerHTML = '';
-  testingContent.innerHTML = '';
-  doneContent.innerHTML = '';
-
-  showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent);
-
-}
-
-/**
- * Loops through the JSON array and displays the tickets on the board.
- * 
- * @param {string} toDoContent 
- * @param {string} inProgressContent 
- * @param {string} testingContent 
- * @param {string} doneContent 
- */
-function showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent) {
-
-  for (let i = 0; i < allTasks.length; i++) {
-
-    let container;
-
-    switch (allTasks[i].status) {
-      case 'toDo': container = toDoContent; break;
-      case 'inProgress': container = inProgressContent; break;
-      case 'testing': container = testingContent; break;
-      case 'done': container = doneContent; break;
-    }
-
-    if (container != null) {
-      container.innerHTML += addHTMLBoard(i, allTasks[i].title, allTasks[i].urgency, allTasks[i].description);
-      addBoardProfilePics(i);
-      addColorBorder(i);
-    }
-
-  }
-
-}
-
-
-/**
- * Adds the HTML for the tickets on the board.
- * 
- * @param {string} title 
- * @param {string} urgency 
- * @param {string} description 
- * @returns HTML
- */
-function addHTMLBoard(id, title, urgency, description) {
-  return `
-
-    <div id="ticket-box-${id}" draggable="true" ondragstart="startDragging(${id})" onclick="openTask(${id}, 'board')" class="ticket-box">
-      <div class="ticket-title">${title}</div>
-      <div class="ticket-category">${urgency}</div>
-      <div class="ticket-description">${description}</div>
-      <div id="ticket-profiles-${id}" class="ticket-profiles"></div>
-    </div>
-
-  `;
-}
-
-
-/**
- * Shows the profile names and pictures of the users who have been assigned to a task within the board ticket.
- * 
- * @param  {number} i - Id of allTasks array.
- */
-function addBoardProfilePics(i) {
-  let ticketProfilePic = document.getElementById(`ticket-profiles-${i}`);
-
-  for (let j = 0; j < allTasks[i].assignedTo.length; j++) {
-    ticketProfilePic.innerHTML += addHTMLBoardMembers(allTasks[i].assignedTo[j].name, allTasks[i].assignedTo[j].img);
-  }
-}
-
-/**
- * Generates HTML code for profile on board ticket.
- * 
- * @param  {string} name - Profile name.
- * @param  {string} img - Profile image.
- */
-function addHTMLBoardMembers(name, img) {
-  return `<div class="ticket-profile"><img title="${name}" class="ticket-profile-pic" src="http://gruppe-63.developerakademie.com/Join/uploads/${img}" alt="ticket-profile-pic"></div>`;
-}
 
 
 /**
@@ -622,56 +268,6 @@ function generateHTMLForOpenTask(id, loc, assignedToNames) {
 }
 
 
-/**
- * Shows the list of users by clicking on the plus icon.
- */
-function openUserList() {
-
-  //allUsers = getArray('allUsers');
-
-  let dialogUserList = document.getElementById('dialogUserListItem');
-  dialogUserList.innerHTML = '';
-
-  for (let i = 0; i < allUsers.length; i++) {
-    dialogUserList.innerHTML += generateUserEntry(i);
-  }
-
-  dialogUserList.innerHTML += `
-    <div class="mdl-dialog__actions">
-      <button type="button" onclick="showAssignedTo()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn close">Add</button>
-      <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect close btn">Cancel</button>
-    </div>`;
-
-  //Shows users' checkboxes checked or unchecked
-  for (let i = 0; i < allUsers.length; i++) {
-    document.getElementById(`list-checkbox-${i}`).checked = allUsers[i]['checkedStatus'];
-  }
-
-  fillDialog();
-
-}
-
-
-/**
- * Generates HTML Code for a user entry.
- * 
- * @param  {number} i - Index of the allUsers array.
- */
-function generateUserEntry(i) {
-
-  return `
-              <li class="mdl-list__item">
-                <div class="mdl-list__item-primary-content">
-                  <div><img src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[i]['img']}" class="profile-pic"></img></div>
-                  <div>${allUsers[i]['name']}</div>
-                </div>
-                <div class="mdl-list__item-secondary-action">
-                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-${i}">
-                    <input onclick="toggleUser(${i})" type="checkbox" id="list-checkbox-${i}" class="mdl-checkbox__input" />
-                  </label>
-                </div>
-              </li>`
-};
 
 
 /**
@@ -697,41 +293,11 @@ function fillDialog() {
 }
 
 
-/**
- * Changes the checkbox status of every user on click.
- * 
- * @param  {number} i - Index of the allUsers array.
- */
-function toggleUser(i) {
 
-  if (allUsers[i]['checkedStatus'] == true) {
-    allUsers[i]['checkedStatus'] = false;
-  }
-
-  else if (allUsers[i]['checkedStatus'] == false) {
-    allUsers[i]['checkedStatus'] = true;
-  }
-}
 
 
 /**
- * Shows all users who have been chosen for the task in the dialog window by checkboxing.
- */
-function showAssignedTo() {
-
-  document.getElementById('default-user').innerHTML = '';
-
-  for (let i = 0; i < allUsers.length; i++) {
-    if (allUsers[i]['checkedStatus'] == true) {
-      document.getElementById('default-user').innerHTML += `<img id="profile-pic-${i}" class="profile-pic" title="${allUsers[i].name}" src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[i].img}">`;
-    }
-  }
-  //setArray('allUsers', allUsers);
-}
-
-
-/**
- * Deletes a task and calls showBoard() or showBacklog() again depending on the curren location.
+ * Deletes a task and calls showBoard() or showBacklog() again depending on the current location.
  * @param  {number} id - Id of the task.
  * @param  {string} loc - Location (board or backlog).
  */
@@ -760,36 +326,9 @@ async function deleteTask(id, loc) {
 }
 
 
-/**
- * Pushes the status of a backlog ticket from "backlog" to "toDo".
- * 
- * @param {number} id - the id of the ticket
- */
-async function pushToBoard(id) {
-  allTasks = await getArrayFromBackend('allTasks');
-  if (allTasks[id].status == 'backlog') {
-    allTasks[id].status = 'toDo';
-  }
-  saveArrayToBackend('allTasks', allTasks);
-  // the next line is only for testing purposes but this feels like it helps
-  allTasks = await getArrayFromBackend('allTasks');
-  showBacklog();
-}
 
-/**
- * Changes the status of a task.
- * 
- * @param  {number} id - The id of the ticket.
- * @param  {string} dest - One of 4 destinations (doTo, inProgress, testing or done).
- */
-async function pushToColumn(id, dest) {
-  allTasks = await getArrayFromBackend('allTasks');
-  allTasks[id].status = dest;
-  saveArrayToBackend('allTasks', allTasks);
-  // the next line is only for testing purposes but this feels like it helps
-  allTasks = await getArrayFromBackend('allTasks');
-  showBoard();
-}
+
+
 
 
 /* LOCAL STORAGE */
@@ -823,24 +362,9 @@ setURL('http://gruppe-63.developerakademie.com/Join/smallest_backend_ever');
  * @param  {string} key - Loads an array (object) from backend.
  */
 async function getArrayFromBackend(key) {
-  // The following code I commented out catches an error in relation with "downloadFromServer()", mostly called ("unexpected JSON input") and just tries it again (on the second try it works 100% but maximum tries are capped to 5 so that there will be no infinite loop guaranteed)
-
-  // let count = 0;
-  // let maxTries = 5;
-
-  // while (count < maxTries) {
-  //   try {
-  //     await downloadFromServer();
-  //     break;
-  //   } catch (error) {
-  //     count++;
-  //     console.log("Error avoided");
-  //   }
-  // }
   await downloadFromServer();
   return JSON.parse(backend.getItem(key)) || [];
 }
-
 
 /**
  * Saves the changed array object (allTasks) to backend.
@@ -862,9 +386,8 @@ function reset(key) {
   backend.deleteItem(key);
 }
 
-
 /**
-* Prevents the reload of the page when the submit button in the Add Task form is clicked.
+* Prevents the reload of the page when the submit button in the add task form is clicked.
 */
 function preventReload() {
   var form = document.getElementById("add-task-form");
@@ -904,26 +427,4 @@ function includeHTML() {
       return;
     }
   }
-}
-
-function startDragging(id) {
-  currentDraggedElement = id;
-}
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-async function moveTo(status) {
-  allTasks[currentDraggedElement]['status'] = status;
-  await saveArrayToBackend('allTasks', allTasks);
-  showBoard();
-}
-
-function addHighlight(id) {
-  document.getElementById(id).classList.add('drag-area-highlight');
-}
-
-function removeHighlight(id) {
-  document.getElementById(id).classList.remove('drag-area-highlight');
 }

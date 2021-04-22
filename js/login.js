@@ -9,6 +9,7 @@ function login() {
     let encryptedPassword = sha256(document.getElementById('password').value);
     let match;
 
+    //changes snackbar color to blue
     let snackbar = document.getElementById('snackbar-container');
     snackbar.classList.remove('snackbar-warning');
 
@@ -24,7 +25,6 @@ function login() {
                 document.location.href = 'pages/board.html';
             }, 3000);
         }
-
     }
 
     //login incorrect (no match)
@@ -41,7 +41,7 @@ function login() {
  * @param  {Object} snackbar - Snackbar container.
  */
 function changeSnackbarToWarning(snackbar) {
-    console.log(typeof(snackbar));
+    console.log(typeof (snackbar));
     snackbar.classList.add('snackbar-warning');
 }
 
@@ -65,13 +65,12 @@ function showLoggedInUser() {
     let currentUserId = getArray('currentUserId');
     let profile = document.getElementById('profile');
 
-    if(currentUserId != undefined) {
+    if (currentUserId != undefined) {
         profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="http://gruppe-63.developerakademie.com/Join/uploads/${allUsers[currentUserId].img}"></img>`;
     }
     else {
         profile.innerHTML = `<img title="Logout" onclick="logout()" class="profile-pic-header" src="../img/profile.png"></img>`;
     }
-
 }
 
 /**
