@@ -306,7 +306,7 @@ function addBacklogElement(id, category, description) {
       <div id="backlog-element-${id}-color" class="backlog-element-color">
       </div>
 
-      <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture flex-center">
+      <div id="backlog-element-profile-picture-${id}" class="backlog-element-picture">
       </div>
 
       <div id="backlog-element-profile-name-${id}" class="backlog-element-name">

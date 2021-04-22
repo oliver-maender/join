@@ -69,6 +69,8 @@ input, textarea, select {
 
 .profile-pics {
     margin-left: 16px;
+    display: flex;
+    overflow-x: scroll;
 }
 
 .profile-pic {
@@ -77,6 +79,7 @@ input, textarea, select {
     object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
+    flex-shrink: 0;
 }
 
 #add-person-btn {
@@ -98,20 +101,17 @@ input, textarea, select {
 /* RESPONSIVE DESIGN */
 
 @media(max-width: 870px) {
-
     .form-part {
         width: 88%;
     }
 }
 
 @media(max-width: 500px) {
-
     .form-part {
         width: 100%;
         margin-left: 0;
         margin-right: 0;
     }
-
 }
 
 #create {

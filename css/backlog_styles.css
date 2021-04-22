@@ -43,6 +43,11 @@
 .backlog-element-picture {
     min-width: 80px;
     flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .backlog-element-picture img {
@@ -50,12 +55,13 @@
     width: 40px;
     object-fit: cover;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .backlog-element-name {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 300px;
     padding: 16px;
 }

@@ -12,7 +12,7 @@ async function validateRegistration() {
 
     let newUser = getUserData();
 
-    let allFieldsFilledOut = newUser.name !== '' && newUser.email !== '' && newUser.password !== '';
+    let allFieldsFilledOut = newUser.name !== '' && newUser.email !== '' && newUser.password !== '' && newUser.img !== '';
 
     if (allFieldsFilledOut == true) {
         if (nameAlreadyExists(newUser) == false) {
