@@ -50,10 +50,10 @@ async function showBoard() {
 /**
  * Loops through the JSON array and displays the tickets on the board.
  * 
- * @param {string} toDoContent 
- * @param {string} inProgressContent 
- * @param {string} testingContent 
- * @param {string} doneContent 
+ * @param {string} toDoContent - The content of the to-do section
+ * @param {string} inProgressContent - The content of the in-progress section
+ * @param {string} testingContent - The content of the testing section
+ * @param {string} doneContent - The content of the done section
  */
 function showBoardLoop(toDoContent, inProgressContent, testingContent, doneContent) {
 
@@ -80,9 +80,10 @@ function showBoardLoop(toDoContent, inProgressContent, testingContent, doneConte
 /**
  * Adds the HTML for the tickets on the board.
  * 
- * @param {string} title 
- * @param {string} urgency 
- * @param {string} description 
+ * @param {number} id - The id of the task
+ * @param {string} title - The title of the task
+ * @param {string} urgency - The urgency of the task
+ * @param {string} description - The description of the task
  * @returns HTML
  */
 function addHTMLBoard(id, title, urgency, description) {
@@ -139,34 +140,49 @@ async function pushToColumn(id, dest) {
 
 /* DROP DOWN */
 
+/**
+ * Specifies the currently dragged element.
+ * 
+ * @param {number} id - The id of the task
+ */
 function startDragging(id) {
     currentDraggedElement = id;
-  }
-  
-  function allowDrop(ev) {
+}
+
+/**
+ * This is needed so that a drop is allowed.
+ * 
+ * @param {event} ev - the Event
+ */
+function allowDrop(ev) {
     ev.preventDefault();
-  }
-  
-  async function moveTo(status) {
+}
+
+/**
+ * This changes the status of the task after dragging it.
+ * 
+ * @param {string} status - The section the task is moved to
+ */
+async function moveTo(status) {
     allTasks[currentDraggedElement]['status'] = status;
     await saveArrayToBackend('allTasks', allTasks);
     showBoard();
-  }
-  
-  /**
-   * Highlights the board column over which a board ticket is dragged.
-   * @param  {number} id
-   */
-  function addHighlight(id) {
+}
+
+/**
+ * Highlights the board column over which a board ticket is dragged.
+ * 
+ * @param  {number} id - the id of the task
+ */
+function addHighlight(id) {
     document.getElementById(id).classList.add('drag-area-highlight');
-  }
-  
-  /**
-   * Withdraws the highlighting as soon as a dragged element leaves the board column.
-   * 
-   * @param  {} id
-   */
-  function removeHighlight(id) {
+}
+
+/**
+ * Withdraws the highlighting as soon as a dragged element leaves the board column.
+ * 
+ * @param  {number} id - The id of the task
+ */
+function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
-  }
-  
+}

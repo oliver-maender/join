@@ -52,10 +52,10 @@ function getUserData() {
 /**
  * Creates the user with all user data.
  * 
- * @param  {String} myUsername
- * @param  {String} myPassword
- * @param  {String} myEmail
- * @param  {String} profilePicUpload
+ * @param  {string} myUsername - the username of the new user
+ * @param  {string} myPassword - the password of the new user
+ * @param  {string} myEmail - the e-mail of the new user
+ * @param  {string} profilePicUpload - the profile picture of the new user
  * returns JSON
  */
 function createUser(myUsername, myPassword, myEmail, profilePicUpload) {

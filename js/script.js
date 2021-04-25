@@ -39,21 +39,18 @@ async function init() {
   showLoggedInUser();
 }
 
-//for login and registration
+/**
+ * Init function for login and registration.
+ */
 async function initUsers() {
   allUsers = await getArrayFromBackend('allUsers');
   console.log("initUsers() wurde aufgerufen!");
 }
 
 
-
-
-
-
-
-
-
-
+/**
+ * Loads content which is necessary at the startup of the FAQ page.
+ */
 async function initFAQ() {
   await init();
   setTimeout(function () {
@@ -61,6 +58,9 @@ async function initFAQ() {
   }, 100);
 }
 
+/**
+ * Loads content which is necessary at the startup of the legal notice page.
+ */
 async function initLegalNotice() {
   await init();
   setTimeout(function () {
@@ -68,6 +68,9 @@ async function initLegalNotice() {
   }, 100);
 }
 
+/**
+ * Loads content which is necessary at the startup of the data privacy page.
+ */
 async function initDataPrivacy() {
   await init();
   setTimeout(function () {
@@ -75,40 +78,40 @@ async function initDataPrivacy() {
   }, 100);
 }
 
+/**
+ * Removes a common bug which didn't show the header sometimes in the mobile view
+ * 
+ * @returns HTML
+ */
 function removeGhostHeader() {
   return `
     <div class="init">initialised</div>
   `;
 }
 
+/**
+ * This toggles the navbar in the mobile view when clicked to open/close
+ */
 function changeNavbar() {
   let button = document.getElementById('change-navbar-btn');
   let header = document.getElementById('header');
   let headerLinks = document.getElementById('header-links');
   let headerTexts = document.getElementsByClassName('header-txt');
-  // let headerIcons = document.getElementsByClassName('header-icon');
+  let logoAndLinks = document.getElementById('logo-and-links');
+  let expandPlus = document.getElementById('expand-plus');
+  let reduceMinus = document.getElementById('reduce-minus');
 
-  if (button.innerHTML == "&gt;") {
+  if (expandPlus.classList.contains('show-header-btn')) {
     for (let i = 0; i < headerTexts.length; i++) {
       const text = headerTexts[i];
-      // header.classList.remove('header');
       header.classList.add('expanded-header');
       headerLinks.classList.remove('hl-dont-show');
       headerLinks.classList.add('hl-show');
-      // text.classList.remove('d-none');
-      // text.classList.add('d-block');
+      logoAndLinks.classList.add('expanded-logo-and-links');
+      // expandPlus.classList.remove('reduced');
+      expandPlus.classList.remove('show-header-btn');
+      reduceMinus.classList.add('show-header-btn');
     }
-
-    // for (let i = 0; i < headerIcons.length; i++) {
-    //   const icons = headerIcons[i];
-    //   icons.classList.remove('d-block');
-    //   icons.classList.add('d-none');
-    // }
-
-    // document.getElementById('header').style.width = 'calc(var(--header-width) + 100px)';
-
-    button.innerHTML = "&lt;";
-
   }
   else {
     for (let i = 0; i < headerTexts.length; i++) {
@@ -116,20 +119,11 @@ function changeNavbar() {
       header.classList.remove('expanded-header');
       headerLinks.classList.remove('hl-show');
       headerLinks.classList.add('hl-dont-show');
-      // text.classList.remove('d-block');
-      // text.classList.add('d-none');
-      // header.classList.add('header');
+      logoAndLinks.classList.remove('expanded-logo-and-links');
+      // expandPlus.classList.add('reduced');
+      expandPlus.classList.add('show-header-btn');
+      reduceMinus.classList.remove('show-header-btn');
     }
-
-    // for (let i = 0; i < headerIcons.length; i++) {
-    //   const icons = headerIcons[i];
-    //   icons.classList.add('d-block');
-    //   icons.classList.remove('d-none');
-    // }
-
-    // document.getElementById('header').style.width = 'var(--header-width)';
-
-    button.innerHTML = "&gt;";
   }
 }
 
@@ -334,19 +328,19 @@ async function deleteTask(id, loc) {
 /* LOCAL STORAGE */
 
 /**
- * Saves an array to the local storage
+ * Saves an array to the local storage.
  * 
- * @param {string} key 
- * @param {Array} array 
+ * @param {string} key - The array's name.
+ * @param {Array} array - The array.
  */
 function setArray(key, array) {
   localStorage.setItem(key, JSON.stringify(array));
 }
 
 /**
- * Gets an array from the local storage
+ * Gets an array from the local storage.
  * 
- * @param {string} key 
+ * @param {string} key - The array's name.
  * @returns Array
  */
 function getArray(key) {
@@ -369,8 +363,8 @@ async function getArrayFromBackend(key) {
 /**
  * Saves the changed array object (allTasks) to backend.
  * 
- * @param  {string} key
- * @param  {obj} array
+ * @param  {string} key - The array's name.
+ * @param  {obj} array - The array.
  */
 async function saveArrayToBackend(key, array) {
   await backend.setItem(key, JSON.stringify(array));
