@@ -140,25 +140,28 @@
         right: 0;
     }
     .expanded-header {
-        height: 50vh;
+        height: 80vh;
     }
     .expanded-logo-and-links {
         width: 60vw;
     }
-    .header-btns-container {
+    /* .header-btns-container {
         position: absolute;
         top: unset;
         right: 50%;
         bottom: 0;
-    }
-    .header-btns {
+    } */
+    /* .header-btns {
         position: relative;
         right: -50%;
-    }
+    } */
     #header-content {
         flex-direction: row !important;
         justify-content: space-around !important;
         height: 100% !important;
+    }
+    .hl-show {
+        margin-bottom: 128px;
     }
     #logo-and-links {
         flex-direction: row !important;
