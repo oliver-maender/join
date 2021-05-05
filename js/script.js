@@ -393,7 +393,7 @@ function preventReload() {
 /**
  * Makes the w3cInclude possible, code by w3schools.com
  * 
- * @returns 
+ * @returns undefined
  */
 function includeHTML() {
   var z, i, elmnt, file, xhttp;
