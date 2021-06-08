@@ -50,7 +50,7 @@
 .ticket-profiles {
     display: flex;
     align-self: flex-end;
-    max-width: 100%;
+    max-width: 84%;
     overflow-x: scroll;
 }
 
